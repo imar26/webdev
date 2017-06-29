@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="BlogApp">
+<head>
+    <meta charset="UTF-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+<p>
+    Some Static Content
+</p>
+<div class="container" ng-controller="BlogController">
+    <h1>Post New Blog</h1>
+
+    <!--<p>{{blogPosts}}</p>-->
+
+    <label>BLog Title</label>
+    <input class="form-control" />
+
+    <label>Blog Content</label>
+    <textarea class="form-control"></textarea>
+
+    <button class="btn btn-primary btn-block">Post</button>
+
+    <div ng-repeat="blog in blogPosts">
+        <h2>{{blog.title}}</h2>
+        <p>{{blog.content}}</p>
+    </div>
+    <!--<h2>My First Post</h2>-->
+    <!--<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>-->
+
+    <!--<h2>My Second Post</h2>-->
+    <!--<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>-->
+
+    <!--<h2>My Third Post</h2>-->
+    <!--<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>-->
+
+</div>
+</body>
+</html>
