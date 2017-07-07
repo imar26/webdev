@@ -13,16 +13,23 @@
         <h1>TODO Form</h1>
 
         <label>Title</label>
-        <input type="text" class="form-control"/>
+        <input type="text" class="form-control" ng-model="todo.title"/>
 
         <label>Details</label>
-        <textarea class="form-control"></textarea>
+        <textarea class="form-control" ng-model="todo.content"></textarea>
 
-        <input type="submit" value="TODO" class="btn btn-primary btn-block" />
+        <input ng-click="createTodo(todo)" value="Create" class="btn btn-primary btn-block" />
+        <input ng-click="updateTodo(todo)" value="Update" class="btn btn-success btn-block" />
 
         <h1>TODO List</h1>
 
         <div ng-repeat="todo in todoLists">
+            <a ng-click="deleteTodo(todo)" class="pull-right">
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+            <a ng-click="editTodo(todo)" class="pull-right">
+                <span class="glyphicon glyphicon-cog"></span>
+            </a>
             <h3>{{todo.title}}</h3>
             <p>{{todo.content}}</p>
         </div>
