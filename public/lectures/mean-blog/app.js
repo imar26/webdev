@@ -2,10 +2,15 @@ angular
     .module('BlogApp', [])
     .controller('BlogController', blogController);
 
-function blogController($scope) {
-    $scope.blogPosts = [
-        {title: 'Post 1', content: 'Content 1'}
-    ];
+function blogController($scope, $http) {
+    // $scope.blogPosts = [
+    //     {title: 'Post 1', content: 'Content 1'}
+    // ];
+
+    $http.get('/blog')
+        .then(function (data) {
+            $scope.blogPosts = data.data;
+        });
 
     $scope.addPost = addPost;
     $scope.deletePost = deletePost;
