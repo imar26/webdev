@@ -13,19 +13,23 @@
     Some Static Content
 </p>
 <div class="container" ng-controller="BlogController">
+    <a ng-click="deleleAll()" class="pull-right"><span class="glyphicon glyphicon-remove"></span> Delete All</a>
     <h1>Post New Blog</h1>
 
     <!--<p>{{blogPosts}}</p>-->
 
     <label>BLog Title</label>
-    <input class="form-control" />
+    <input class="form-control" ng-model="blog.title"/>
 
     <label>Blog Content</label>
-    <textarea class="form-control"></textarea>
+    <textarea class="form-control" ng-model="blog.content"></textarea>
 
-    <button class="btn btn-primary btn-block">Post</button>
+    <button class="btn btn-success btn-block" ng-click="updatePost(blog)">Update</button>
+    <button class="btn btn-primary btn-block" ng-click="addPost(blog)">Add</button>
 
     <div ng-repeat="blog in blogPosts">
+        <a ng-click="deletePost($index)" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+        <a ng-click="selectPost(blog, $index)" class="pull-right"><span class="glyphicon glyphicon-cog"></span></a>
         <h2>{{blog.title}}</h2>
         <p>{{blog.content}}</p>
     </div>
