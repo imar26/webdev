@@ -2,11 +2,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 pull-left iconBack">
-                <a href="website-list.html"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                <a href="#!/user/1/website/new"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
                 <h3>New Website</h3>
             </div>
             <div class="col-md-6 pull-right iconCheck">
-                <a href="website-list.html"><i class="fa fa-check" aria-hidden="true"></i></a>
+                <a href="#!/user/1/website"><i class="fa fa-check" aria-hidden="true"></i></a>
             </div>
         </div>
     </div>
@@ -14,16 +14,16 @@
 <div class="container main-content">
     <br/>
     <label>Name</label>
-    <input type="text" class="form-control" placeholder="Name" />
+    <input type="text" class="form-control" placeholder="Name" ng-model="model.website.name" />
     <br/>
     <label>Description</label>
-    <textarea class="form-control" rows="4" placeholder="Description"></textarea>
+    <textarea class="form-control" rows="4" placeholder="Description" ng-model="model.website.description"></textarea>
 </div>
 <div class="footer">
     <div class="container">
         <div class="row">
             <div class="col-md-12 pull-right iconUser">
-                <a href="profile.html"><i class="fa fa-user" aria-hidden="true"></i></a>
+                <a href="#!/user/1"><i class="fa fa-user" aria-hidden="true"></i></a>
             </div>
         </div>
     </div>
