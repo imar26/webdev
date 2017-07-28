@@ -1,9 +1,9 @@
 (function() {
     angular
         .module("WebAppMaker")
-        .config(Config);
+        .config(configuration);
 
-    function Config($routeProvider) {
+    function configuration($routeProvider) {
         $routeProvider
             .when("/login", {
                 templateUrl: "views/user/templates/login.view.client.html",
@@ -21,17 +21,17 @@
                 controllerAs: "model"
             })
             .when("/user/:uid/website", {
-                templateUrl: "views/user/templates/website-list.view.client.html",
+                templateUrl: "views/website/templates/website-list.view.client.html",
                 controller: "WebsiteListController",
                 controllerAs: "model"
             })
             .when("/user/:uid/website/new", {
-                templateUrl: "views/user/templates/website-new.view.client.html",
+                templateUrl: "views/website/templates/website-new.view.client.html",
                 controller: "NewWebsiteController",
                 controllerAs: "model"
             })
             .when("/user/:uid/website/:wid", {
-                templateUrl: "views/user/templates/website-edit.view.client.html",
+                templateUrl: "views/website/templates/website-edit.view.client.html",
                 controller: "EditWebsiteController",
                 controllerAs: "model"
             })
