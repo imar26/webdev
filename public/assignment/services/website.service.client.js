@@ -28,7 +28,15 @@
         }
 
         function findWebsitesByUser(userId) {
-
+            var websitesObj = {
+                name : []
+            };
+            for(var i=0;i<websites.length;i++) {
+                if(websites[i].developerId == userId) {
+                    websitesObj['name'].push(websites[i].name);
+                }
+            }
+            return websitesObj;
         }
 
         function findWebsiteById(websiteId) {

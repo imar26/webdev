@@ -30,7 +30,15 @@
         }
 
         function findWidgetsByPageId(pageId) {
-
+            var widgetsObj = {
+                text: []
+            }
+            for(var i=0;i<widgets.length;i++) {
+                if(widgets[i].pageId == pageId) {
+                    widgetsObj['text'].push(widgets[i].text);
+                }
+            }
+            return widgetsObj;
         }
 
         function findWidgetById(widgetId) {

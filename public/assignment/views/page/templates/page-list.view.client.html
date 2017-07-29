@@ -13,41 +13,9 @@
 </div>
 <div class="container main-content">
     <br/>
-    <div class="row websiteRow">
+    <div class="row websiteRow" ng-repeat="page in model.pages">
         <div class="col-md-8">
-            <a href="#!/user/123/website/456/page/321/widget">Blog Post</a>
-        </div>
-        <div class="col-md-4 pull-right iconCog">
-            <a href="#!/user/123/website/456/page/321"><i class="fa fa-cog" aria-hidden="true"></i></a>
-        </div>
-    </div>
-    <div class="row websiteRow">
-        <div class="col-md-8">
-            <a href="#!/user/123/website/456/page/321/widget">Blogs</a>
-        </div>
-        <div class="col-md-4 pull-right iconCog">
-            <a href="#!/user/123/website/456/page/321"><i class="fa fa-cog" aria-hidden="true"></i></a>
-        </div>
-    </div>
-    <div class="row websiteRow">
-        <div class="col-md-8">
-            <a href="#!/user/123/website/456/page/321/widget">Home</a>
-        </div>
-        <div class="col-md-4 pull-right iconCog">
-            <a href="#!/user/123/website/456/page/321"><i class="fa fa-cog" aria-hidden="true"></i></a>
-        </div>
-    </div>
-    <div class="row websiteRow">
-        <div class="col-md-8">
-            <a href="#!/user/123/website/456/page/321/widget">About</a>
-        </div>
-        <div class="col-md-4 pull-right iconCog">
-            <a href="#!/user/123/website/456/page/321"><i class="fa fa-cog" aria-hidden="true"></i></a>
-        </div>
-    </div>
-    <div class="row websiteRow">
-        <div class="col-md-8">
-            <a href="#!/user/123/website/456/page/321/widget">Contact Us</a>
+            <a href="#!/user/123/website/456/page/321/widget">{{page}}</a>
         </div>
         <div class="col-md-4 pull-right iconCog">
             <a href="#!/user/123/website/456/page/321"><i class="fa fa-cog" aria-hidden="true"></i></a>

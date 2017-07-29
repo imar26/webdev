@@ -24,7 +24,15 @@
         }
 
         function findPageByWebsiteId(websiteId) {
-
+            var pagesObj = {
+                name : []
+            };
+            for(var i=0; i<pages.length;i++) {
+                if(pages[i].websiteId == websiteId) {
+                    pagesObj['name'].push(pages[i].name);
+                }
+            }
+            return pagesObj;
         }
 
         function findPageById(pageId) {
