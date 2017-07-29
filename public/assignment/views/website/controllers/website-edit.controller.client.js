@@ -8,19 +8,7 @@
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
 		function init() {
-			vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
-			console.log(vm.websites);
-            vm.website = {
-            	name: '',
-            	description: ''
-            };
-            var n = Object.keys(vm.websites).length;
-            for(var i=0; i<n; i++) {
-            	if(vm.websites[i].id == vm.websiteId) {
-            		// vm.website['name'] = vm.websites[i].name;
-            		// vm.website['description'] = vm.websites[i].description;
-            	}
-            }
+			vm.website = WebsiteService.findWebsiteById(vm.websiteId);
 		}
 		init();
     }

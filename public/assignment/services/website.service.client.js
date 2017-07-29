@@ -28,23 +28,21 @@
         }
 
         function findWebsitesByUser(userId) {
+
+        }
+
+        function findWebsiteById(websiteId) {
             var websiteObj = {
-                id : [],
                 name : [],
                 description: []
             };
             for(var i=0; i<websites.length;i++) {
-                if(websites[i].developerId == userId) {
-                    websiteObj['id'].push(websites[i]._id);
-                    websiteObj['name'].push(websites[i].name);
-                    websiteObj['description'].push(websites[i].description);
+                if(websites[i]._id == websiteId) {
+                    websiteObj['name'] = websites[i].name;
+                    websiteObj['description'] = websites[i].description;
                 }
             }
             return websiteObj;
-        }
-
-        function findWebsiteById(websiteId) {
-
         }
 
         function updateWebsite(websiteId, website) {

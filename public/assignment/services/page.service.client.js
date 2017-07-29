@@ -28,7 +28,15 @@
         }
 
         function findPageById(pageId) {
-
+            var pageObj = {
+                name : ''
+            };
+            for(var i=0; i<pages.length;i++) {
+                if(pages[i]._id == pageId) {
+                    pageObj['name'] = pages[i].name;
+                }
+            }
+            return pageObj;
         }
 
         function updatePage(pageId, page) {

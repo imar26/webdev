@@ -34,7 +34,17 @@
         }
 
         function findWidgetById(widgetId) {
-
+            var widgetObj = {
+                text: '',
+                size: ''
+            }
+            for(var i=0;i<widgets.length;i++) {
+                if(widgets[i]._id == widgetId) {
+                    widgetObj['text'] = widgets[i].text;
+                    widgetObj['size'] = widgets[i].size;
+                }
+            }
+            return widgetObj;
         }
 
         function updateWidget(widgetId, widget) {
