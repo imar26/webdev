@@ -17,6 +17,8 @@
             user = UserService.updateUser(vm.userId, user);
             if(user) {
                 vm.success = "Profile updated successfully.";
+            } else {
+                vm.error = "Profile could not be updated.";
             }
         }
         function goToProfile() {
