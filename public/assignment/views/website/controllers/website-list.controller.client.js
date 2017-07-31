@@ -8,9 +8,10 @@
         vm.userId = $routeParams['uid'];
         vm.goToProfile = goToProfile;
         vm.newWebsite = newWebsite;
+        vm.newPage = newPage;
+        vm.editWebsite = editWebsite;
         function init() {
             vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
-            vm.websites = vm.websites.name;
         }
         init();
         function goToProfile() {
@@ -18,6 +19,12 @@
         }
         function newWebsite() {
             $location.url("/user/"+vm.userId+"/website/new/");
+        }
+        function newPage() {
+
+        }
+        function editWebsite() {
+
         }
     }
 })();
