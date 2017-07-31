@@ -96,3 +96,7 @@ a:hover, a:focus {
 .padBtm {
     padding-bottom: 15px;
 }
+
+a:hover {
+    cursor: pointer;
+}

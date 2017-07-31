@@ -9,7 +9,6 @@
 
         function createUser(user) {
         	user = UserService.createUser(user);
-        	console.log(user);
         	if(user) {
         		$location.url("/user/"+user);
         	} else {
