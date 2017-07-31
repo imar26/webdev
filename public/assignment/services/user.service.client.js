@@ -22,7 +22,21 @@
         return api;
 
         function createUser(user) {
-
+            var counter = 0;
+            var userObj = {
+                _id: '',
+                username : '',
+                password : ''
+            };
+            if(user.password == user.verifypassword) {
+                counter = counter + 1;
+                userObj['_id'] = counter.toString();
+                userObj['username'] = user.username;
+                userObj['password'] = user.password;
+                users.push(userObj);
+            }
+            var uid = counter;
+            return userObj['_id'];
         }
 
         function findUserById(userId) {

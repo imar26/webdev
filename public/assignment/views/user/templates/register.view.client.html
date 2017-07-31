@@ -8,8 +8,9 @@
             <br/>
             <input type="password" class="form-control" placeholder="verify password" ng-model="model.user.verifypassword" />
             <br/>
-            <a href="#!/user/123" class="btn btn-primary btn-block">Register</a>
+            <a ng-click="model.createUser(model.user)" class="btn btn-primary btn-block">Register</a>
             <a href="#!/login" class="btn btn-danger btn-block">Cancel</a>
+            <h5 class="text-danger">{{model.alert}}</h5>
         </div>
     </div>
 </div>
