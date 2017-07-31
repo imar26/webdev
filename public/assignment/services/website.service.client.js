@@ -24,7 +24,21 @@
         return api;
 
         function createWebsite(userId, website) {
-
+            var counter = 0;
+            var websitesObj = {
+                _id: '',
+                name : '',
+                developerId : '',
+                description : ''
+            };
+            counter = counter + 1;
+            websitesObj['_id'] = counter.toString();
+            websitesObj['name'] = website.name;
+            websitesObj['developerId'] = userId;
+            websitesObj['description'] = website.description;
+            websites.push(websitesObj);
+            var wid = counter;
+            return websitesObj['_id'];
         }
 
         function findWebsitesByUser(userId) {
