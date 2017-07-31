@@ -66,21 +66,15 @@
         }
 
         function updateUser(userId, user) {
-            var userObj = {
-                username : '',
-                firstName : '',
-                lastName : '',
-                email: ''
-            };
             for(var i=0; i<users.length;i++) {
                 if(users[i]._id == userId) {
-                    userObj['username'] = user.username;
-                    userObj['firstName'] = user.firstName;
-                    userObj['lastName'] = user.lastName;
-                    userObj['email'] = user.email;
+                    users[i].username = user.username;
+                    users[i].firstName = user.firstName;
+                    users[i].lastName = user.lastName;
+                    users[i].email = user.email;
+                    return users[i]._id;
                 }
-            }
-            return userObj;
+            }            
         }
 
         function deleteUser(userId) {

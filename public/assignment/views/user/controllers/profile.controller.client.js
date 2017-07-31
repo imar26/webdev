@@ -8,6 +8,7 @@
         vm.userId = $routeParams["uid"];
         vm.updateUser = updateUser;
         vm.goToProfile = goToProfile;
+        vm.goToWebsites = goToWebsites;
 		function init() {
 			vm.user = UserService.findUserById(vm.userId);
 		}
@@ -20,6 +21,9 @@
         }
         function goToProfile() {
             $location.url("/user/"+vm.userId);
+        }
+        function goToWebsites() {
+            $location.url("/user/"+vm.userId+"/website/");
         }
     }
 })();

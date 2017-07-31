@@ -27,7 +27,7 @@
             <label>Last Name</label>
             <input type="text" class="form-control" value="Annunziato" ng-model="model.user.lastName" />
             <br/>
-            <a href="#!/user/123/website" class="btn btn-primary btn-block">Websites</a>
+            <a ng-click="model.goToWebsites()" class="btn btn-primary btn-block">Websites</a>
             <a href="#!/login" class="btn btn-danger btn-block">Logout</a>
             <h5 class="text-success">{{model.success}}</h5>
         </div>
