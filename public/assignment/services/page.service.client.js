@@ -37,15 +37,20 @@
         }
 
         function findPageByWebsiteId(websiteId) {
+            var pagesArray = [];
             var pagesObj = {
-                name : []
+                id : '',
+                name : ''
             };
             for(var i=0; i<pages.length;i++) {
                 if(pages[i].websiteId == websiteId) {
-                    pagesObj['name'].push(pages[i].name);
+                    pagesObj.id = pages[i]._id;
+                    pagesObj.name = pages[i].name;
+
+                    pagesArray.push({id: pagesObj.id, name: pagesObj.name});
                 }
             }
-            return pagesObj;
+            return pagesArray;
         }
 
         function findPageById(pageId) {

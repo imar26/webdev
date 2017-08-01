@@ -15,10 +15,10 @@
     <br/>
     <div class="row websiteRow" ng-repeat="page in model.pages">
         <div class="col-md-8">
-            <a href="#!/user/123/website/456/page/321/widget">{{page}}</a>
+            <a ng-click="model.newWidget(page.id)">{{page.name}}</a>
         </div>
         <div class="col-md-4 pull-right iconCog">
-            <a href="#!/user/123/website/456/page/321"><i class="fa fa-cog" aria-hidden="true"></i></a>
+            <a ng-click="model.editPage(page.id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
         </div>
     </div>
 </div>

@@ -10,9 +10,10 @@
         vm.goToWebsites = goToWebsites;
         vm.goToProfile = goToProfile;
         vm.newPage = newPage;
+        vm.newWidget = newWidget;
+        vm.editPage = editPage;
         function init() {
             vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
-            vm.pages = vm.pages.name;
         }
         init();
         function goToWebsites() {
@@ -23,6 +24,12 @@
         }
         function newPage() {
             $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/new/");
+        }
+        function newWidget(id) {
+            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+id+"/widget/");
+        }
+        function editPage(id) {
+            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+id);
         }
     }
 })();
