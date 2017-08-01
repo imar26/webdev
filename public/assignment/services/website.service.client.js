@@ -49,8 +49,6 @@
             };
             for(var i=0;i<websites.length;i++) {
                 if(websites[i].developerId == userId) {
-                    // websitesObj['id'].push(websites[i]._id);
-                    // websitesObj['name'].push(websites[i].name);
                     websitesObj.id = websites[i]._id;
                     websitesObj.name = websites[i].name;
 

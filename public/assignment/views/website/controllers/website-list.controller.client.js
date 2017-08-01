@@ -20,11 +20,11 @@
         function newWebsite() {
             $location.url("/user/"+vm.userId+"/website/new/");
         }
-        function newPage() {
-
+        function newPage(websiteId) {
+            $location.url("/user/"+vm.userId+"/website/"+websiteId+"/page/");
         }
-        function editWebsite() {
-
+        function editWebsite(websiteId) {
+            $location.url("/user/"+vm.userId+"/website/"+websiteId);
         }
     }
 })();
