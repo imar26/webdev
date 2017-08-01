@@ -20,7 +20,20 @@
         return api;
 
         function createPage(websiteId, page) {
-
+            var size = pages.length;
+            var pagesObj = {
+                _id: '',
+                name : '',
+                websiteId : '',
+                description : ''
+            };
+            size = size + 1;
+            pagesObj['_id'] = size.toString();
+            pagesObj['name'] = page.name;
+            pagesObj['websiteId'] = websiteId;
+            pagesObj['description'] = page.description;
+            pages.push(pagesObj);
+            return pagesObj['_id'];
         }
 
         function findPageByWebsiteId(websiteId) {
