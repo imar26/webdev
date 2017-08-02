@@ -19,7 +19,8 @@
     <label>Website Description</label>
     <textarea class="form-control" rows="4" ng-model="model.website.description"></textarea>
     <br/>
-    <a href="#!/user/123/website" class="btn btn-danger btn-block">Delete</a>
+    <a ng-click="model.updateWebsite(model.website)" class="btn btn-success btn-block">Update</a>
+    <a ng-click="model.deleteWebsite()" class="btn btn-danger btn-block">Delete</a>
 </div>
 <div class="footer">
     <div class="container">

@@ -6,8 +6,10 @@
             <br/>
             <input type="password" class="form-control" placeholder="password" ng-model="model.user.password" />
             <br/>
-            <a href="#!/user/123" class="btn btn-primary btn-block">Login</a>
+            <a ng-click="model.login(model.user)" class="btn btn-primary btn-block">Login</a>
             <a href="#!/register" class="btn btn-success btn-block">Register</a>
+
+            <h5 class="text-danger">{{model.alert}}</h5>
         </div>
     </div>
 </div>
