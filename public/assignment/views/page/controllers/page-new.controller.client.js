@@ -9,6 +9,7 @@
         vm.userId = $routeParams['uid'];
         vm.websiteId = $routeParams['wid'];
         vm.createPage = createPage;
+        vm.goToProfile = goToProfile;
         function goToPages() {
         	$location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/");
         }
@@ -19,6 +20,9 @@
         	} else {
         		vm.alert = "Page could not be created";
         	}
+        }
+        function goToProfile() {
+            $location.url("/user/"+vm.userId);
         }
     }
 })();

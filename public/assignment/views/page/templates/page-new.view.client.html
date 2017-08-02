@@ -17,7 +17,7 @@
     <input type="text" class="form-control" placeholder="Page Name" ng-model="model.page.name" />
     <br/>
     <label>Title</label>
-    <input type="text" class="form-control" placeholder="Page Title" ng-model="model.page.title" />
+    <input type="text" class="form-control" placeholder="Page Title" ng-model="model.page.description" />
 
     <h5 class="text-danger">{{model.alert}}</h5>
 </div>
@@ -25,7 +25,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 pull-right iconDefaultUser">
-                <a href="#!/user/123"><i class="fa fa-user" aria-hidden="true"></i></a>
+                <a ng-click="model.goToProfile()"><i class="fa fa-user" aria-hidden="true"></i></a>
             </div>
         </div>
     </div>

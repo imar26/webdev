@@ -55,22 +55,35 @@
 
         function findPageById(pageId) {
             var pageObj = {
-                name : ''
+                name : '',
+                description : ''
             };
             for(var i=0; i<pages.length;i++) {
                 if(pages[i]._id == pageId) {
                     pageObj['name'] = pages[i].name;
+                    pageObj['description'] = pages[i].description;
                 }
             }
             return pageObj;
         }
 
         function updatePage(pageId, page) {
-
+            for(var i=0; i<pages.length;i++) {
+                if(pages[i]._id == pageId) {
+                    pages[i].name = page.name;
+                    pages[i].description = page.description;
+                    return true;
+                }
+            }
         }
 
         function deletePage(pageId) {
-
+            for(var i=0; i<pages.length;i++) {
+                if(pages[i]._id == pageId) {
+                    pages.splice(i, 1);
+                    return true;
+                }
+            }
         }
 
     }
