@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 pull-left iconDefaultBack">
-                <a href="#!/user/1/website/1/page/1/widget"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                <a ng-click="model.goToWidgets()"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
                 <h3>Choose Widget</h3>
             </div>
         </div>
@@ -12,34 +12,34 @@
     <br/>
     <div class="row websiteRow">
         <div class="col-md-12 padBtm">
-            <p><a href="#!/user/1/website/1/page/1/widget/1">Header</a> </p>
+            <p><a ng-click="model.createWidget('HEADING')">Header</a> </p>
         </div>
         <div class="col-md-12 padBtm">
-            <p><a href="#!/user/1/website/1/page/1/widget/2">Label</a> </p>
+            <p><a>Label</a> </p>
         </div>
         <div class="col-md-12 padBtm">
-            <p><a href="#!/user/1/website/1/page/1/widget/3">HTML</a> </p>
+            <p><a>HTML</a> </p>
         </div>
         <div class="col-md-12 padBtm">
-            <p><a href="#!/user/1/website/1/page/1/widget/4">Text Input</a> </p>
+            <p><a>Text Input</a> </p>
         </div>
         <div class="col-md-12 padBtm">
-            <p><a href="#!/user/1/website/1/page/1/widget/5">Link</a> </p>
+            <p><a>Link</a> </p>
         </div>
         <div class="col-md-12 padBtm">
-            <p><a href="#!/user/1/website/1/page/1/widget/6">Button</a> </p>
+            <p><a>Button</a> </p>
         </div>
         <div class="col-md-12 padBtm">
-            <p><a href="#!/user/1/website/1/page/1/widget/7">Image</a> </p>
+            <p><a ng-click="model.createWidget('IMAGE')">Image</a> </p>
         </div>
         <div class="col-md-12 padBtm">
-            <p><a href="#!/user/1/website/1/page/1/widget/8">YouTube</a> </p>
+            <p><a ng-click="model.createWidget('YOUTUBE')">YouTube</a> </p>
         </div>
         <div class="col-md-12 padBtm">
-            <p><a href="#!/user/1/website/1/page/1/widget/9">Data Table</a> </p>
+            <p><a>Data Table</a> </p>
         </div>
         <div class="col-md-12 padBtm">
-            <p><a href="#!/user/1/website/1/page/1/widget/10">Repeater</a> </p>
+            <p><a>Repeater</a> </p>
         </div>
     </div>
 </div>
@@ -47,7 +47,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 pull-right iconDefaultUser">
-                <a href="#!/user/1"><i class="fa fa-user" aria-hidden="true"></i></a>
+                <a ng-click="model.goToProfile()"><i class="fa fa-user" aria-hidden="true"></i></a>
             </div>
         </div>
     </div>
