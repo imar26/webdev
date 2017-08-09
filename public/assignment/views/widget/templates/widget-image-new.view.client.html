@@ -1,42 +1,24 @@
-<div class="default-heading">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 pull-left iconDefaultBack">
-                <a href="widget-chooser.html"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
-                <h3>Widget Edit</h3>
-            </div>
-            <div class="col-md-6 pull-right iconDefaultCheck">
-                <a href="widget-list.html"><i class="fa fa-check" aria-hidden="true"></i></a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container main-content">
+<div class="container">
     <br/>
-    <label>Name</label>
-    <input type="text" class="form-control" />
+    <label>Widget Type</label>
+    <input type="text" class="form-control" ng-model="model.widgetType" />
     <br/>
     <label>Text</label>
-    <input type="text" class="form-control" />
+    <input type="text" class="form-control" ng-model="model.widget.text" />
     <br/>
     <label>URL</label>
-    <input type="text" class="form-control" value="https://docs.google.com/document/d/1Xq-d8gEPmqGv3JElKocPiNsj8Ft82SY3yNOREHt6r2U" />
+    <input type="text" class="form-control" ng-model="model.widget.url" />
     <br/>
     <label>Width</label>
-    <input type="text" class="form-control" value="100%" />
+    <select class="form-control" ng-model="model.widget.width">
+        <option value="20%">20%</option>
+        <option value="40%">40%</option>
+        <option value="60%">60%</option>
+        <option value="80%">80%</option>
+        <option value="100%">100%</option>
+    </select>
     <br/>
-    <label>Upload</label>
-    <input type="file" class="form-control" />
+    <!-- <label>Upload</label>
+    <input type="file" class="form-control" /> -->
     <br/>
-    <a href="widget-list.html" class="btn btn-primary btn-block">Upload Image</a>
-    <a href="widget-list.html" class="btn btn-danger btn-block">Delete</a>
-</div>
-<div class="default-footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 pull-right iconDefaultUser">
-                <a href="profile.html"><i class="fa fa-user" aria-hidden="true"></i></a>
-            </div>
-        </div>
-    </div>
 </div>

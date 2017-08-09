@@ -3,7 +3,7 @@
         .module("WebAppMaker")
         .controller("WidgetListController", WidgetListController);
 
-    function WidgetListController($routeParams, WidgetService, $location) {
+    function WidgetListController($routeParams, WidgetService, $location, $sce) {
         var vm = this;
         vm.userId = $routeParams['uid'];
         vm.websiteId = $routeParams['wid'];
@@ -11,6 +11,7 @@
         vm.goToPages = goToPages;
         vm.newWidget = newWidget;
         vm.goToProfile = goToProfile;
+        vm.trustSrc = trustSrc;
         function init() {
             vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
         }
@@ -23,6 +24,10 @@
         }
         function goToProfile() {
             $location.url("/user/"+vm.userId);   
+        }
+        function trustSrc(url) {
+            url = url.replace("watch?v=", "embed/");
+            return $sce.trustAsResourceUrl(url);
         }
     }
 })();

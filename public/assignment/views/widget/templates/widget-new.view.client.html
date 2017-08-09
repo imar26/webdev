@@ -15,13 +15,13 @@
     <br/>
     <div class="row websiteRow" ng-switch="model.widgetType">
         <div ng-switch-when="HEADING">
-            <div ng-include="'views/widget/templates/widget-heading-new.view.client.html'">
+            <div ng-include="'views/widget/templates/widget-heading-new.view.client.html'"></div>
         </div>
         <div ng-switch-when="IMAGE">
-            <div ng-include="'views/widget/templates/widget-image-new.view.client.html'">
+            <div ng-include="'views/widget/templates/widget-image-new.view.client.html'"></div>
         </div>
         <div ng-switch-when="YOUTUBE">
-            <div ng-include="'views/widget/templates/widget-youtube-new.view.client.html'">
+            <div ng-include="'views/widget/templates/widget-youtube-new.view.client.html'"></div>
         </div>
         <h5 class="text-danger">{{model.alert}}</h5>
     </div>
