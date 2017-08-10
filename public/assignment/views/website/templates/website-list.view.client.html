@@ -13,11 +13,31 @@
 </div>
 <div class="container main-content">
     <br/>
+    <div class="row websiteRow">
+        <div class="col-md-3">
+            Name
+        </div>
+        <div class="col-md-3">
+            Created At
+        </div>
+        <div class="col-md-3">
+            Created By
+        </div>
+        <div class="col-md-3 pull-right iconCog">
+            Actions
+        </div>
+    </div>
     <div class="row websiteRow" ng-repeat="website in model.websites">
-        <div class="col-md-8">
+        <div class="col-md-3">
             <a ng-click="model.newPage(website.id)">{{website.name}}</a>
         </div>
-        <div class="col-md-4 pull-right iconCog">
+        <div class="col-md-3">
+            <a>{{website.created | date}}</a>
+        </div>
+        <div class="col-md-3">
+            <a>{{website.developerId}}</a>
+        </div>
+        <div class="col-md-3 pull-right iconCog">
             <a ng-click="model.editWebsite(website.id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
         </div>
     </div>
