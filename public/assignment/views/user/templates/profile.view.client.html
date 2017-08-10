@@ -6,32 +6,33 @@
                 <h3>Profile</h3>
             </div>
             <div class="col-md-6 pull-right iconCheck">
-                <a ng-click="model.updateUser(model.user)"><i class="fa fa-check" aria-hidden="true"></i></a>
+                <a ng-click="updateProfile.$valid && model.updateUser(model.user)"><i class="fa fa-check" aria-hidden="true"></i></a>
             </div>
         </div>
     </div>
 </div>
 <div class="container main-content">
     <div class="row">
-        <div class="col-md-12">
+        <form name="updateProfile" class="col-md-12">
             <br/>
             <label>Username</label>
-            <input type="text" class="form-control" value="Name" ng-model="model.user.username" />
+            <input type="text" class="form-control" value="Name" ng-model="model.user.username" required/>
             <br/>
             <label>Email</label>
-            <input type="email" class="form-control" value="jannunzi@gmail.com" ng-model="model.user.email" />
+            <input type="email" name="email" class="form-control" value="jannunzi@gmail.com" ng-model="model.user.email" required />
+            <span ng-show="updateProfile.email.$invalid && !updateProfile.email.$pristine" class="text-danger">Please enter valid email id</span>
             <br/>
             <label>First Name</label>
-            <input type="text" class="form-control" value="Jose" ng-model="model.user.firstName" />
+            <input type="text" class="form-control" value="Jose" ng-model="model.user.firstName" required />
             <br/>
             <label>Last Name</label>
-            <input type="text" class="form-control" value="Annunziato" ng-model="model.user.lastName" />
+            <input type="text" class="form-control" value="Annunziato" ng-model="model.user.lastName" required/>
             <br/>
             <a ng-click="model.goToWebsites()" class="btn btn-primary btn-block">Websites</a>
             <a href="#!/login" class="btn btn-danger btn-block">Logout</a>
             <h5 class="text-success">{{model.success}}</h5>
             <h5 class="text-danger">{{model.error}}</h5>
-        </div>
+        </form>
     </div>
 </div>
 <div class="footer">

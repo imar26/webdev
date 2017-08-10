@@ -12,6 +12,7 @@
         vm.newWidget = newWidget;
         vm.goToProfile = goToProfile;
         vm.trustSrc = trustSrc;
+        vm.editWidget = editWidget;
         function init() {
             vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
         }
@@ -28,6 +29,9 @@
         function trustSrc(url) {
             url = url.replace("watch?v=", "embed/");
             return $sce.trustAsResourceUrl(url);
+        }
+        function editWidget(widgetId) {
+            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+widgetId);
         }
     }
 })();

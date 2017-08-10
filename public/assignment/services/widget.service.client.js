@@ -75,24 +75,45 @@
 
         function findWidgetById(widgetId) {
             var widgetObj = {
+                id: '',
+                widgetType: '',
+                size: '',
                 text: '',
-                size: ''
+                url: '',
+                width: ''
             }
             for(var i=0;i<widgets.length;i++) {
                 if(widgets[i]._id == widgetId) {
-                    widgetObj['text'] = widgets[i].text;
+                    widgetObj['id'] = widgets[i]._id;
+                    widgetObj['widgetType'] = widgets[i].widgetType;
                     widgetObj['size'] = widgets[i].size;
+                    widgetObj['text'] = widgets[i].text;
+                    widgetObj['url'] = widgets[i].url;
+                    widgetObj['width'] = widgets[i].width;
                 }
             }
             return widgetObj;
         }
 
         function updateWidget(widgetId, widget) {
-
+            for(var i=0; i<widgets.length;i++) {
+                if(widgets[i]._id == widgetId) {
+                    widgets[i].text = widget.text;
+                    widgets[i].size = widget.size;
+                    widgets[i].url = widget.url;
+                    widgets[i].width = widget.width;
+                    return true;
+                }
+            }
         }
 
         function deleteWidget(widgetId) {
-
+            for(var i=0; i<widgets.length;i++) {
+                if(widgets[i]._id == widgetId) {
+                    widgets.splice(i, 1);
+                    return true;
+                }
+            }
         }
 
     }
