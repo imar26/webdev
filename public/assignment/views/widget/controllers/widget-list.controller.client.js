@@ -13,6 +13,7 @@
         vm.goToProfile = goToProfile;
         vm.trustSrc = trustSrc;
         vm.editWidget = editWidget;
+        vm.safeHtml = safeHtml;
         function init() {
             vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
         }
@@ -32,6 +33,9 @@
         }
         function editWidget(widgetId) {
             $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+widgetId);
+        }
+        function safeHtml(val) {
+            return $sce.trustAsHtml(val);
         }
     }
 })();
