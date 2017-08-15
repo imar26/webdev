@@ -22,12 +22,20 @@
 		}
 		init();
         function updateUser(user) {
-            user = UserService.updateUser(vm.userId, user);
-            if(user) {
-                vm.success = "Profile updated successfully.";
-            } else {
-                vm.error = "Profile could not be updated.";
-            }
+            var user ;
+            UserService
+                .updateUser(vm.userId, user)
+                .then(
+                    function(user) {
+                        if(user) {
+                            vm.success = "Profile updated successfully.";
+                        } else {
+                            vm.error = "Profile could not be updated.";
+                        }
+                    }, function(response) {
+                        console.log(response);
+                    }
+                );            
         }
         function goToProfile() {
             $location.url("/user/"+vm.userId);
