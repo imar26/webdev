@@ -27,8 +27,6 @@ module.exports = function(app) {
 			userObj['password'] = password;
 			users.push(userObj);
 		}
-		console.log(users);
-		console.log(userObj);
 		res.json(userObj);
     }
 
@@ -36,10 +34,8 @@ module.exports = function(app) {
 		var username = req.query.username;
 		var password = req.query.password;
 		if(username && password) {
-			console.log('yes');
 			findUserByCredentials(req, res);
 		} else if (username) {
-			console.log('no');
 			findUserByUsername(req, res);
 		}
 	}
@@ -68,12 +64,10 @@ module.exports = function(app) {
 	}
 
 	function findUserById(req, res) {
-		console.log(users);
 		var userId = req.params.userId;
 		var user = users.find(function(user) {
         	return user._id === userId;
 		});
-		console.log(user);
 		res.json(user);
 	}
 
