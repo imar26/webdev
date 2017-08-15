@@ -3,7 +3,7 @@
         .module("WebAppMaker")
         .factory("WebsiteService", WebsiteService);
 
-    function WebsiteService() {
+    function WebsiteService($http) {
         var websites = [
             { "_id": "123", "name": "Facebook",    "developerId": "456", "description": "Lorem", "created": new Date() },
             { "_id": "234", "name": "Tweeter",     "developerId": "456", "description": "Lorem", "created": new Date() },
@@ -42,25 +42,8 @@
             return websitesObj['_id'];
         }
 
-        function findWebsitesByUser(userId) {
-            var websiteArray = [];
-            var websitesObj = {
-                id : '',
-                name : '',
-                created : '',
-                developerId : ''
-            };
-            for(var i=0;i<websites.length;i++) {
-                if(websites[i].developerId == userId) {
-                    websitesObj.id = websites[i]._id;
-                    websitesObj.name = websites[i].name;
-                    websitesObj.created = websites[i].created;
-                    websitesObj.developerId = websites[i].developerId;
-
-                    websiteArray.push({id: websitesObj.id, name: websitesObj.name, created: websitesObj.created, developerId: websitesObj.developerId});
-                }
-            }
-            return websiteArray;
+        function findWebsitesByUser(userId) {            
+            return $http.get("/api/user/"+userId+"/website");
         }
 
         function findWebsiteById(websiteId) {

@@ -22,7 +22,7 @@
         return api;
 
         function createUser(user) {
-            return $http.post("/api/user/createUser", user);
+            return $http.post("/api/user", user);
         }
 
         function findUserById(userId) {
