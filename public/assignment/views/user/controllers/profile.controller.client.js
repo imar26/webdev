@@ -10,7 +10,15 @@
         vm.goToProfile = goToProfile;
         vm.goToWebsites = goToWebsites;
 		function init() {
-			vm.user = UserService.findUserById(vm.userId);
+			UserService
+                .findUserById(vm.userId)
+                .then(
+                    function(response) {
+                        vm.user = response.data;
+                    }, function(response) {
+                        console.log(response);
+                    }
+                );
 		}
 		init();
         function updateUser(user) {
