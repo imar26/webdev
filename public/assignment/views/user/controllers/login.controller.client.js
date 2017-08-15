@@ -14,7 +14,6 @@
                 .then(
                     function(response) {
                         u = response.data;
-                        console.log(u);
                         if(u) {
                             $location.url("/user/" + u._id);
                         } else {

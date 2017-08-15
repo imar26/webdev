@@ -1,7 +1,8 @@
 module.exports = function(app) {
-	app.get("/api/user", findUserByCredentials);
+	app.get("/api/user", findUser);
 	app.get("/api/user/:userId", findUserById);
 	app.put("/api/user/:userId", updateUser);
+	app.post("/api/user/createUser", createUser);
 
     var users = [
         {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder", email: "aw@gmail.com"  },
@@ -9,6 +10,39 @@ module.exports = function(app) {
         {_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia", email: "cg@gmail.com"  },
         {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi", email: "ja@gmail.com" }
     ];
+
+    function createUser(req, res) {
+    	var username = req.body.username;
+		var password = req.body.password;
+		var verifypassword = req.body.verifypassword;
+		var size = users.length;
+		var userObj = {
+            _id: '',
+            username : '',
+            password : ''
+        };
+		if(password === verifypassword) {
+			userObj['_id'] = (size + 1).toString();
+			userObj['username'] = username;
+			userObj['password'] = password;
+			users.push(userObj);
+		}
+		console.log(users);
+		console.log(userObj);
+		res.json(userObj);
+    }
+
+    function findUser(req, res) {
+		var username = req.query.username;
+		var password = req.query.password;
+		if(username && password) {
+			console.log('yes');
+			findUserByCredentials(req, res);
+		} else if (username) {
+			console.log('no');
+			findUserByUsername(req, res);
+		}
+	}
 
 	function findUserByCredentials(req, res) {
 		var username = req.query.username;
@@ -19,11 +53,27 @@ module.exports = function(app) {
 		res.json(user);
 	}
 
+	function findUserByUsername(req, res) {
+		var username = req.query.username;
+		var user = users.find(function(user) {
+        	return user.username === username;
+		});
+		if(user) {
+			res.json(user);
+			return;
+		} else {
+			res.sendStatus(404).send({message: 'User not found.'});
+			return;
+		}
+	}
+
 	function findUserById(req, res) {
+		console.log(users);
 		var userId = req.params.userId;
 		var user = users.find(function(user) {
         	return user._id === userId;
 		});
+		console.log(user);
 		res.json(user);
 	}
 
