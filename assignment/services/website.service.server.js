@@ -1,4 +1,5 @@
 module.exports = function(app) {
+	app.post("/api/user/:userId/website", createWebsite);
 	app.get("/api/user/:userId/website", findWebsitesByUser);
 
 	var websites = [
@@ -10,6 +11,26 @@ module.exports = function(app) {
         { "_id": "678", "name": "Checkers",    "developerId": "123", "description": "Lorem", "created": new Date() },
         { "_id": "789", "name": "Chess",       "developerId": "234", "description": "Lorem", "created": new Date() }
     ];
+
+    function createWebsite(req, res) {
+    	var userId = req.params.userId;
+    	var size = websites.length;
+        var websitesObj = {
+            _id: '',
+            name : '',
+            developerId : '',
+            description : '',
+            created: ''
+        };
+        size = size + 1;
+        websitesObj['_id'] = size.toString();
+        websitesObj['name'] = req.body.name;
+        websitesObj['developerId'] = userId;
+        websitesObj['description'] = req.body.description;
+        websitesObj['created'] = new Date();
+        websites.push(websitesObj);
+        res.json(websitesObj);
+    }
 
     function findWebsitesByUser(req, res) {
     	var userId = req.params.userId;

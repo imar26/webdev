@@ -24,22 +24,7 @@
         return api;
 
         function createWebsite(userId, website) {
-            var size = websites.length;
-            var websitesObj = {
-                _id: '',
-                name : '',
-                developerId : '',
-                description : '',
-                created: ''
-            };
-            size = size + 1;
-            websitesObj['_id'] = size.toString();
-            websitesObj['name'] = website.name;
-            websitesObj['developerId'] = userId;
-            websitesObj['description'] = website.description;
-            websitesObj['created'] = new Date();
-            websites.push(websitesObj);
-            return websitesObj['_id'];
+            return $http.post("/api/user/"+userId+"/website", website);
         }
 
         function findWebsitesByUser(userId) {            
