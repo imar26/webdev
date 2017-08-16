@@ -31,12 +31,18 @@
         	widgetFinal['size'] = widget.size;
         	widgetFinal['width'] = widget.width;
         	widgetFinal['url'] = widget.url;
-        	widget = WidgetService.createWidget(vm.pageId, widgetFinal);
-        	if(widget) {
-        		$location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/");
-        	} else {
-        		vm.alert = "Widget could not be created.";
-        	}
+            WidgetService
+                .createWidget(vm.pageId, widgetFinal)
+                .then(function(response) {
+                    widget = response.data;
+                    if(widget) {
+                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/");
+                    } else {
+                        vm.alert = "Widget could not be created.";
+                    }
+                }, function(response) {
+                    console.log(response);
+                });        	
         }
     }
 })();

@@ -14,7 +14,14 @@
         vm.editWidget = editWidget;
         vm.deleteWidget = deleteWidget;
         function init() {
-            vm.widget = WidgetService.findWidgetById(vm.widgetId);
+            WidgetService
+                .findWidgetById(vm.widgetId)
+                .then(function(response) {
+                    vm.widget = response.data;
+                    console.log(vm.widget);
+                }, function(response) {
+                    console.log(response);
+                });
         }
         init();
         function goToWidgets() {

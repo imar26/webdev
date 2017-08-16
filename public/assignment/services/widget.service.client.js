@@ -3,7 +3,7 @@
         .module("WebAppMaker")
         .factory("WidgetService", WidgetService);
 
-    function WidgetService() {
+    function WidgetService($http) {
         var widgets = [
             { "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
             { "_id": "234", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
@@ -25,74 +25,16 @@
         };
         return api;
 
-        function createWidget(pageId, widget) {
-            var size = widgets.length;
-            var widgetObj = {
-                _id: '',
-                widgetType: '',
-                pageId: '',
-                size: '',
-                text: '',
-                url: '',
-                width: ''
-            }
-            widgetObj['_id'] = size + 1;
-            widgetObj['widgetType'] = widget.widgetType;
-            widgetObj['pageId'] = pageId;
-            widgetObj['size'] = widget.size;
-            widgetObj['text'] = widget.text;
-            widgetObj['url'] = widget.url;
-            widgetObj['width'] = widget.width;
-            widgets.push(widgetObj);
-
-            return widgetObj['_id'];
+        function createWidget(pageId, widget) {            
+            return $http.post("/api/page/"+pageId+"/widget", widget);
         }
 
-        function findWidgetsByPageId(pageId) {
-            var widgetsArray = [];
-            var widgetsObj = {
-                id: '',
-                widgetType: '',
-                size: '',
-                text: '',
-                url: '',
-                width: ''
-            }
-            for(var i=0;i<widgets.length;i++) {
-                if(widgets[i].pageId == pageId) {
-                    widgetsObj.id = widgets[i]._id;
-                    widgetsObj.widgetType = widgets[i].widgetType;
-                    widgetsObj.size = widgets[i].size;
-                    widgetsObj.text = widgets[i].text;
-                    widgetsObj.url = widgets[i].url;
-                    widgetsObj.width = widgets[i].width;
-
-                    widgetsArray.push({id: widgetsObj.id, widgetType: widgetsObj.widgetType, size: widgetsObj.size, text: widgetsObj.text, url: widgetsObj.url, width: widgetsObj.width});
-                }
-            }
-            return widgetsArray;
+        function findWidgetsByPageId(pageId) {            
+            return $http.get("/api/page/"+pageId+"/widget");
         }
 
-        function findWidgetById(widgetId) {
-            var widgetObj = {
-                id: '',
-                widgetType: '',
-                size: '',
-                text: '',
-                url: '',
-                width: ''
-            }
-            for(var i=0;i<widgets.length;i++) {
-                if(widgets[i]._id == widgetId) {
-                    widgetObj['id'] = widgets[i]._id;
-                    widgetObj['widgetType'] = widgets[i].widgetType;
-                    widgetObj['size'] = widgets[i].size;
-                    widgetObj['text'] = widgets[i].text;
-                    widgetObj['url'] = widgets[i].url;
-                    widgetObj['width'] = widgets[i].width;
-                }
-            }
-            return widgetObj;
+        function findWidgetById(widgetId) {            
+            return $http.get("/api/widget/"+widgetId);
         }
 
         function updateWidget(widgetId, widget) {

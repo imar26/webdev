@@ -14,8 +14,14 @@
         vm.trustSrc = trustSrc;
         vm.editWidget = editWidget;
         vm.safeHtml = safeHtml;
-        function init() {
-            vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
+        function init() {            
+            WidgetService
+                .findWidgetsByPageId(vm.pageId)
+                .then(function(response) {
+                    vm.widgets = response.data;
+                }, function(response) {
+                    console.log(response);
+                });
         }
         init();
         function goToPages() {
