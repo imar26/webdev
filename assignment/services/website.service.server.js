@@ -3,6 +3,7 @@ module.exports = function(app) {
 	app.get("/api/user/:userId/website", findWebsitesByUser);
 	app.get("/api/website/:websiteId", findWebsiteById);
 	app.put("/api/website/:websiteId", updateWebsite);
+	app.delete("/api/website/:websiteId", deleteWebsite);
 
 	var websites = [
         { "_id": "123", "name": "Facebook",    "developerId": "456", "description": "Lorem", "created": new Date() },
@@ -80,6 +81,17 @@ module.exports = function(app) {
                 websites[i].name = req.body.name;
                 websites[i].description = req.body.description;
                 res.json(websites[i]);
+            }
+        }
+    }
+
+    function deleteWebsite(req, res) {
+    	var websiteId = req.params.websiteId;
+
+    	for(var i=0; i<websites.length;i++) {
+            if(websites[i]._id == websiteId) {
+                websites.splice(i, 1);
+                res.sendStatus(200);
             }
         }
     }

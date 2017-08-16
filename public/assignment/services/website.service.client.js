@@ -39,13 +39,8 @@
             return $http.put("/api/website/"+websiteId, website);
         }
 
-        function deleteWebsite(websiteId) {
-            for(var i=0; i<websites.length;i++) {
-                if(websites[i]._id == websiteId) {
-                    websites.splice(i, 1);
-                    return true;
-                }
-            }
+        function deleteWebsite(websiteId) {            
+            return $http.delete("/api/website/"+websiteId);
         }
 
     }

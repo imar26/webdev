@@ -41,10 +41,16 @@
         }
 
         function deleteWebsite() {
-            website = WebsiteService.deleteWebsite(vm.websiteId);
-            if(website) {
-                $location.url("/user/"+vm.userId+"/website/");
-            }
+            WebsiteService
+                .deleteWebsite(vm.websiteId)
+                .then(function(response) {
+                    website = response.data;
+                    if(website) {
+                        $location.url("/user/"+vm.userId+"/website/");
+                    }
+                }, function(response) {
+                    console.log(response);
+                });            
         }
 
     }
