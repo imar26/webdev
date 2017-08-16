@@ -13,13 +13,19 @@
         function goToPages() {
         	$location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/");
         }
-        function createPage(page) {
-        	page = PageService.createPage(vm.websiteId, page);
-        	if(page) {
-        		$location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/");
-        	} else {
-        		vm.alert = "Page could not be created";
-        	}
+        function createPage(page) {        	
+            PageService
+                .createPage(vm.websiteId, page)
+                .then(function(response) {
+                    page = response.data;
+                    if(page) {
+                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/");
+                    } else {
+                        vm.alert = "Page could not be created";
+                    }
+                }, function(response) {
+                    console.log(response);
+                });        	
         }
         function goToProfile() {
             $location.url("/user/"+vm.userId);

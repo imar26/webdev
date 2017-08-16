@@ -12,8 +12,14 @@
         vm.newPage = newPage;
         vm.newWidget = newWidget;
         vm.editPage = editPage;
-        function init() {
-            vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
+        function init() {            
+            PageService
+                .findPageByWebsiteId(vm.websiteId)
+                .then(function(response) {
+                    vm.pages = response.data;
+                }, function(response) {
+                    console.log(response);
+                });
         }
         init();
         function goToWebsites() {

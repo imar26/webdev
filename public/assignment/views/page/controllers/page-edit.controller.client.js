@@ -13,8 +13,13 @@
         vm.updatePage = updatePage;
         vm.deletePage = deletePage;
         function init() {
-            vm.page = PageService.findPageById(vm.pageId);
-            console.log(vm.page);
+            PageService
+                .findPageById(vm.pageId)
+                .then(function(response) {
+                    vm.page = response.data;
+                }, function(response) {
+                    console.log(response);
+                });
         }
         init();
         function goToPages() {
@@ -24,16 +29,28 @@
             $location.url("/user/"+vm.userId);
         }
         function updatePage(page) {
-            page = PageService.updatePage(vm.pageId, page);
-            if(page) {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/");
-            }
+            PageService
+                .updatePage(vm.pageId, page)
+                .then(function(response) {
+                    page = response.data;
+                    if(page) {
+                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/");
+                    }
+                }, function(response) {
+                    console.log(response);
+                });            
         }
         function deletePage() {
-            page = PageService.deletePage(vm.pageId);
-            if(page) {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/");
-            }
+            PageService
+                .deletePage(vm.pageId)
+                .then(function(response) {
+                    page = response.data;
+                    if(page) {
+                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/");
+                    }
+                }, function(response) {
+                    console.log(response);
+                });            
         }
     }
 })();
