@@ -32,27 +32,11 @@
         }
 
         function findWebsiteById(websiteId) {
-            var websiteObj = {
-                name : [],
-                description: []
-            };
-            for(var i=0; i<websites.length;i++) {
-                if(websites[i]._id == websiteId) {
-                    websiteObj['name'] = websites[i].name;
-                    websiteObj['description'] = websites[i].description;
-                }
-            }
-            return websiteObj;
+            return $http.get("/api/website/"+websiteId);
         }
 
-        function updateWebsite(websiteId, website) {
-            for(var i=0; i<websites.length;i++) {
-                if(websites[i]._id == websiteId) {
-                    websites[i].name = website.name;
-                    websites[i].description = website.description;
-                    return true;
-                }
-            }
+        function updateWebsite(websiteId, website) {            
+            return $http.put("/api/website/"+websiteId, website);
         }
 
         function deleteWebsite(websiteId) {

@@ -1,6 +1,8 @@
 module.exports = function(app) {
 	app.post("/api/user/:userId/website", createWebsite);
 	app.get("/api/user/:userId/website", findWebsitesByUser);
+	app.get("/api/website/:websiteId", findWebsiteById);
+	app.put("/api/website/:websiteId", updateWebsite);
 
 	var websites = [
         { "_id": "123", "name": "Facebook",    "developerId": "456", "description": "Lorem", "created": new Date() },
@@ -32,6 +34,21 @@ module.exports = function(app) {
         res.json(websitesObj);
     }
 
+    function findWebsiteById(req, res) {
+    	var websiteId = req.params.websiteId;
+        var websiteObj = {
+            name : [],
+            description: []
+        };
+        for(var i=0; i<websites.length;i++) {
+            if(websites[i]._id == websiteId) {
+                websiteObj['name'] = websites[i].name;
+                websiteObj['description'] = websites[i].description;
+            }
+        }
+        res.json(websiteObj);
+    }
+
     function findWebsitesByUser(req, res) {
     	var userId = req.params.userId;
 
@@ -53,5 +70,17 @@ module.exports = function(app) {
             }
         }
         res.send(websiteArray);
+    }
+
+    function updateWebsite(req, res) {
+    	var websiteId = req.params.websiteId;
+
+    	for(var i=0; i<websites.length;i++) {
+            if(websites[i]._id == websiteId) {
+                websites[i].name = req.body.name;
+                websites[i].description = req.body.description;
+                res.json(websites[i]);
+            }
+        }
     }
 };

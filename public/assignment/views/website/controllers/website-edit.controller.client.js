@@ -12,7 +12,13 @@
         vm.goToProfile = goToProfile;
         vm.goToWebsites = goToWebsites;
 		function init() {
-			vm.website = WebsiteService.findWebsiteById(vm.websiteId);
+            WebsiteService
+                .findWebsiteById(vm.websiteId)
+                .then(function(response) {
+                    vm.website = response.data;
+                }, function(response) {
+                    console.log(response);
+                });
 		}
 		init();
         function goToProfile() {
@@ -21,11 +27,17 @@
         function goToWebsites() {
             $location.url("/user/"+vm.userId+"/website/");
         }
-        function updateWebsite(website) {
-            website = WebsiteService.updateWebsite(vm.websiteId, website);
-            if(website) {
-                $location.url("/user/"+vm.userId+"/website/");
-            }
+        function updateWebsite(website) {            
+            WebsiteService
+                .updateWebsite(vm.websiteId, website)
+                .then(function(response) {
+                    website = response.data;
+                    if(website) {
+                        $location.url("/user/"+vm.userId+"/website/");
+                    }
+                }, function(response) {
+                    console.log(response);
+                });
         }
 
         function deleteWebsite() {
