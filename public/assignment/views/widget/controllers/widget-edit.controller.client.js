@@ -31,16 +31,28 @@
             $location.url("/user/"+vm.userId);   
         }
         function editWidget(widget) {
-            widget = WidgetService.updateWidget(vm.widgetId, widget);
-            if(widget) {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/");
-            }
+            WidgetService
+                .updateWidget(vm.widgetId, widget)
+                .then(function(response) {
+                    widget = response.data;
+                    if(widget) {
+                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/");
+                    }
+                }, function(response) {
+                    console.log(response);
+                });
         }
         function deleteWidget() {
-            widget = WidgetService.deleteWidget(vm.widgetId);
-            if(widget) {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/");
-            }
+            WidgetService
+                .deleteWidget(vm.widgetId)
+                .then(function(response) {
+                    widget = response.data;
+                    if(widget) {
+                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/");
+                    }
+                }, function(response) {
+                    console.log(response);
+                });
         }
     }
 })();
