@@ -18,7 +18,6 @@
                 .findWidgetById(vm.widgetId)
                 .then(function(response) {
                     vm.widget = response.data;
-                    console.log(vm.widget);
                 }, function(response) {
                     console.log(response);
                 });

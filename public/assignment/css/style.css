@@ -104,3 +104,7 @@ a:hover {
 .head h1, .head h2, .head h3, .head h4, .head h5, .head h6 {
     margin: 0;
 }
+
+#widgetList {
+    cursor: pointer;
+}

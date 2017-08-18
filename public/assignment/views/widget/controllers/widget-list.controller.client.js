@@ -14,6 +14,11 @@
         vm.trustSrc = trustSrc;
         vm.editWidget = editWidget;
         vm.safeHtml = safeHtml;
+
+        // $('#widgetList').sortable({
+        //     axis: "y"
+        // });
+
         function init() {            
             WidgetService
                 .findWidgetsByPageId(vm.pageId)

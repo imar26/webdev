@@ -13,26 +13,28 @@
 </div>
 <div class="container main-content">
     <br/>
-    <div class="row websiteRow" ng-repeat="widget in model.widgets track by $index">
-        <div class="col-md-12" ng-switch="widget.widgetType">
-            <div class="icons">
-                <a ng-click="model.editWidget(widget.id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
-                <a><i class="fa fa-align-justify" aria-hidden="true"></i></a>
-            </div>
-            <div ng-switch-when="HEADING">
-                <div ng-include="'views/widget/templates/widget-heading.view.client.html'"></div>
-            </div>
-            <div ng-switch-when="IMAGE">
-                <div ng-include="'views/widget/templates/widget-image.view.client.html'"></div>
-            </div>
-            <div ng-switch-when="HTML">
-                <div ng-include="'views/widget/templates/widget-html.view.client.html'"></div>
-            </div>
-            <div ng-switch-when="YOUTUBE">
-                <div ng-include="'views/widget/templates/widget-youtube.view.client.html'"></div>
+    <wbdv-sortable id="widgetList">
+        <div class="row websiteRow" ng-repeat="widget in model.widgets track by $index">
+            <div class="col-md-12" ng-switch="widget.widgetType">
+                <div class="icons">
+                    <a ng-click="model.editWidget(widget.id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                    <a><i class="fa fa-align-justify" aria-hidden="true"></i></a>
+                </div>
+                <div ng-switch-when="HEADING">
+                    <div ng-include="'views/widget/templates/widget-heading.view.client.html'"></div>
+                </div>
+                <div ng-switch-when="IMAGE">
+                    <div ng-include="'views/widget/templates/widget-image.view.client.html'"></div>
+                </div>
+                <div ng-switch-when="HTML">
+                    <div ng-include="'views/widget/templates/widget-html.view.client.html'"></div>
+                </div>
+                <div ng-switch-when="YOUTUBE">
+                    <div ng-include="'views/widget/templates/widget-youtube.view.client.html'"></div>
+                </div>
             </div>
         </div>
-    </div>
+    </wbdv-sortable>
 </div>
 <div class="default-footer">
     <div class="container">
