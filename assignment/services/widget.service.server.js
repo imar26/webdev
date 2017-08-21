@@ -4,6 +4,7 @@ module.exports = function(app) {
 	app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId", updateWidget);
     app.delete("/api/widget/:widgetId", deleteWidget);
+    app.put("/api/page/:pageId/widget/", updateWidgetIndex);
 
 	var widgets = [
         { "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
@@ -16,6 +17,11 @@ module.exports = function(app) {
             "url": "https://www.youtube.com/watch?v=AM2Ivdi9c4E" },
         { "_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
     ];
+
+    Array.prototype.move = function(from,to){
+        this.splice(to,0,this.splice(from,1)[0]);
+        return this;
+    }
 
     function createWidget(req, res) {
     	var pageId = req.params.pageId;
@@ -118,5 +124,18 @@ module.exports = function(app) {
                 res.sendStatus(200);
             }
         }
+    }
+
+    function updateWidgetIndex(req, res) {
+        var pageId = req.params.pageId;
+        var startIndex = req.query.initial;
+        var endIndex = req.query.final;
+        var widgetObj = {};
+        for(var i=0; i<widgets.length;i++) {
+            if(widgets[i].pageId == pageId) {
+                widgets.move(startIndex,endIndex);
+            }
+        }
+        res.json(widgets);
     }
 };
