@@ -1,10 +1,23 @@
 module.exports = function(app) {
+    var multer = require('multer');
+    var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, '././public/assignment/uploads/')
+        },
+        filename: function (req, file, cb) {
+            var datetimestamp = Date.now();
+            cb(null, file.fieldname + '-' + file.originalname.replace(/\..+$/, '') + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1])
+        }
+    });
+    var upload = multer({ storage: storage });
+
 	app.get("/api/page/:pageId/widget", findWidgetsByPageId);
 	app.post("/api/page/:pageId/widget", createWidget);
 	app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId", updateWidget);
     app.delete("/api/widget/:widgetId", deleteWidget);
     app.put("/api/page/:pageId/widget/", updateWidgetIndex);
+    app.post("/api/upload/", upload.single('myFile'), uploadImage);
 
 	var widgets = [
         { "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
@@ -137,5 +150,9 @@ module.exports = function(app) {
             }
         }
         res.json(widgets);
+    }
+
+    function uploadImage(req, res) {
+        res.json(req.file);
     }
 };

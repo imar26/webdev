@@ -3,7 +3,7 @@
         .module("WebAppMaker")
         .controller("NewWidgetController", NewWidgetController);
 
-    function NewWidgetController($location, $routeParams, WidgetService) {
+    function NewWidgetController($location, $routeParams, WidgetService, $http) {
         var vm = this;
         vm.userId = $routeParams['uid'];
         vm.websiteId = $routeParams['wid'];
@@ -12,13 +12,31 @@
         vm.goToWidgetChooser = goToWidgetChooser;
         vm.goToProfile = goToProfile;
         vm.addWidget = addWidget;
+        vm.uploadImage = uploadImage;
         function goToWidgetChooser() {
         	$location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/new/");
         }
         function goToProfile() {
             $location.url("/user/"+vm.userId);
         }
-        function addWidget(widget, widgetType) {
+        function uploadImage(widget, widgetType) {
+            var widget = widget;
+            var widgetType = widgetType;
+            $("#uploadImage").on('submit', function() {
+                $(this).ajaxSubmit({
+                    success: function(response) {
+                        var url = response.filename;
+                        addWidget(widget, widgetType, url);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                    }
+                });
+                //Very important line, it disable the page refresh.
+                return false;
+            });
+        }
+        function addWidget(widget, widgetType, url) {
         	var widgetFinal = {
         		widgetType: '',
         		text: '',
@@ -30,7 +48,11 @@
         	widgetFinal['text'] = widget.text;
         	widgetFinal['size'] = widget.size;
         	widgetFinal['width'] = widget.width;
-        	widgetFinal['url'] = widget.url;
+            if(widgetType == 'IMAGE') {
+                widgetFinal['url'] = url;
+            } else {
+                widgetFinal['url'] = widget.url;
+            }        	
             WidgetService
                 .createWidget(vm.pageId, widgetFinal)
                 .then(function(response) {
