@@ -6,9 +6,9 @@
         <br/>
         <label>Text</label>
         <input type="text" class="form-control" ng-model="model.widget.text" />
-        <!-- <br/>
+        <br/>
         <label>URL</label>
-        <input type="text" class="form-control" ng-model="model.widget.url" /> -->
+        <input type="text" class="form-control" ng-model="model.widget.url" />
         <br/>
         <label>Width</label>
         <select class="form-control" ng-model="model.widget.width">
@@ -21,10 +21,16 @@
         <br/>
         <label>Upload Image</label>
         <br/>
-        <img ng-src="./uploads/{{model.widget.url}}" width="50%" />
-        <input type="file" class="form-control" ng-model="model.widget.url" name="myFile" />
+        <div class="crossIcon">
+            <img ng-if="model.widget.path" ng-src="./uploads/{{model.widget.path}}" width="50%" />
+            <span ng-if="model.widget.path"><a ng-click="model.nullPath()"><i class="fa fa-window-close" aria-hidden="true"></i></a></span>
+        </div>
+        <input type="file" class="form-control" name="myFile" />
         <br/>
         <input type="submit" value="Upload Image" class="btn btn-success btn-bordered btn-block" ng-click="model.uploadImage(model.widget, model.widget.widgetType)" />
+        <br/>
+        <a class="btn btn-primary btn-bordered btn-block" ng-click="model.searchFlicker()">Search Flickr</a>
+        <br/>
         <a ng-click="model.deleteWidget()" class="btn btn-danger btn-bordered btn-block">Delete</a>
     </form>
 </div>

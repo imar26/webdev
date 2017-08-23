@@ -14,6 +14,7 @@
         vm.editWidget = editWidget;
         vm.deleteWidget = deleteWidget;
         vm.uploadImage = uploadImage;
+        vm.nullPath = nullPath;
         function init() {
             WidgetService
                 .findWidgetById(vm.widgetId)
@@ -35,8 +36,8 @@
             $("#uploadImage").on('submit', function() {
                 $(this).ajaxSubmit({
                     success: function(response) {
-                        var url = response.filename;
-                        widget.url = url;
+                        var path = response.filename;
+                        widget.path = path;
                         editWidget(widget);
                     },
                     error: function(response) {
@@ -47,7 +48,7 @@
                 return false;
             });
         }
-        function editWidget(widget) {
+        function editWidget(widget) {            
             WidgetService
                 .updateWidget(vm.widgetId, widget)
                 .then(function(response) {
@@ -70,6 +71,9 @@
                 }, function(response) {
                     console.log(response);
                 });
+        }
+        function nullPath() {
+            vm.widget.path = '';
         }
     }
 })();

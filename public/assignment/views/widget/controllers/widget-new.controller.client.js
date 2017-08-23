@@ -25,8 +25,8 @@
             $("#uploadImage").on('submit', function() {
                 $(this).ajaxSubmit({
                     success: function(response) {
-                        var url = response.filename;
-                        addWidget(widget, widgetType, url);
+                        var path = response.filename;
+                        addWidget(widget, widgetType, path);
                     },
                     error: function(response) {
                         console.log(response);
@@ -36,23 +36,21 @@
                 return false;
             });
         }
-        function addWidget(widget, widgetType, url) {
+        function addWidget(widget, widgetType, path) {
         	var widgetFinal = {
         		widgetType: '',
         		text: '',
         		size: '',
         		width: '',
-        		url: ''
+        		url: '',
+                path: ''
         	}
         	widgetFinal['widgetType'] = widgetType;
         	widgetFinal['text'] = widget.text;
         	widgetFinal['size'] = widget.size;
         	widgetFinal['width'] = widget.width;
-            if(widgetType == 'IMAGE') {
-                widgetFinal['url'] = url;
-            } else {
-                widgetFinal['url'] = widget.url;
-            }        	
+            widgetFinal['url'] = widget.url;
+            widgetFinal['path'] = path;  
             WidgetService
                 .createWidget(vm.pageId, widgetFinal)
                 .then(function(response) {

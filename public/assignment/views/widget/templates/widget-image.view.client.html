@@ -1,3 +1,4 @@
 <div class="container">
-    <img ng-src="./uploads/{{widget.url}}" width="{{widget.width}}" />
+    <img ng-if="widget.path" ng-src="./uploads/{{widget.path}}" width="{{widget.width}}" />
+    <img ng-if="widget.url" ng-src="{{widget.url}}" width="{{widget.width}}" />
 </div>

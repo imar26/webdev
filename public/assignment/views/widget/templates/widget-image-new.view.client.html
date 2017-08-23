@@ -7,9 +7,9 @@
         <label>Text</label>
         <input type="text" class="form-control" ng-model="model.widget.text" />
         <br/>
-        <!-- <label>URL</label>
-        <input type="text" class="form-control" ng-model="model.widget.url" /> -->
-        <!-- <br/> -->
+        <label>URL</label>
+        <input type="text" class="form-control" ng-model="model.widget.url" />
+        <br/>
         <label>Width</label>
         <select class="form-control" ng-model="model.widget.width">
             <option value="20%">20%</option>
@@ -20,9 +20,10 @@
         </select>
         <br/>
         <label>Upload Image</label>
-        <input type="file" class="form-control" ng-model="model.widget.url" name="myFile" />
+        <input type="file" class="form-control" name="myFile" />
         <br/>
-        <input type="submit" value="Upload Image" class="btn btn-primary btn-bordered" ng-click="model.uploadImage(model.widget, model.widgetType)" />
+        <input type="submit" value="Upload Image" class="btn btn-primary btn-bordered btn-block" ng-click="model.uploadImage(model.widget, model.widgetType)" />
         <br/>
+        <a class="btn btn-primary btn-bordered btn-block" ng-click="model.searchFlicker()">Search Flickr</a>      
     </form>
 </div>

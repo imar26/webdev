@@ -108,3 +108,15 @@ a:hover {
 #widgetList {
     cursor: pointer;
 }
+
+.crossIcon {
+    position: relative;
+}
+
+.crossIcon span {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 20px;
+    line-height: 1;
+}

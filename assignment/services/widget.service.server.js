@@ -47,7 +47,8 @@ module.exports = function(app) {
             size: '',
             text: '',
             url: '',
-            width: ''
+            width: '',
+            path: ''
         }
         widgetObj['_id'] = (length + 1).toString();
         widgetObj['widgetType'] = req.body.widgetType;
@@ -56,6 +57,7 @@ module.exports = function(app) {
         widgetObj['text'] = req.body.text;
         widgetObj['url'] = req.body.url;
         widgetObj['width'] = req.body.width;
+        widgetObj['path'] = req.body.path;
         widgets.push(widgetObj);
 
         res.json(widgetObj);
@@ -70,7 +72,8 @@ module.exports = function(app) {
             size: '',
             text: '',
             url: '',
-            width: ''
+            width: '',
+            path: ''
         }
         for(var i=0;i<widgets.length;i++) {
             if(widgets[i]._id == widgetId) {
@@ -81,6 +84,7 @@ module.exports = function(app) {
                 }               
                 widgetObj['text'] = widgets[i].text;
                 widgetObj['url'] = widgets[i].url;
+                widgetObj['path'] = widgets[i].path;
                 widgetObj['width'] = widgets[i].width;
             }
         }
@@ -97,7 +101,8 @@ module.exports = function(app) {
             size: '',
             text: '',
             url: '',
-            width: ''
+            width: '',
+            path: ''
         }
         for(var i=0;i<widgets.length;i++) {
             if(widgets[i].pageId == pageId) {
@@ -106,9 +111,10 @@ module.exports = function(app) {
                 widgetsObj.size = widgets[i].size;
                 widgetsObj.text = widgets[i].text;
                 widgetsObj.url = widgets[i].url;
+                widgetsObj.path = widgets[i].path;
                 widgetsObj.width = widgets[i].width;
 
-                widgetsArray.push({id: widgetsObj.id, widgetType: widgetsObj.widgetType, size: widgetsObj.size, text: widgetsObj.text, url: widgetsObj.url, width: widgetsObj.width});
+                widgetsArray.push({id: widgetsObj.id, widgetType: widgetsObj.widgetType, size: widgetsObj.size, text: widgetsObj.text, url: widgetsObj.url, path: widgetsObj.path, width: widgetsObj.width});
             }
         }
         res.json(widgetsArray);
@@ -122,6 +128,7 @@ module.exports = function(app) {
                 widgets[i].text = req.body.text;
                 widgets[i].size = req.body.size;
                 widgets[i].url = req.body.url;
+                widgets[i].path = req.body.path;
                 widgets[i].width = req.body.width;
                 res.send(widgets[i]);
             }

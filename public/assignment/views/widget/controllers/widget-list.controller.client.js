@@ -15,16 +15,11 @@
         vm.editWidget = editWidget;
         vm.safeHtml = safeHtml;
 
-        // $('#widgetList').sortable({
-        //     axis: "y"
-        // });
-
         function init() {            
             WidgetService
                 .findWidgetsByPageId(vm.pageId)
                 .then(function(response) {
                     vm.widgets = response.data;
-                    console.log(vm.widgets);
                 }, function(response) {
                     console.log(response);
                 });
