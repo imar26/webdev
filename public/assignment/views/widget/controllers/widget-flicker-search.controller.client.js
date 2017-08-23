@@ -4,6 +4,21 @@
         .controller("ImageSearchController", ImageSearchController);
 
     function ImageSearchController($location, $routeParams) {
-        console.log('hi');
+        var vm = this;
+
+        vm.wgType = $routeParams['wgType'];
+        vm.userId = $routeParams['uid'];
+        vm.websiteId = $routeParams['wid'];
+        vm.pageId = $routeParams['pid'];
+
+        vm.goToCreateImageWidget = goToCreateImageWidget;
+        vm.goToProfile = goToProfile;
+
+        function goToCreateImageWidget() {
+        	$location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/create/"+vm.wgType);
+        }
+        function goToProfile() {
+            $location.url("/user/"+vm.userId);
+        }
     }
 })();
