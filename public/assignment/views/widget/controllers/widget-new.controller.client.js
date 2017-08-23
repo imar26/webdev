@@ -13,6 +13,8 @@
         vm.goToProfile = goToProfile;
         vm.addWidget = addWidget;
         vm.uploadImage = uploadImage;
+        vm.searchFlicker = searchFlicker;
+        vm.wgType = $routeParams['wgType'];
         function goToWidgetChooser() {
         	$location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/new/");
         }
@@ -63,6 +65,9 @@
                 }, function(response) {
                     console.log(response);
                 });        	
+        }
+        function searchFlicker() {
+            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/create/"+vm.wgType+"/search/");
         }
     }
 })();

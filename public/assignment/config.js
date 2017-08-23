@@ -65,6 +65,11 @@
                 controller: "NewWidgetController",
                 controllerAs: "model"
             })
+            .when("/user/:uid/website/:wid/page/:pid/widget/create/IMAGE/search", {
+                templateUrl: "views/widget/templates/widget-flicker-search.view.client.html",
+                controller: "ImageSearchController",
+                controllerAs: "model"
+            })
             .when("/user/:uid/website/:wid/page/:pid/widget/:wgid", {
                 templateUrl: "views/widget/templates/widget-edit.view.client.html",
                 controller: "EditWidgetController",
