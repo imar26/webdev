@@ -13,6 +13,7 @@
         vm.goToProfile = goToProfile;
         vm.editWidget = editWidget;
         vm.deleteWidget = deleteWidget;
+        vm.uploadImage = uploadImage;
         function init() {
             WidgetService
                 .findWidgetById(vm.widgetId)
@@ -28,6 +29,23 @@
         }
         function goToProfile() {
             $location.url("/user/"+vm.userId);   
+        }
+        function uploadImage(widget) {
+            var widget = widget;
+            $("#uploadImage").on('submit', function() {
+                $(this).ajaxSubmit({
+                    success: function(response) {
+                        var url = response.filename;
+                        widget.url = url;
+                        editWidget(widget);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                    }
+                });
+                //Very important line, it disable the page refresh.
+                return false;
+            });
         }
         function editWidget(widget) {
             WidgetService

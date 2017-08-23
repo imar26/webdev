@@ -1,26 +1,30 @@
 <div class="container">
-    <br/>
-    <label>Widget Type</label>
-    <input type="text" class="form-control" ng-model="model.widget.widgetType" />
-    <br/>
-    <label>Text</label>
-    <input type="text" class="form-control" ng-model="model.widget.text" />
-    <br/>
-    <label>URL</label>
-    <input type="text" class="form-control" ng-model="model.widget.url" />
-    <br/>
-    <label>Width</label>
-    <select class="form-control" ng-model="model.widget.width">
-        <option value="20%">20%</option>
-        <option value="40%">40%</option>
-        <option value="60%">60%</option>
-        <option value="80%">80%</option>
-        <option value="100%">100%</option>
-    </select>
-    <br/>
-    <!-- <label>Upload</label>
-    <input type="file" class="form-control" />
-    <br/>
-    <a href="widget-list.html" class="btn btn-primary btn-block">Upload Image</a> -->
-    <a ng-click="model.deleteWidget()" class="btn btn-danger btn-block">Delete</a>
+    <form method="post" id="uploadImage" action="/api/upload/" enctype="multipart/form-data">
+        <br/>
+        <label>Widget Type</label>
+        <input type="text" class="form-control" ng-model="model.widget.widgetType" />
+        <br/>
+        <label>Text</label>
+        <input type="text" class="form-control" ng-model="model.widget.text" />
+        <!-- <br/>
+        <label>URL</label>
+        <input type="text" class="form-control" ng-model="model.widget.url" /> -->
+        <br/>
+        <label>Width</label>
+        <select class="form-control" ng-model="model.widget.width">
+            <option value="20%">20%</option>
+            <option value="40%">40%</option>
+            <option value="60%">60%</option>
+            <option value="80%">80%</option>
+            <option value="100%">100%</option>
+        </select>
+        <br/>
+        <label>Upload Image</label>
+        <br/>
+        <img ng-src="./uploads/{{model.widget.url}}" width="50%" />
+        <input type="file" class="form-control" ng-model="model.widget.url" name="myFile" />
+        <br/>
+        <input type="submit" value="Update" class="btn btn-success btn-bordered btn-block" ng-click="model.uploadImage(model.widget, model.widget.widgetType)" />
+        <a ng-click="model.deleteWidget()" class="btn btn-danger btn-bordered btn-block">Delete</a>
+    </form>
 </div>
