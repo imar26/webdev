@@ -9,7 +9,15 @@
     </div>
 </div>
 <div class="container main-content">
-    
+	<br/>
+	<form method="post">
+	    <div class="col-md-11 noPad">
+	    	<input type="text" class="form-control searchFlickr" ng-model="searchValue" placeholder="Search Images on Flickr" />
+	    </div>
+	    <div class="col-md-1 noPad text-center searchIcon">
+	    	<a ng-click="model.searchImages(searchValue)"><i class="fa fa-search" aria-hidden="true"></i></a>
+	    </div>
+	</form>
 </div>
 <div class="footer">
     <div class="container">

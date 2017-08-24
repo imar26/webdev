@@ -67,7 +67,7 @@
             })
             .when("/user/:uid/website/:wid/page/:pid/widget/create/:wgType/search", {
                 templateUrl: "views/widget/templates/widget-flicker-search.view.client.html",
-                controller: "ImageSearchController",
+                controller: "FlickrImageSearchController",
                 controllerAs: "model"
             })
             .when("/user/:uid/website/:wid/page/:pid/widget/:wgid", {

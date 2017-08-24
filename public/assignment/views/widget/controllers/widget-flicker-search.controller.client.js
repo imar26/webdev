@@ -1,9 +1,9 @@
 (function () {
     angular
         .module("WebAppMaker")
-        .controller("ImageSearchController", ImageSearchController);
+        .controller("FlickrImageSearchController", FlickrImageSearchController);
 
-    function ImageSearchController($location, $routeParams) {
+    function FlickrImageSearchController($location, $routeParams) {
         var vm = this;
 
         vm.wgType = $routeParams['wgType'];
@@ -13,6 +13,11 @@
 
         vm.goToCreateImageWidget = goToCreateImageWidget;
         vm.goToProfile = goToProfile;
+        vm.searchImages = searchImages;
+
+        function searchImages(value) {
+        	console.log(value);
+        }
 
         function goToCreateImageWidget() {
         	$location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/create/"+vm.wgType);
