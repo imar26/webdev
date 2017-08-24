@@ -10,7 +10,7 @@
 </div>
 <div class="container main-content">
 	<br/>
-	<form method="post">
+	<form method="post" class="clearfix">
 	    <div class="col-md-11 noPad">
 	    	<input type="text" class="form-control searchFlickr" ng-model="searchValue" placeholder="Search Images on Flickr" />
 	    </div>
@@ -18,6 +18,12 @@
 	    	<a ng-click="model.searchImages(searchValue)"><i class="fa fa-search" aria-hidden="true"></i></a>
 	    </div>
 	</form>
+	<br>
+	<div class="row flickrImages">
+	    <div class="col-xs-4 singleImage" ng-repeat="photo in model.photos.photo">
+	        <a ng-click="model.selectPhoto(photo)"><img ng-src="https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}_m.jpg"/></a>
+	    </div>
+	</div>
 </div>
 <div class="footer">
     <div class="container">
