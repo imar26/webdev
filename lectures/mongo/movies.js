@@ -1,7 +1,10 @@
 module.exports = function (app) {
 
     app.get('/api/movie', findAllMovies);
+    app.post('/api/movie', createMovie);
     app.get('/api/movie/:movieId', findMovieById);
+    app.put('/api/movie/:movieId', updateMovie);
+    app.delete('/api/movie/:movieId', deleteMovieById);
 
     var mongoose = require('mongoose');
 
@@ -49,6 +52,45 @@ module.exports = function (app) {
             })
     }
 
+    function createMovie(req, res) {
+        var movie = req.body;
+        MovieModel
+            .create(movie)
+            .then(function (movie) {
+                res.json(movie);
+            }, function (error) {
+                res.sendStatus(400).send(error);
+            });
+    }
+
+    function deleteMovieById(req, res) {
+        var movieId = req.params.movieId;
+
+        MovieModel
+            .remove({_id : movieId})
+            .then(function (response) {
+                res.sendStatus(200).send(response);
+            }, function (error) {
+                res.sendStatus(400).send(error);
+            });
+    }
+
+    function updateMovie(req, res) {
+        var movieId = req.params.movieId;
+        var movie = req.body;
+
+        MovieModel
+            .update(
+                {_id : movieId},
+                {$set: {title: movie.title}}
+            )
+            .then(function (response) {
+                res.json(response);
+            }, function (error) {
+                res.sendStatus(400).send(error);
+            });
+    }
+
     // MovieModel.create({
     //     title: 'Aliens',
     //     cast: ['Sigourney Wiever', 'Hrithik Roshan']
@@ -61,13 +103,5 @@ module.exports = function (app) {
     //         console.log(response);
     //     }, function () {
     //
-    //     });
-
-    // MovieModel
-    //     .remove({_id : '59a20c96aea2e60b24566d38'})
-    //     .then(function (response) {
-    //         console.log(response);
-    //     }, function (response) {
-    //         console.log(response);
     //     });
 };
