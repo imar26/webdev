@@ -14,6 +14,7 @@ require ("./todo/app")(app);
 require ("./blog/app")(app);
 
 require ("./assignment/app.js")(app);
+require ("./lectures/mongo/movies.js")(app);
 
 var port = process.env.PORT || 3000;
 

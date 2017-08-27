@@ -130,7 +130,7 @@ a:hover {
 }
 
 .searchIcon {
-    padding: 5px 12px;
+    padding: 5px 12px 4px;
     border: 1px solid #ccc;
     font-size: 16px;
 }
