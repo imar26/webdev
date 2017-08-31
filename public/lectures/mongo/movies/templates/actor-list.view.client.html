@@ -1,0 +1,14 @@
+<h2>Actors</h2>
+
+<ul class="list-group">
+	<li class="list-group-item">
+		<input class="form-control" ng-model="model.actor.name" />
+		<span ng-click="model.createActor(model.actor)" class="glyphicon glyphicon-plus pull-right" style="position: relative; top: -25px; right: 10px;"></span>
+	</li>
+	<li class="list-group-item" ng-repeat="actor in model.actors">
+		{{actor.name}}
+		<span ng-click="model.deleteActor(actor._id)" class="glyphicon glyphicon-remove-sign pull-right" style="position: relative; right: 10px;"></span>
+	</li>
+	<h5 ng-if="model.success" class="text-success">{{model.success}}</h5>
+	<h5 ng-if="model.delete" class="text-success">{{model.delete}}</h5>
+</ul>
