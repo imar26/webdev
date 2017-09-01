@@ -3,7 +3,7 @@ module.exports = function() {
 
 	var MovieSchema = mongoose.Schema({
 		name: String
-	}, {collection: 'MovieDB'});
+	}, {collection: 'MoviesDB'});
 
 	return MovieSchema;
 };

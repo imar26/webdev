@@ -11,15 +11,15 @@
 		return api;
 
 		function createMovie(movie) {
-			return $http.post('/api/movie');
+			return $http.post('/api/movie/create', movie);
 		}
 
 		function findAllMovies() {
-			return $http.get('/api/movie');
+			return $http.get('/api/movie/findAll');
 		}
 
 		function deleteMovie(id) {
-			return $http.delete('/api/movie/'+id);
+			return $http.delete('/api/movie/delete/'+id);
 		}
 	}
 })();

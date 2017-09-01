@@ -20,6 +20,7 @@
 		init();
 
 		function createMovie(movie) {
+			console.log(movie);
 			MovieService
 				.createMovie(movie)
 				.then(function(movie) {

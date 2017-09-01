@@ -7,7 +7,7 @@
 	</li>
 	<li class="list-group-item" ng-repeat="movie in model.movies">
 		{{movie.name}}
-		<span ng-click="model.deletemMovie(movie._id)" class="glyphicon glyphicon-remove-sign pull-right" style="position: relative; right: 10px;"></span>
+		<span ng-click="model.deleteMovie(movie._id)" class="glyphicon glyphicon-remove-sign pull-right" style="position: relative; right: 10px;"></span>
 	</li>
 	<h5 ng-if="model.success" class="text-success">{{model.success}}</h5>
 	<h5 ng-if="model.delete" class="text-success">{{model.delete}}</h5>
