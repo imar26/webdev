@@ -10,9 +10,21 @@ module.exports = function() {
 	var api = {
 		createMovie: createMovie,
 		findAllMovies: findAllMovies,
-		deleteMovie: deleteMovie
+		deleteMovie: deleteMovie,
+		addActorToMovie: addActorToMovie
 	};
 	return api;
+
+	function addActorToMovie(movieId, actorId) {
+		var d = q.defer();
+		MovieModel
+			.findById(movieId, function(err, movie) {
+				movie.actors.push(actorId);
+				movie.save();
+				d.resolve(movie);
+			});
+			return d.promise;
+	}
 
 	function createMovie(movie) {
 		var d = q.defer();

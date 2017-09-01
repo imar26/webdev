@@ -1,9 +1,9 @@
-module.exports = function(app) {
+module.exports = function(app, model) {
 	app.post('/api/movie/create', createMovie);
 	app.get('/api/movie/findAll', findAllMovies);
 	app.delete('/api/movie/delete/:movieId', deleteMovie);
 
-	var MovieModel = require('../models/movie.model.server.js')();
+	var MovieModel = model.MovieModel;
 
 	function createMovie(req, res) {
 		MovieModel

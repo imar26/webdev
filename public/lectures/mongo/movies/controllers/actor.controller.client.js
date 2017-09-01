@@ -8,6 +8,7 @@
 		vm.createActor = createActor;
 		vm.deleteActor = deleteActor;
 		vm.addSelectedMovieToSelectedActor = addSelectedMovieToSelectedActor;
+		vm.deleteMovieFromActor = deleteMovieFromActor;
 
 		function init() {
 			ActorService
@@ -64,6 +65,19 @@
 							$window.location.reload();
 						}, 1500);
 					}
+				}, function(err) {
+					console.log(err);
+				});
+		}
+
+		function deleteMovieFromActor(actorId, movieId) {
+			ActorService
+				.deleteMovieFromActor(actorId, movieId)
+				.then(function(actor) {
+					vm.moviedelete = "Movie Deleted from Actor Successfully.";
+					$timeout(function() {
+						$window.location.reload();
+					}, 1500);
 				}, function(err) {
 					console.log(err);
 				});

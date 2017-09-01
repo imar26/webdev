@@ -11,7 +11,8 @@ module.exports = function() {
 		createActor: createActor,
 		findAllActors: findAllActors,
 		deleteActor: deleteActor,
-		addMovieToActor: addMovieToActor
+		addMovieToActor: addMovieToActor,
+		deleteMovieFromActor: deleteMovieFromActor
 	};
 	return api;
 
@@ -61,6 +62,18 @@ module.exports = function() {
 		ActorModel
 			.findById(actorId, function(err, actor) {
 				actor.movies.push(movieId);
+				actor.save();
+				d.resolve(actor);
+			});
+			return d.promise;	
+	}
+
+	function deleteMovieFromActor(actorId, movieId) {
+		var d = q.defer();
+		ActorModel
+			.findById(actorId, function(err, actor) {
+				var index = actor.movies.indexOf(movieId);
+				actor.movies.splice(index, 1);
 				actor.save();
 				d.resolve(actor);
 			});

@@ -1,10 +1,12 @@
-module.exports = function(app) {
+module.exports = function(app, model) {
 	app.post('/api/actor', createActor);
 	app.get('/api/actor', findAllActors);
 	app.delete('/api/actor/:actorId', deleteActor);
 	app.put('/api/actor/:actorId/movie/:movieId', addMovieToActor);
+	app.delete('/api/actor/:actorId/movie/:movieId', deleteMovieFromActor);
 
-	var ActorModel = require('../models/actor.model.server.js')();
+	var ActorModel = model.ActorModel;
+	var MovieModel = model.MovieModel;
 
 	function createActor(req, res) {
 		ActorModel
@@ -44,7 +46,25 @@ module.exports = function(app) {
 		ActorModel
 			.addMovieToActor(movieId, actorId)
 			.then(function(actor) {
-				res.send(actor);
+				MovieModel.addActorToMovie(movieId, actorId)
+				.then(function(doc) {
+					res.send(doc);
+				}, function(err) {
+					res.sendStatus(500).send(err);
+				});				
+			}, function(err) {
+				res.sendStatus(500).send(err);
+			});
+	}
+
+	function deleteMovieFromActor(req, res) {
+		var actorId = req.params.actorId;
+		var movieId = req.params.movieId;
+
+		ActorModel
+			.deleteMovieFromActor(actorId, movieId)
+			.then(function(actor) {
+				res.sendStatus(200).send(actor);
 			}, function(err) {
 				res.sendStatus(500).send(err);
 			});
