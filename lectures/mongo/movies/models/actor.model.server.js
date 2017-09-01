@@ -10,7 +10,8 @@ module.exports = function() {
 	var api = {
 		createActor: createActor,
 		findAllActors: findAllActors,
-		deleteActor: deleteActor
+		deleteActor: deleteActor,
+		addMovieToActor: addMovieToActor
 	};
 	return api;
 
@@ -30,7 +31,9 @@ module.exports = function() {
 	function findAllActors() {
 		var d = q.defer();
 		ActorModel
-			.find(function(err, actors) {
+			.find()
+			.populate('movies', 'name -_id')
+			.exec(function(err, actors) {
 				if(err) {
 					d.abort(err);
 				} else {
@@ -51,5 +54,16 @@ module.exports = function() {
 				}
 			});
 			return d.promise;
+	}
+
+	function addMovieToActor(movieId, actorId) {
+		var d = q.defer();
+		ActorModel
+			.findById(actorId, function(err, actor) {
+				actor.movies.push(movieId);
+				actor.save();
+				d.resolve(actor);
+			});
+			return d.promise;	
 	}
 };

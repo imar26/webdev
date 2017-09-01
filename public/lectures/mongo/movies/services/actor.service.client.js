@@ -6,7 +6,8 @@
 		var api = {
 			createActor: createActor,
 			findAllActors: findAllActors,
-			deleteActor: deleteActor
+			deleteActor: deleteActor,
+			addMovieToActor: addMovieToActor
 		};
 		return api;
 
@@ -20,6 +21,10 @@
 
 		function deleteActor(id) {
 			return $http.delete('/api/actor/'+id);
+		}
+
+		function addMovieToActor(movieId, actorId) {
+			return $http.put('/api/actor/'+actorId+'/movie/'+movieId);
 		}
 	}
 })();
