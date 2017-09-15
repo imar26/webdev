@@ -1,4 +1,4 @@
-module.exports = function(app) {
+module.exports = function(app, model) {
     var multer = require('multer');
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {

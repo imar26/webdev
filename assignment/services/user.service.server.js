@@ -1,4 +1,4 @@
-module.exports = function(app) {
+module.exports = function(app, model) {
 	app.get("/api/user", findUser);
 	app.get("/api/user/:userId", findUserById);
 	app.put("/api/user/:userId", updateUser);
