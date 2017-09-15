@@ -12,9 +12,9 @@
                 .findUserByUsername(user.username)
                 .then(
                     function(response) {
-                        vm.error = "Username already exists.";                      
-                    }, function(response) {
-                        if(response.data == 'Not Found') {
+                        if(response.data) {
+                            vm.error = "Username already exists.";                      
+                        } else {
                             UserService
                                 .createUser(user)
                                 .then(
@@ -25,11 +25,13 @@
                                         } else {
                                             vm.alert = "Registration not successful.";
                                         }
-                                    }, function(response) {
-                                        console.log(response);
+                                    }, function(error) {
+                                        vm.passwordsDoNotMatch = "Passwords do not match";
                                     }
-                                );
+                                ); 
                         }
+                    }, function(error) {
+                        console.log(error);
                     }
                 );
         }

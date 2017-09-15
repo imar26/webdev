@@ -12,22 +12,36 @@ module.exports = function(app, model) {
     ];
 
     function createUser(req, res) {
-    	var username = req.body.username;
+  //   	var username = req.body.username;
 		var password = req.body.password;
 		var verifypassword = req.body.verifypassword;
-		var size = users.length;
-		var userObj = {
-            _id: '',
-            username : '',
-            password : ''
-        };
 		if(password === verifypassword) {
-			userObj['_id'] = (size + 1).toString();
-			userObj['username'] = username;
-			userObj['password'] = password;
-			users.push(userObj);
+			model
+				.userModel
+				.createUser(req.body)
+				.then(function(status) {
+					console.log("createUser status- " + status);
+					res.json(status);
+				}, function(error) {
+					console.log("createUser error- " + error);
+					res.sendStatus(404).send(error);
+				});
+		} else {
+			res.sendStatus(404);
 		}
-		res.json(userObj);
+		// var size = users.length;
+		// var userObj = {
+  //           _id: '',
+  //           username : '',
+  //           password : ''
+  //       };
+		// if(password === verifypassword) {
+		// 	userObj['_id'] = (size + 1).toString();
+		// 	userObj['username'] = username;
+		// 	userObj['password'] = password;
+		// 	users.push(userObj);
+		// }
+		// res.json(userObj);
     }
 
     function findUser(req, res) {
@@ -51,16 +65,24 @@ module.exports = function(app, model) {
 
 	function findUserByUsername(req, res) {
 		var username = req.query.username;
-		var user = users.find(function(user) {
-        	return user.username === username;
-		});
-		if(user) {
-			res.json(user);
-			return;
-		} else {
-			res.sendStatus(404).send({message: 'User not found.'});
-			return;
-		}
+		model
+			.userModel
+			.findUserByUsername(username)
+			.then(function(user) {
+				res.json(user);
+			}, function(error) {
+				res.sendStatus(404).send(error);
+			});
+		// var user = users.find(function(user) {
+  //       	return user.username === username;
+		// });
+		// if(user) {
+		// 	res.json(user);
+		// 	return;
+		// } else {
+		// 	res.sendStatus(404).send({message: 'User not found.'});
+		// 	return;
+		// }
 	}
 
 	function findUserById(req, res) {
