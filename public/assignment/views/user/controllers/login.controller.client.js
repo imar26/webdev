@@ -21,7 +21,9 @@
                         }
                     },
                     function(response) {
-                        console.log(response.data)
+                        if(response.data == 'Not Found') {
+                            vm.alert = "Unable to login";
+                        }
                     }
                 );
             

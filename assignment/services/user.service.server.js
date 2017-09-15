@@ -20,10 +20,8 @@ module.exports = function(app, model) {
 				.userModel
 				.createUser(req.body)
 				.then(function(status) {
-					console.log("createUser status- " + status);
 					res.json(status);
 				}, function(error) {
-					console.log("createUser error- " + error);
 					res.sendStatus(404).send(error);
 				});
 		} else {
@@ -57,10 +55,23 @@ module.exports = function(app, model) {
 	function findUserByCredentials(req, res) {
 		var username = req.query.username;
 		var password = req.query.password;
-		var user = users.find(function(user) {
-        	return user.username === username && user.password === password;
-		}); 
-		res.json(user);
+		model
+			.userModel
+			.findUserByCredentials(username)
+			.then(function(user) {
+				// res.json(user);
+				if(user.password === password) {
+					res.json(user);
+				} else {
+					res.sendStatus(404);
+				}
+			}, function(error) {
+				res.sendStatus(404).send(error);
+			});
+		// var user = users.find(function(user) {
+  //       	return user.username === username && user.password === password;
+		// }); 
+		// res.json(user);
 	}
 
 	function findUserByUsername(req, res) {
