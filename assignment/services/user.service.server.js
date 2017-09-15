@@ -98,10 +98,18 @@ module.exports = function(app, model) {
 
 	function findUserById(req, res) {
 		var userId = req.params.userId;
-		var user = users.find(function(user) {
-        	return user._id === userId;
-		});
-		res.json(user);
+		model
+			.userModel
+			.findUserById(userId)
+			.then(function(user) {
+				res.json(user);
+			}, function(error) {
+				res.sendStatus(404).send(error);
+			});
+		// var user = users.find(function(user) {
+  //       	return user._id === userId;
+		// });
+		// res.json(user);
 	}
 
 	function updateUser(req, res) {
