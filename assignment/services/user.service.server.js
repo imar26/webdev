@@ -38,7 +38,6 @@ module.exports = function(app, model) {
 			.userModel
 			.findUserByCredentials(username)
 			.then(function(user) {
-				// res.json(user);
 				if(user.password === password) {
 					res.json(user);
 				} else {
