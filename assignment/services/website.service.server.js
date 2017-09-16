@@ -21,8 +21,8 @@ module.exports = function(app, model) {
         model
             .websiteModel
             .createWebsite(userId, req.body)
-            .then(function(websites) {
-                res.sendStatus(200).send(websites);
+            .then(function(website) {
+                res.sendStatus(200).send(website);
             }, function(error) {
                 res.sendStatus(404).send(error);
             });

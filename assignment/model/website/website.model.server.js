@@ -2,7 +2,9 @@ module.exports = function() {
 	var model = {};
 	var mongoose = require('mongoose');
 	var WebsiteSchema = require('./website.schema.server.js')();
+	var UserSchema = require('../user/user.schema.server.js')();
 	var WebsiteModel = mongoose.model('WebsiteModel', WebsiteSchema);
+	var UserRepeatModel = mongoose.model('UserRepeatModel', UserSchema);
 	var q = require('q');
 
 	var api = {
@@ -36,6 +38,17 @@ module.exports = function() {
 				if(err) {
 					deferred.abort(err);
 				} else {
+					UserRepeatModel
+						.update({"_id" : userId}, {$push : {
+							"websites" : website._id
+						}}, function(err, website) {
+							if(err) {
+								deferred.abort(err);
+							} else {
+								deferred.resolve(website);
+							}
+						});
+
 					WebsiteModel
 						.update({"_id" : website._id}, {$set : {
 							"_user" : userId
