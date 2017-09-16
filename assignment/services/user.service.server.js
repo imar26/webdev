@@ -34,11 +34,15 @@ module.exports = function(app, model) {
 	function findUserByCredentials(req, res) {
 		var username = req.query.username;
 		var password = req.query.password;
+		console.log(username);
+        console.log(password);
 		model
 			.userModel
 			.findUserByCredentials(username)
 			.then(function(user) {
-				if(user.password === password) {
+				if(user == null) {
+					res.sendStatus(404);
+				} else if(user.password === password) {
 					res.json(user);
 				} else {
 					res.sendStatus(404);

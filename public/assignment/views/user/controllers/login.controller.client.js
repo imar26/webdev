@@ -13,7 +13,6 @@
                 .findUserByCredentials(user.username, user.password)
                 .then(
                     function(response) {
-                        console.log(response);
                         u = response.data;
                         if(u) {
                             $location.url("/user/" + u._id);

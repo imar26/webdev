@@ -27,6 +27,8 @@
         }
 
         function findUserByCredentials(username, password) {
+            console.log(username);
+            console.log(password);
             return $http.get("/api/user?username="+username+"&password="+password);            
         }
 
