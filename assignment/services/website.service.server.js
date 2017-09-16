@@ -17,22 +17,15 @@ module.exports = function(app, model) {
 
     function createWebsite(req, res) {
     	var userId = req.params.userId;
-    	var size = websites.length;
-        var websitesObj = {
-            _id: '',
-            name : '',
-            developerId : '',
-            description : '',
-            created: ''
-        };
-        size = size + 1;
-        websitesObj['_id'] = size.toString();
-        websitesObj['name'] = req.body.name;
-        websitesObj['developerId'] = userId;
-        websitesObj['description'] = req.body.description;
-        websitesObj['created'] = new Date();
-        websites.push(websitesObj);
-        res.json(websitesObj);
+    	
+        model
+            .websiteModel
+            .createWebsite(userId, req.body)
+            .then(function(websites) {
+                res.sendStatus(200).send(websites);
+            }, function(error) {
+                res.sendStatus(404).send(error);
+            });
     }
 
     function findWebsiteById(req, res) {

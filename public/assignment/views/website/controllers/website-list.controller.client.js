@@ -3,7 +3,7 @@
         .module("WebAppMaker")
         .controller("WebsiteListController", WebsiteListController);
 
-    function WebsiteListController($routeParams, WebsiteService, $location) {
+    function WebsiteListController($routeParams, WebsiteService, $location, UserService) {
         var vm = this;
         vm.userId = $routeParams['uid'];
         vm.goToProfile = goToProfile;
@@ -20,6 +20,15 @@
                         } else {
                             vm.noWebsitesFound = 'No websites found';
                         }
+                    }, function(response) {
+                        console.log(response);
+                    });
+
+            UserService
+                .findUserById(vm.userId)
+                .then(
+                    function(response) {
+                        vm.developer = response.data;
                     }, function(response) {
                         console.log(response);
                     });

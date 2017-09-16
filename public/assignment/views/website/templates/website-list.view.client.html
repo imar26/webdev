@@ -32,10 +32,10 @@
             <a ng-click="model.newPage(website.id)">{{website.name}}</a>
         </div>
         <div class="col-md-3">
-            <a>{{website.created | date}}</a>
+            <a>{{website.dateCreated | date}}</a>
         </div>
         <div class="col-md-3">
-            <a>{{website.developerId}}</a>
+            <a>{{model.developer.firstName}} {{model.developer.lastName}}</a>
         </div>
         <div class="col-md-3 pull-right iconCog">
             <a ng-click="model.editWebsite(website.id)"><i class="fa fa-cog" aria-hidden="true"></i></a>

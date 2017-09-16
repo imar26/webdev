@@ -7,7 +7,8 @@ module.exports = function() {
 
 	var api = {
 		setModel: setModel,
-		findWebsitesByUser: findWebsitesByUser
+		findWebsitesByUser: findWebsitesByUser,
+		createWebsite: createWebsite
 	};
 	return api;
 
@@ -23,6 +24,28 @@ module.exports = function() {
 					deferred.abort(err);
 				} else {
 					deferred.resolve(websites);
+				}
+			});
+		return deferred.promise;
+	}
+
+	function createWebsite(userId, website) {
+		var deferred = q.defer();
+		WebsiteModel
+			.create(website, function(err, website) {
+				if(err) {
+					deferred.abort(err);
+				} else {
+					WebsiteModel
+						.update({"_id" : website._id}, {$set : {
+							"_user" : userId
+						}}, function(err, website) {
+							if(err) {
+								deferred.abort(err);
+							} else {
+								deferred.resolve(website);
+							}
+						});						
 				}
 			});
 		return deferred.promise;
