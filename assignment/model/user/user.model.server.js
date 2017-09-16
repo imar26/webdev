@@ -10,7 +10,8 @@ module.exports = function() {
 		findUserByUsername: findUserByUsername,
 		createUser: createUser,
 		findUserByCredentials: findUserByCredentials,
-		findUserById: findUserById
+		findUserById: findUserById,
+		updateUser: updateUser
 	};
 	return api;
 
@@ -61,6 +62,25 @@ module.exports = function() {
 		var deferred = q.defer();
 		UserModel
 			.findOne({"_id" : userId}, function(err, user) {
+				if(err) {
+					deferred.abort(err);
+				} else {
+					deferred.resolve(user);
+				}
+			});
+		return deferred.promise;
+	}
+
+	function updateUser(userId, user) {
+		var deferred = q.defer();
+		UserModel
+			.update({"_id" : userId}, {
+				$set: {
+					email: user.email,
+					firstName: user.firstName,
+					lastName: user.lastName
+				}
+			}, function(err, user) {
 				if(err) {
 					deferred.abort(err);
 				} else {

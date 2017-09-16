@@ -114,15 +114,23 @@ module.exports = function(app, model) {
 
 	function updateUser(req, res) {
 		var userId = req.params.userId;
-		for(var i=0; i<users.length;i++) {
-            if(users[i]._id == userId) {
-                users[i].username = req.body.username;
-                users[i].firstName = req.body.firstName;
-                users[i].lastName = req.body.lastName;
-                users[i].email = req.body.email;
-                res.json(users[i]);
-                return;
-            }
-        } 
+		// for(var i=0; i<users.length;i++) {
+  //           if(users[i]._id == userId) {
+  //               users[i].username = req.body.username;
+  //               users[i].firstName = req.body.firstName;
+  //               users[i].lastName = req.body.lastName;
+  //               users[i].email = req.body.email;
+  //               res.json(users[i]);
+  //               return;
+  //           }
+  //       } 
+  		model
+  			.userModel
+  			.updateUser(userId, req.body)
+  			.then(function(user) {
+				res.json(user);
+			}, function(error) {
+				res.sendStatus(404).send(error);
+			});
 	}
 }

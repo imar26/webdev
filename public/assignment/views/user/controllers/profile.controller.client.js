@@ -3,7 +3,7 @@
         .module("WebAppMaker")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController($routeParams, UserService, $location) {
+    function ProfileController($routeParams, UserService, $location, $timeout, $window) {
         var vm = this;
         vm.userId = $routeParams["uid"];
         vm.updateUser = updateUser;
@@ -29,8 +29,14 @@
                     function(user) {
                         if(user) {
                             vm.success = "Profile updated successfully.";
+                            $timeout(function() {
+                                $window.location.reload();
+                            }, 2000);
                         } else {
                             vm.error = "Profile could not be updated.";
+                            $timeout(function() {
+                                $window.location.reload();
+                            }, 2000);
                         }
                     }, function(response) {
                         console.log(response);
