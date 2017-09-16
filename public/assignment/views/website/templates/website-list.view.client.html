@@ -29,7 +29,7 @@
     </div>
     <div class="row websiteRow" ng-repeat="website in model.websites">
         <div class="col-md-3">
-            <a ng-click="model.newPage(website.id)">{{website.name}}</a>
+            <a ng-click="model.newPage(website._id)">{{website.name}}</a>
         </div>
         <div class="col-md-3">
             <a>{{website.dateCreated | date}}</a>
@@ -38,7 +38,7 @@
             <a>{{model.developer.firstName}} {{model.developer.lastName}}</a>
         </div>
         <div class="col-md-3 pull-right iconCog">
-            <a ng-click="model.editWebsite(website.id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
+            <a ng-click="model.editWebsite(website._id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
         </div>
     </div>
     <h5 ng-if="model.noWebsitesFound" class="text-danger">{{model.noWebsitesFound}}</h5>
