@@ -96,24 +96,23 @@ module.exports = function() {
 		return deferred.promise;
 	}
 
-	function deleteWebsite(websiteId) {
+	function deleteWebsite(websiteId, userId) {
 		var deferred = q.defer();
 		WebsiteModel
 			.remove({"_id" : websiteId}, function(err, website) {
 				if(err) {
 					deferred.abort(err);
 				} else {
-					deferred.resolve(website);
-					// UserRepeatModel
-					// 	.update({"_id" : userId}, {$pull : {
-					// 		"websites" :websiteId
-					// 	}}, function(err, website) {
-					// 		if(err) {
-					// 			deferred.abort(err);
-					// 		} else {
-					// 			deferred.resolve(website);
-					// 		}
-					// 	});
+					UserRepeatModel
+						.update({"_id" : userId}, {$pull : {
+							"websites" : websiteId
+						}}, function(err, website) {
+							if(err) {
+								deferred.abort(err);
+							} else {
+								deferred.resolve(website);
+							}
+						});
 				}
 			});
 		return deferred.promise;

@@ -29,8 +29,8 @@
             return $http.put("/api/website/"+websiteId, website);
         }
 
-        function deleteWebsite(websiteId) {            
-            return $http.delete("/api/website/"+websiteId);
+        function deleteWebsite(websiteId, userId) {            
+            return $http.delete("/api/website/"+websiteId+"/user/"+userId);
         }
 
     }

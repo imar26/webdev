@@ -42,7 +42,7 @@
 
         function deleteWebsite() {
             WebsiteService
-                .deleteWebsite(vm.websiteId)
+                .deleteWebsite(vm.websiteId, vm.userId)
                 .then(function(response) {
                     website = response.data;
                     if(website) {

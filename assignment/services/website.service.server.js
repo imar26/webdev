@@ -3,7 +3,7 @@ module.exports = function(app, model) {
 	app.get("/api/user/:userId/website", findWebsitesByUser);
 	app.get("/api/website/:websiteId", findWebsiteById);
 	app.put("/api/website/:websiteId", updateWebsite);
-	app.delete("/api/website/:websiteId", deleteWebsite);
+	app.delete("/api/website/:websiteId/user/:userId", deleteWebsite);
 
     function createWebsite(req, res) {
     	var userId = req.params.userId;
@@ -58,11 +58,12 @@ module.exports = function(app, model) {
     }
 
     function deleteWebsite(req, res) {
-    	var websiteId = req.params.websiteId;
+        var websiteId = req.params.websiteId;
+    	var userId = req.params.userId;
 
     	model
             .websiteModel
-            .deleteWebsite(websiteId)
+            .deleteWebsite(websiteId, userId)
             .then(function(website) {
                 res.sendStatus(200);
             }, function(error) {
