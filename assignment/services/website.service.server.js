@@ -53,24 +53,14 @@ module.exports = function(app, model) {
     function findWebsitesByUser(req, res) {
     	var userId = req.params.userId;
 
-    	var websiteArray = [];
-        var websitesObj = {
-            id : '',
-            name : '',
-            created : '',
-            developerId : ''
-        };
-        for(var i=0;i<websites.length;i++) {
-            if(websites[i].developerId == userId) {
-                websitesObj.id = websites[i]._id;
-                websitesObj.name = websites[i].name;
-                websitesObj.created = websites[i].created;
-                websitesObj.developerId = websites[i].developerId;
-
-                websiteArray.push({id: websitesObj.id, name: websitesObj.name, created: websitesObj.created, developerId: websitesObj.developerId});
-            }
-        }
-        res.send(websiteArray);
+    	model
+            .websiteModel
+            .findWebsitesByUser(userId)
+            .then(function(websites) {
+                res.json(websites);
+            }, function(error) {
+                res.sendStatus(404).send(error);
+            });
     }
 
     function updateWebsite(req, res) {

@@ -15,7 +15,11 @@
                 .findWebsitesByUser(vm.userId)
                 .then(
                     function(response) {
-                        vm.websites = response.data;
+                        if(response.data.length > 0) {
+                            vm.websites = response.data;
+                        } else {
+                            vm.noWebsitesFound = 'No websites found';
+                        }
                     }, function(response) {
                         console.log(response);
                     });
