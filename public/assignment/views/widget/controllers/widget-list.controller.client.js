@@ -20,7 +20,6 @@
                 .findWidgetsByPageId(vm.pageId)
                 .then(function(response) {
                     vm.widgets = response.data;
-                    console.log(vm.widgets);
                 }, function(response) {
                     console.log(response);
                 });

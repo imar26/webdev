@@ -14,19 +14,19 @@ module.exports = function() {
     var userModel = require('./user/user.model.server.js')();
     var pageModel = require('./page/page.model.server.js')();
     var websiteModel = require('./website/website.model.server.js')();
-    // var widgetModel = require('./widget/widget.model.server.js')();
+    var widgetModel = require('./widget/widget.model.server.js')();
 
     var model = {
     	userModel: userModel,
     	pageModel: pageModel,
-    	websiteModel: websiteModel
-    	// widgetModel: widgetModel
+    	websiteModel: websiteModel,
+    	widgetModel: widgetModel
     };
 
     userModel.setModel(model);
     pageModel.setModel(model);
     websiteModel.setModel(model);
-    // widgetModel.setModel(model);
+    widgetModel.setModel(model);
 
     return model;
 };

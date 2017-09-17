@@ -17,7 +17,7 @@
         <div class="row websiteRow" ng-repeat="widget in model.widgets track by $index">
             <div class="col-md-12" ng-switch="widget.widgetType">
                 <div class="icons">
-                    <a ng-click="model.editWidget(widget.id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                    <a ng-click="model.editWidget(widget._id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
                     <a><i class="fa fa-align-justify" aria-hidden="true"></i></a>
                 </div>
                 <div ng-switch-when="HEADING">
