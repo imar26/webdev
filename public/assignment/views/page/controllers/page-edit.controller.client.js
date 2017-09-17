@@ -42,7 +42,7 @@
         }
         function deletePage() {
             PageService
-                .deletePage(vm.pageId)
+                .deletePage(vm.pageId, vm.websiteId)
                 .then(function(response) {
                     page = response.data;
                     if(page) {

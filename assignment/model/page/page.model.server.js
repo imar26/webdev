@@ -12,7 +12,8 @@ module.exports = function() {
 		createPage: createPage,
 		findPageByWebsiteId: findPageByWebsiteId,
 		findPageById: findPageById,
-		updatePage: updatePage
+		updatePage: updatePage,
+		deletePage: deletePage
 	};
 	return api;
 
@@ -90,6 +91,28 @@ module.exports = function() {
 					deferred.abort(err);
 				} else {
 					deferred.resolve(page);
+				}
+			});
+		return deferred.promise;
+	}
+
+	function deletePage(pageId, websiteId) {
+		var deferred = q.defer();
+		PageModel
+			.remove({"_id" : pageId}, function(err, page) {
+				if(err) {
+					deferred.abort(err);
+				} else {
+					WebsiteRepeatModel
+						.update({"_id" : websiteId}, {$pull : {
+							pages: pageId
+						}}, function(err, page) {
+							if(err) {
+								deferred.abort(err);
+							} else {
+								deferred.resolve(page);
+							}
+						});
 				}
 			});
 		return deferred.promise;

@@ -3,7 +3,7 @@ module.exports = function(app, model) {
 	app.post("/api/website/:websiteId/page", createPage);
 	app.get("/api/page/:pageId", findPageById);
 	app.put("/api/page/:pageId", updatePage);
-	app.delete("/api/page/:pageId", deletePage);
+	app.delete("/api/page/:pageId/website/:websiteId", deletePage);
 
 	var pages = [
         { "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
@@ -64,14 +64,17 @@ module.exports = function(app, model) {
     }
 
     function deletePage(req, res) {
-    	var pageId = req.params.pageId;
+        var pageId = req.params.pageId;
+    	var websiteId = req.params.websiteId;
 
-    	for(var i=0; i<pages.length;i++) {
-            if(pages[i]._id == pageId) {
-                pages.splice(i, 1);
-                res.sendStatus(200);
-            }
-        }
+    	model
+            .pageModel
+            .deletePage(pageId, websiteId)
+            .then(function(page) {
+                res.json(page);
+            }, function(error) {
+                res.sendStatus(404).send(error);
+            });
     }
 
 };

@@ -29,8 +29,8 @@
             return $http.put("/api/page/"+pageId, page);
         }
 
-        function deletePage(pageId) {            
-            return $http.delete("/api/page/"+pageId);
+        function deletePage(pageId, websiteId) {            
+            return $http.delete("/api/page/"+pageId+"/website/"+websiteId);
         }
 
     }
