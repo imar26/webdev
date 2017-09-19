@@ -91,12 +91,14 @@ module.exports = function(app, model) {
     function deleteWidget(req, res) {
         var widgetId = req.params.widgetId;
 
-        for(var i=0; i<widgets.length;i++) {
-            if(widgets[i]._id == widgetId) {
-                widgets.splice(i, 1);
-                res.sendStatus(200);
-            }
-        }
+        model
+            .widgetModel
+            .deleteWidget(widgetId)
+            .then(function(status) {
+                res.json(status);
+            }, function(error) {
+                res.sendStatus(404).send(error);
+            });
     }
 
     function updateWidgetIndex(req, res) {

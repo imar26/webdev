@@ -10,7 +10,8 @@ module.exports = function() {
 		createWidget: createWidget,
 		findWidgetsByPageId: findWidgetsByPageId,
 		findWidgetById: findWidgetById,
-		updateWidget: updateWidget
+		updateWidget: updateWidget,
+		deleteWidget: deleteWidget
 	};
 	return api;
 
@@ -120,6 +121,19 @@ module.exports = function() {
 				});
 		}
 		
+		return deferred.promise;
+	}
+
+	function deleteWidget(widgetId) {
+		var deferred = q.defer();
+		WidgetModel
+			.remove({"_id" : widgetId}, function(err, widget) {
+				if(err) {
+					deferred.abort(err);
+				} else {
+					deferred.resolve(widget);
+				}
+			});
 		return deferred.promise;
 	}
 };
