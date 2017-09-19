@@ -78,16 +78,14 @@ module.exports = function(app, model) {
 	function updateWidget(req, res) {
         var widgetId = req.params.widgetId;
 
-        for(var i=0; i<widgets.length;i++) {
-            if(widgets[i]._id == widgetId) {
-                widgets[i].text = req.body.text;
-                widgets[i].size = req.body.size;
-                widgets[i].url = req.body.url;
-                widgets[i].path = req.body.path;
-                widgets[i].width = req.body.width;
-                res.send(widgets[i]);
-            }
-        }
+        model
+            .widgetModel
+            .updateWidget(widgetId, req.body)
+            .then(function(widget) {
+                res.json(widget);
+            }, function(error) {
+                res.sendStatus(404).send(error);
+            });
     }
 
     function deleteWidget(req, res) {

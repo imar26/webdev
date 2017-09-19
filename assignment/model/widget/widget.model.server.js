@@ -9,7 +9,8 @@ module.exports = function() {
 		setModel: setModel,
 		createWidget: createWidget,
 		findWidgetsByPageId: findWidgetsByPageId,
-		findWidgetById: findWidgetById
+		findWidgetById: findWidgetById,
+		updateWidget: updateWidget
 	};
 	return api;
 
@@ -62,6 +63,63 @@ module.exports = function() {
 					deferred.resolve(widget);
 				}
 			});
+		return deferred.promise;
+	}
+
+	function updateWidget(widgetId, widget) {
+		var deferred = q.defer();
+		if(widget.widgetType == 'HEADING') {
+			WidgetModel
+				.update({"_id" : widgetId}, {$set: {
+					text: widget.text,
+	        		size: widget.size
+				}}, function(err, widget) {
+					if(err) {
+						deferred.abort(err);
+					} else {
+						deferred.resolve(widget);
+					}
+				});
+		} else if(widget.widgetType == 'HTML') {
+			WidgetModel
+				.update({"_id" : widgetId}, {$set: {
+					text: widget.text
+				}}, function(err, widget) {
+					if(err) {
+						deferred.abort(err);
+					} else {
+						deferred.resolve(widget);
+					}
+				});
+		} else if(widget.widgetType == 'IMAGE') {
+			WidgetModel
+				.update({"_id" : widgetId}, {$set: {
+					text: widget.text,
+	        		width: widget.width,
+	        		url: widget.url,
+	                path: widget.path
+				}}, function(err, widget) {
+					if(err) {
+						deferred.abort(err);
+					} else {
+						deferred.resolve(widget);
+					}
+				});
+		} else if(widget.widgetType == 'YOUTUBE') {
+			WidgetModel
+				.update({"_id" : widgetId}, {$set: {
+					text: widget.text,
+	        		width: widget.width,
+	        		url: widget.url
+				}}, function(err, widget) {
+					if(err) {
+						deferred.abort(err);
+					} else {
+						deferred.resolve(widget);
+					}
+				});
+		}
+		
 		return deferred.promise;
 	}
 };

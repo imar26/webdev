@@ -32,8 +32,10 @@
         function selectPhoto(photo) {
         	var url = "https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + "_b.jpg";
             var widget = {
+                widgetType: '',
                 url: ''
             };
+            widget['widgetType'] = 'IMAGE';
             widget['url'] = url;
         	WidgetService
                 .updateWidget(vm.widgetId, widget)
