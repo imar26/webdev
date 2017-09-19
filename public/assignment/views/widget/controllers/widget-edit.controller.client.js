@@ -5,7 +5,6 @@
 
     function EditWidgetController($routeParams, WidgetService, $location) {
         var vm = this;
-
         vm.userId = $routeParams['uid'];
         vm.websiteId = $routeParams['wid'];
         vm.pageId = $routeParams['pid'];
@@ -23,7 +22,10 @@
             WidgetService
                 .findWidgetById(vm.widgetId)
                 .then(function(response) {
-                    vm.widget = response.data;
+                    vm.widget = response.data[0];
+                    if(vm.widget.widgetType == 'HEADING') {
+                        vm.widget.size = vm.widget.size.toString();
+                    }
                 }, function(response) {
                     console.log(response);
                 });

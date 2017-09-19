@@ -52,29 +52,14 @@ module.exports = function(app, model) {
     function findWidgetById(req, res) {
     	var widgetId = req.params.widgetId;
 
-    	var widgetObj = {
-            id: '',
-            widgetType: '',
-            size: '',
-            text: '',
-            url: '',
-            width: '',
-            path: ''
-        }
-        for(var i=0;i<widgets.length;i++) {
-            if(widgets[i]._id == widgetId) {
-                widgetObj['id'] = widgets[i]._id;
-                widgetObj['widgetType'] = widgets[i].widgetType;
-                if(widgets[i].size) {
-                	widgetObj['size'] = (widgets[i].size).toString();
-                }               
-                widgetObj['text'] = widgets[i].text;
-                widgetObj['url'] = widgets[i].url;
-                widgetObj['path'] = widgets[i].path;
-                widgetObj['width'] = widgets[i].width;
-            }
-        }
-        res.json(widgetObj);
+    	model
+            .widgetModel
+            .findWidgetById(widgetId)
+            .then(function(widget) {
+                res.json(widget);
+            }, function(error) {
+                res.sendStatus(404).send(error);
+            });
     }
 
 	function findWidgetsByPageId(req, res) {

@@ -8,7 +8,8 @@ module.exports = function() {
 	var api = {
 		setModel: setModel,
 		createWidget: createWidget,
-		findWidgetsByPageId: findWidgetsByPageId
+		findWidgetsByPageId: findWidgetsByPageId,
+		findWidgetById: findWidgetById
 	};
 	return api;
 
@@ -46,6 +47,19 @@ module.exports = function() {
 					deferred.abort(err);
 				} else {
 					deferred.resolve(widgets);
+				}
+			});
+		return deferred.promise;
+	}
+
+	function findWidgetById(widgetId) {
+		var deferred = q.defer();
+		WidgetModel
+			.find({"_id" : widgetId}, function(err, widget) {
+				if(err) {
+					deferred.abort(err);
+				} else {
+					deferred.resolve(widget);
 				}
 			});
 		return deferred.promise;
