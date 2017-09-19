@@ -39,28 +39,14 @@ module.exports = function(app, model) {
     function createWidget(req, res) {
     	var pageId = req.params.pageId;
 
-    	var length = widgets.length;
-        var widgetObj = {
-            _id: '',
-            widgetType: '',
-            pageId: '',
-            size: '',
-            text: '',
-            url: '',
-            width: '',
-            path: ''
-        }
-        widgetObj['_id'] = (length + 1).toString();
-        widgetObj['widgetType'] = req.body.widgetType;
-        widgetObj['pageId'] = pageId;
-        widgetObj['size'] = req.body.size;
-        widgetObj['text'] = req.body.text;
-        widgetObj['url'] = req.body.url;
-        widgetObj['width'] = req.body.width;
-        widgetObj['path'] = req.body.path;
-        widgets.push(widgetObj);
-
-        res.json(widgetObj);
+    	model
+            .widgetModel
+            .createWidget(pageId, req.body)
+            .then(function(status) {
+                res.json(status);
+            }, function(error) {
+                res.sendStatus(404).send(error);
+            });
     }
 
     function findWidgetById(req, res) {
@@ -94,30 +80,14 @@ module.exports = function(app, model) {
 	function findWidgetsByPageId(req, res) {
 		var pageId = req.params.pageId;
 
-		var widgetsArray = [];
-        var widgetsObj = {
-            id: '',
-            widgetType: '',
-            size: '',
-            text: '',
-            url: '',
-            width: '',
-            path: ''
-        }
-        for(var i=0;i<widgets.length;i++) {
-            if(widgets[i].pageId == pageId) {
-                widgetsObj.id = widgets[i]._id;
-                widgetsObj.widgetType = widgets[i].widgetType;
-                widgetsObj.size = widgets[i].size;
-                widgetsObj.text = widgets[i].text;
-                widgetsObj.url = widgets[i].url;
-                widgetsObj.path = widgets[i].path;
-                widgetsObj.width = widgets[i].width;
-
-                widgetsArray.push({id: widgetsObj.id, widgetType: widgetsObj.widgetType, size: widgetsObj.size, text: widgetsObj.text, url: widgetsObj.url, path: widgetsObj.path, width: widgetsObj.width});
-            }
-        }
-        res.json(widgetsArray);
+		model
+            .widgetModel
+            .findWidgetsByPageId(pageId)
+            .then(function(widgets) {
+                res.json(widgets);
+            }, function(error) {
+                res.sendStatus(404).send(error);
+            });
 	}
 
 	function updateWidget(req, res) {

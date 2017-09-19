@@ -6,11 +6,48 @@ module.exports = function() {
 	var WidgetModel = mongoose.model('WidgetModel', WidgetSchema);
 
 	var api = {
-		setModel: setModel
+		setModel: setModel,
+		createWidget: createWidget,
+		findWidgetsByPageId: findWidgetsByPageId
 	};
 	return api;
 
 	function setModel(_model) {
 		model = _model;
+	}
+
+	function createWidget(pageId, widget) {
+		var deferred = q.defer();
+		WidgetModel
+			.create(widget, function(err, widget) {
+				if(err) {
+					deferred.abort(err);
+				} else {
+					WidgetModel
+						.update({"_id" : widget._id}, {$set: {
+							"_page" : pageId
+						}}, function(err, widget) {
+							if(err) {
+								deferred.abort(err);
+							} else {
+								deferred.resolve(widget);
+							}
+						});
+				}
+			});
+		return deferred.promise;
+	}
+
+	function findWidgetsByPageId(pageId) {
+		var deferred = q.defer();
+		WidgetModel
+			.find({"_page" : pageId}, function(err, widgets) {
+				if(err) {
+					deferred.abort(err);
+				} else {
+					deferred.resolve(widgets);
+				}
+			});
+		return deferred.promise;
 	}
 };

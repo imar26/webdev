@@ -15,6 +15,7 @@ module.exports = function() {
 		placeholder: String,
 		description: String,
 		url: String,
+		path: String,
 		width: String,
 		height: String,
 		rows: Number,

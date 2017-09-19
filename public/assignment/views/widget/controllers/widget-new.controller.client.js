@@ -52,7 +52,8 @@
         	widgetFinal['size'] = widget.size;
         	widgetFinal['width'] = widget.width;
             widgetFinal['url'] = widget.url;
-            widgetFinal['path'] = path;  
+            widgetFinal['path'] = path; 
+
             WidgetService
                 .createWidget(vm.pageId, widgetFinal)
                 .then(function(response) {
