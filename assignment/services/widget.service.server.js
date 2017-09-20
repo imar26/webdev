@@ -15,7 +15,7 @@ module.exports = function(app, model) {
 	app.post("/api/page/:pageId/widget", createWidget);
 	app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId", updateWidget);
-    app.delete("/api/widget/:widgetId", deleteWidget);
+    app.delete("/api/page/:pageId/widget/:widgetId", deleteWidget);
     app.put("/api/page/:pageId/widget/", updateWidgetIndex);
     app.post("/api/upload/", upload.single('myFile'), uploadImage);
 
@@ -77,16 +77,49 @@ module.exports = function(app, model) {
     }
 
     function deleteWidget(req, res) {
+        var pageId = req.params.pageId;
         var widgetId = req.params.widgetId;
 
         model
             .widgetModel
-            .deleteWidget(widgetId)
+            .deleteWidget(pageId, widgetId)
             .then(function(status) {
                 res.json(status);
             }, function(error) {
                 res.sendStatus(404).send(error);
             });
+
+        // var pageId = req.params.pageId;
+        // var widgetId = req.params.widgetId;
+        // var widgetsArray = [];
+        // model
+        //     .widgetModel
+        //     .findWidgetById(widgetId)
+        //     .then(function(status) {
+        //         var index = status[0].index;
+        //         model
+        //             .widgetModel
+        //             .findWidgetsByPageId(pageId)
+        //             .then(function(widgets) {
+        //                 for(var i=0; i<widgets.length;i++) {
+        //                     if(widgets[i].index > index) {
+        //                         widgetsArray.push(widgets[i]);
+        //                     }
+        //                 }
+        //                 model
+        //                     .widgetModel
+        //                     .deleteWidget(widgetId, widgetsArray)
+        //                     .then(function(status) {
+        //                         console.log(status);
+        //                     }, function(error) {
+        //                         res.sendStatus(404).send(error);
+        //                     });
+        //             }, function(error) {
+        //                 res.sendStatus(404).send(error);
+        //             });
+        //     }, function(error) {
+        //         res.sendStatus(404).send(error);
+        //     });
     }
 
     function updateWidgetIndex(req, res) {

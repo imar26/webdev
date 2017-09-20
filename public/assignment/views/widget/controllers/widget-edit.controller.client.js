@@ -68,7 +68,7 @@
         }
         function deleteWidget() {
             WidgetService
-                .deleteWidget(vm.widgetId)
+                .deleteWidget(vm.pageId, vm.widgetId)
                 .then(function(response) {
                     widget = response.data;
                     if(widget) {

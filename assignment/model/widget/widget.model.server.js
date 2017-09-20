@@ -3,7 +3,9 @@ module.exports = function() {
 	var q = require('q');
 	var model = {};
 	var WidgetSchema = require('./widget.schema.server.js')();
+	var PageSchema = require('../page/page.schema.server.js')();
 	var WidgetModel = mongoose.model('WidgetModel', WidgetSchema);
+	var PageRepeatModel = mongoose.model('PageRepeatModel', PageSchema);
 
 	var api = {
 		setModel: setModel,
@@ -29,6 +31,17 @@ module.exports = function() {
 					WidgetModel
 						.update({"_id" : widget._id}, {$set: {
 							"_page" : pageId
+						}}, function(err, widget) {
+							if(err) {
+								deferred.abort(err);
+							} else {
+								deferred.resolve(widget);
+							}
+						});
+
+					PageRepeatModel
+						.update({"_id" : pageId}, {$push: {
+							"widgets" : widget._id
 						}}, function(err, widget) {
 							if(err) {
 								deferred.abort(err);
@@ -124,14 +137,48 @@ module.exports = function() {
 		return deferred.promise;
 	}
 
-	function deleteWidget(widgetId) {
+	function deleteWidget(pageId, widgetId) {
 		var deferred = q.defer();
 		WidgetModel
-			.remove({"_id" : widgetId}, function(err, widget) {
+			.findOne({"_id" : widgetId}, function(err, widget) {
 				if(err) {
 					deferred.abort(err);
 				} else {
-					deferred.resolve(widget);
+					WidgetModel
+						.find({"_page" : pageId}, function(err, widgets) {
+							if(err) {
+								deferred.abort(err);
+							} else {
+								for(var i=widget.index; i < widgets.length-1 ; i++) {
+									WidgetModel
+										.update({"index" : i+1}, {$set : {
+											"index" : i
+										}}, function(err, widget) {
+											if(err) {
+												deferred.abort(err);
+											} else {
+												WidgetModel
+													.remove({"_id" : widgetId}, function(err, widget) {
+														if(err) {
+															deferred.abort(err);
+														} else {
+															PageRepeatModel
+																.update({"_id" : pageId}, {$pull : {
+																	widgets: widgetId
+																}}, function(err, widget) {
+																	if(err) {
+																		deferred.abort(err);
+																	} else {
+																		deferred.resolve(widget);
+																	}
+																});
+														}
+													});
+											}
+										});
+								}
+							}
+						});
 				}
 			});
 		return deferred.promise;

@@ -30,8 +30,8 @@
             return $http.put("/api/widget/"+widgetId, widget);
         }
 
-        function deleteWidget(widgetId) {
-            return $http.delete("/api/widget/"+widgetId);
+        function deleteWidget(pageId, widgetId) {
+            return $http.delete("/api/page/"+pageId+"/widget/"+widgetId);
         }
 
         function updateWidgetIndex(pageId, startIndex, endIndex) {

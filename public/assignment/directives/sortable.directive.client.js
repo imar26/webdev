@@ -15,14 +15,14 @@
 				},
 				stop: function(event, ui) {
 					endIndex = ui.item.index();
-					WidgetService
-						.updateWidgetIndex(pageId, startIndex, endIndex)
-						.then(function(response) {
-							var success = "Reordering done.";
-							console.log(response.data);
-						}, function(response) {
-							console.log(response);
-						});
+					// WidgetService
+					// 	.updateWidgetIndex(pageId, startIndex, endIndex)
+					// 	.then(function(response) {
+					// 		var success = "Reordering done.";
+					// 		console.log(response.data);
+					// 	}, function(response) {
+					// 		console.log(response);
+					// 	});
 				}
 			});
 		}
