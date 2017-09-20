@@ -24,43 +24,83 @@ module.exports = function() {
 
 	function updateWidgetIndex(pageId, startIndex, endIndex) {
 		var deferred = q.defer();
-		WidgetModel
-			.find({"_page":pageId}, function(err, widgets) {
-				if(err) {
-					deferred.abort(err);
-				} else {
-					WidgetModel
-						.findOne({"index":startIndex}, function(err, widget) {
-							if(err) {
-								deferred.abort(err);
-							} else {
-								var widgetId = widget._id;
-								for(var i=endIndex; i<=startIndex-1;i++) {
-									WidgetModel
-										.update({"index":i}, {$set: {
-											"index":i+1
-										}}, function(err, widget) {
-											if(err) {
-												deferred.abort(err);
-											} else {
-												WidgetModel
-													.update({"_id" : widgetId}, {$set : {
-														"index" : endIndex
-													}}, function(err, widget) {
-														if(err) {
-															deferred.abort(err);
-														} else {
-															deferred.resolve(widget);
-														}
-													});
-												deferred.resolve(widget);
-											}
-										});
+		if(startIndex > endIndex) {
+			WidgetModel
+				.find({"_page":pageId}, function(err, widgets) {
+					if(err) {
+						deferred.abort(err);
+					} else {
+						WidgetModel
+							.findOne({"index":startIndex}, function(err, widget) {
+								if(err) {
+									deferred.abort(err);
+								} else {
+									var widgetId = widget._id;
+									for(var i=endIndex; i<=startIndex-1;i++) {
+										WidgetModel
+											.update({"index":i}, {$set: {
+												"index":parseInt(i)+1
+											}}, function(err, widget) {
+												if(err) {
+													deferred.abort(err);
+												} else {
+													WidgetModel
+														.update({"_id" : widgetId}, {$set : {
+															"index" : endIndex
+														}}, function(err, widget) {
+															if(err) {
+																deferred.abort(err);
+															} else {
+																deferred.resolve(widget);
+															}
+														});
+													deferred.resolve(widget);
+												}
+											});
+									}
 								}
-							}
-						});					
-				}
-			});
+							});					
+					}
+				});
+		} else if(startIndex < endIndex) {
+			WidgetModel
+				.find({"_page":pageId}, function(err, widgets) {
+					if(err) {
+						deferred.abort(err);
+					} else {
+						WidgetModel
+							.findOne({"index":startIndex}, function(err, widget) {
+								if(err) {
+									deferred.abort(err);
+								} else {
+									var widgetId = widget._id;
+									for(var i=startIndex; i<=endIndex-1;i++) {
+										WidgetModel
+											.update({"index":parseInt(i)+1}, {$set: {
+												"index":i
+											}}, function(err, widget) {
+												if(err) {
+													deferred.abort(err);
+												} else {
+													WidgetModel
+														.update({"_id" : widgetId}, {$set : {
+															"index" : endIndex
+														}}, function(err, widget) {
+															if(err) {
+																deferred.abort(err);
+															} else {
+																deferred.resolve(widget);
+															}
+														});
+													deferred.resolve(widget);
+												}
+											});
+									}
+								}
+							});					
+					}
+				});
+		}
 		return deferred.promise;
 	}
 

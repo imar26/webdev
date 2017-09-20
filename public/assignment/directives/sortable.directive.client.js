@@ -19,7 +19,6 @@
 						.updateWidgetIndex(pageId, startIndex, endIndex)
 						.then(function(response) {
 							var success = "Reordering done.";
-							console.log(response.data);
 						}, function(response) {
 							console.log(response);
 						});
