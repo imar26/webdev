@@ -39,33 +39,44 @@
             });
         }
         function addWidget(widget, widgetType, path) {
-        	var widgetFinal = {
-        		widgetType: '',
-        		text: '',
-        		size: '',
-        		width: '',
-        		url: '',
-                path: ''
-        	}
-        	widgetFinal['widgetType'] = widgetType;
-        	widgetFinal['text'] = widget.text;
-        	widgetFinal['size'] = widget.size;
-        	widgetFinal['width'] = widget.width;
-            widgetFinal['url'] = widget.url;
-            widgetFinal['path'] = path; 
-
             WidgetService
-                .createWidget(vm.pageId, widgetFinal)
+                .findWidgetsByPageId(vm.pageId)
                 .then(function(response) {
-                    widget = response.data;
-                    if(widget) {
-                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/");
-                    } else {
-                        vm.alert = "Widget could not be created.";
+                    vm.widgets = response.data;
+
+                    var widgetFinal = {
+                        widgetType: '',
+                        text: '',
+                        size: '',
+                        width: '',
+                        url: '',
+                        path: '',
+                        index: ''
                     }
+                    widgetFinal['widgetType'] = widgetType;
+                    widgetFinal['text'] = widget.text;
+                    widgetFinal['size'] = widget.size;
+                    widgetFinal['width'] = widget.width;
+                    widgetFinal['url'] = widget.url;
+                    widgetFinal['path'] = path; 
+                    widgetFinal['index'] = vm.widgets.length; 
+
+                    WidgetService
+                        .createWidget(vm.pageId, widgetFinal)
+                        .then(function(response) {
+                            widget = response.data;
+                            if(widget) {
+                                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/");
+                            } else {
+                                vm.alert = "Widget could not be created.";
+                            }
+                        }, function(response) {
+                            console.log(response);
+                        });
                 }, function(response) {
                     console.log(response);
-                });        	
+                });
+        	        
         }
         function searchFlicker() {
             $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/create/"+vm.wgType+"/search/");

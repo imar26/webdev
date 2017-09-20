@@ -32,30 +32,40 @@
         function selectPhoto(photo) {
         	var url = "https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + "_b.jpg";
 
-        	var widgetFinal = {
-        		widgetType: '',
-        		text: '',
-        		size: '',
-        		width: '',
-        		url: '',
-                path: ''
-        	}
-        	widgetFinal['widgetType'] = vm.wgType;
-        	widgetFinal['width'] = "100%";
-            widgetFinal['url'] = url;
+            WidgetService
+                .findWidgetsByPageId(vm.pageId)
+                .then(function(response) {
+                    vm.widgets = response.data;
 
-        	WidgetService
-        		.createWidget(vm.pageId, widgetFinal)
-        		.then(function(response) {
-        			widget = response.data;
-                    if(widget) {
-                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/");
-                    } else {
-                        vm.alert = "Widget could not be created.";
+                    var widgetFinal = {
+                        widgetType: '',
+                        text: '',
+                        size: '',
+                        width: '',
+                        url: '',
+                        path: '',
+                        index: ''
                     }
-        		}, function(response) {
-        			console.log(response);
-        		});
+                    widgetFinal['widgetType'] = vm.wgType;
+                    widgetFinal['width'] = "100%";
+                    widgetFinal['url'] = url; 
+                    widgetFinal['index'] = vm.widgets.length; 
+
+                    WidgetService
+                        .createWidget(vm.pageId, widgetFinal)
+                        .then(function(response) {
+                            widget = response.data;
+                            if(widget) {
+                                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/");
+                            } else {
+                                vm.alert = "Widget could not be created.";
+                            }
+                        }, function(response) {
+                            console.log(response);
+                        });
+                }, function(response) {
+                    console.log(response);
+                });
         }
 
         function goToCreateImageWidget() {

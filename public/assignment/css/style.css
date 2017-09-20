@@ -4,7 +4,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1;
+    z-index: 2;
 }
 
 .default-heading {
@@ -13,7 +13,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1;
+    z-index: 2;
 }
 
 .main-content {
@@ -165,14 +165,17 @@ a:hover {
 }
 
 .youtube-widget {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 */
-    height: 0;
+    position:relative;
+    padding-bottom:56.25%;
+    padding-top:30px;
+    height:0;
+    overflow:hidden;
 }
 
 .youtube-widget iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
 }
