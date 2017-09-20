@@ -88,51 +88,20 @@ module.exports = function(app, model) {
             }, function(error) {
                 res.sendStatus(404).send(error);
             });
-
-        // var pageId = req.params.pageId;
-        // var widgetId = req.params.widgetId;
-        // var widgetsArray = [];
-        // model
-        //     .widgetModel
-        //     .findWidgetById(widgetId)
-        //     .then(function(status) {
-        //         var index = status[0].index;
-        //         model
-        //             .widgetModel
-        //             .findWidgetsByPageId(pageId)
-        //             .then(function(widgets) {
-        //                 for(var i=0; i<widgets.length;i++) {
-        //                     if(widgets[i].index > index) {
-        //                         widgetsArray.push(widgets[i]);
-        //                     }
-        //                 }
-        //                 model
-        //                     .widgetModel
-        //                     .deleteWidget(widgetId, widgetsArray)
-        //                     .then(function(status) {
-        //                         console.log(status);
-        //                     }, function(error) {
-        //                         res.sendStatus(404).send(error);
-        //                     });
-        //             }, function(error) {
-        //                 res.sendStatus(404).send(error);
-        //             });
-        //     }, function(error) {
-        //         res.sendStatus(404).send(error);
-        //     });
     }
 
     function updateWidgetIndex(req, res) {
         var pageId = req.params.pageId;
         var startIndex = req.query.initial;
         var endIndex = req.query.final;
-        var widgetObj = {};
-        for(var i=0; i<widgets.length;i++) {
-            if(widgets[i].pageId == pageId) {
-                widgets.move(startIndex,endIndex);
-            }
-        }
-        res.json(widgets);
+        model
+            .widgetModel
+            .updateWidgetIndex(pageId, startIndex, endIndex)
+            .then(function(status) {
+                res.json(status);
+            }, function(error) {
+                res.sendStatus(404).send(error);
+            });
     }
 
     function uploadImage(req, res) {

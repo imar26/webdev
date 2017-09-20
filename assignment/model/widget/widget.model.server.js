@@ -13,12 +13,55 @@ module.exports = function() {
 		findWidgetsByPageId: findWidgetsByPageId,
 		findWidgetById: findWidgetById,
 		updateWidget: updateWidget,
-		deleteWidget: deleteWidget
+		deleteWidget: deleteWidget,
+		updateWidgetIndex: updateWidgetIndex
 	};
 	return api;
 
 	function setModel(_model) {
 		model = _model;
+	}
+
+	function updateWidgetIndex(pageId, startIndex, endIndex) {
+		var deferred = q.defer();
+		WidgetModel
+			.find({"_page":pageId}, function(err, widgets) {
+				if(err) {
+					deferred.abort(err);
+				} else {
+					WidgetModel
+						.findOne({"index":startIndex}, function(err, widget) {
+							if(err) {
+								deferred.abort(err);
+							} else {
+								var widgetId = widget._id;
+								for(var i=endIndex; i<=startIndex-1;i++) {
+									WidgetModel
+										.update({"index":i}, {$set: {
+											"index":i+1
+										}}, function(err, widget) {
+											if(err) {
+												deferred.abort(err);
+											} else {
+												WidgetModel
+													.update({"_id" : widgetId}, {$set : {
+														"index" : endIndex
+													}}, function(err, widget) {
+														if(err) {
+															deferred.abort(err);
+														} else {
+															deferred.resolve(widget);
+														}
+													});
+												deferred.resolve(widget);
+											}
+										});
+								}
+							}
+						});					
+				}
+			});
+		return deferred.promise;
 	}
 
 	function createWidget(pageId, widget) {
@@ -149,7 +192,7 @@ module.exports = function() {
 							if(err) {
 								deferred.abort(err);
 							} else {
-								for(var i=widget.index; i < widgets.length-1 ; i++) {
+								for(var i=widget.index; i <= widgets.length-1 ; i++) {
 									WidgetModel
 										.update({"index" : i+1}, {$set : {
 											"index" : i

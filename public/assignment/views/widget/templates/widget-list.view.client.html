@@ -14,7 +14,7 @@
 <div class="container main-content">
     <br/>
     <wbdv-sortable id="widgetList">
-        <div class="row websiteRow" ng-repeat="widget in model.widgets track by $index">
+        <div class="row websiteRow" ng-repeat="widget in model.widgets">
             <div class="col-md-12" ng-switch="widget.widgetType">
                 <div class="icons">
                     <a ng-click="model.editWidget(widget._id)"><i class="fa fa-cog" aria-hidden="true"></i></a>
