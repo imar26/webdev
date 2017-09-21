@@ -4,7 +4,12 @@
     <input type="text" class="form-control" ng-model="model.widget.widgetType" />
     <br/>
     <label>Text</label>
-    <input type="text" class="form-control" ng-model="model.widget.text" />
+    <!-- <input type="text" class="form-control" ng-model="model.widget.text" /> -->
+    <div ng-model="model.widget.text" text-angular ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
+        ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+        ['indent','outdent'],['html']]">
+	</div>
+
     <br/>
     <a ng-click="model.deleteWidget()" class="btn btn-danger btn-block">Delete</a>
 </div>
