@@ -25,20 +25,38 @@ module.exports = function() {
 	function updateWidgetIndex(pageId, startIndex, endIndex) {
 		var deferred = q.defer();
 		if(startIndex > endIndex) {
+			console.log("startIndex");
+			console.log(startIndex);
+			console.log("endIndex");
+			console.log(endIndex);
 			WidgetModel
 				.find({"_page":pageId}, function(err, widgets) {
 					if(err) {
 						deferred.abort(err);
 					} else {
+						console.log("widgets");
+						console.log(widgets);
+						var updateQuery1 = {
+							"index":startIndex,
+							"_page":pageId
+						};
 						WidgetModel
-							.findOne({"index":startIndex}, function(err, widget) {
+							.findOne(updateQuery1, function(err, widget) {
 								if(err) {
 									deferred.abort(err);
 								} else {
+									console.log("widget");
+									console.log(widget);
 									var widgetId = widget._id;
+									console.log("widgetId");
+									console.log(widgetId);
 									for(var i=endIndex; i<=startIndex-1;i++) {
+										var updateQuery2 = {
+											"index":i,
+											"_page":pageId
+										};
 										WidgetModel
-											.update({"index":i}, {$set: {
+											.update(updateQuery2, {$set: {
 												"index":parseInt(i)+1
 											}}, function(err, widget) {
 												if(err) {
@@ -68,15 +86,23 @@ module.exports = function() {
 					if(err) {
 						deferred.abort(err);
 					} else {
+						var updateQuery1 = {
+							"index":startIndex,
+							"_page":pageId
+						};
 						WidgetModel
-							.findOne({"index":startIndex}, function(err, widget) {
+							.findOne(updateQuery1, function(err, widget) {
 								if(err) {
 									deferred.abort(err);
 								} else {
 									var widgetId = widget._id;
 									for(var i=startIndex; i<=endIndex-1;i++) {
+										var updateQuery2 = {
+											"index":parseInt(i)+1,
+											"_page":pageId
+										};
 										WidgetModel
-											.update({"index":parseInt(i)+1}, {$set: {
+											.update(updateQuery2, {$set: {
 												"index":i
 											}}, function(err, widget) {
 												if(err) {
@@ -247,8 +273,12 @@ module.exports = function() {
 								deferred.abort(err);
 							} else {
 								for(var i=widget.index; i <= widgets.length-1 ; i++) {
+									var updateQuery = {
+										"_page" : pageId,
+										"index" : i+1
+									};
 									WidgetModel
-										.update({"index" : i+1}, {$set : {
+										.update(updateQuery, {$set : {
 											"index" : i
 										}}, function(err, widget) {
 											if(err) {
@@ -261,7 +291,7 @@ module.exports = function() {
 														} else {
 															PageRepeatModel
 																.update({"_id" : pageId}, {$pull : {
-																	widgets: widgetId
+																	"widgets": widgetId
 																}}, function(err, widget) {
 																	if(err) {
 																		deferred.abort(err);
