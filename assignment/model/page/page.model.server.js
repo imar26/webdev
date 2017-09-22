@@ -105,7 +105,7 @@ module.exports = function() {
 				} else {
 					WebsiteRepeatModel
 						.update({"_id" : websiteId}, {$pull : {
-							pages: pageId
+							"pages": pageId
 						}}, function(err, page) {
 							if(err) {
 								deferred.abort(err);
