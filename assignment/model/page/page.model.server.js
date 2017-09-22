@@ -3,8 +3,10 @@ module.exports = function() {
 	var mongoose = require('mongoose');
 	var PageSchema = require('./page.schema.server.js')();
 	var WebsiteSchema = require('../website/website.schema.server.js')();
+	var WidgetSchema = require('../widget/widget.schema.server.js')();
 	var PageModel = mongoose.model('PageModel', PageSchema);
 	var WebsiteRepeatModel = mongoose.model('WebsiteRepeatModel', WebsiteSchema);
+	var WidgetRepeatModel = mongoose.model('WidgetRepeatModel', WidgetSchema);
 	var q = require('q');
 
 	var api = {
@@ -110,7 +112,14 @@ module.exports = function() {
 							if(err) {
 								deferred.abort(err);
 							} else {
-								deferred.resolve(page);
+								WidgetRepeatModel
+									.remove({"_page" : pageId}, function(err, page) {
+										if(err) {
+											deferred.abort(err);
+										} else {
+											deferred.resolve(page);
+										}
+									});
 							}
 						});
 				}

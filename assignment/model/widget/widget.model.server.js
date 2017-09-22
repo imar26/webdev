@@ -25,17 +25,11 @@ module.exports = function() {
 	function updateWidgetIndex(pageId, startIndex, endIndex) {
 		var deferred = q.defer();
 		if(startIndex > endIndex) {
-			console.log("startIndex");
-			console.log(startIndex);
-			console.log("endIndex");
-			console.log(endIndex);
 			WidgetModel
 				.find({"_page":pageId}, function(err, widgets) {
 					if(err) {
 						deferred.abort(err);
 					} else {
-						console.log("widgets");
-						console.log(widgets);
 						var updateQuery1 = {
 							"index":startIndex,
 							"_page":pageId
@@ -45,11 +39,7 @@ module.exports = function() {
 								if(err) {
 									deferred.abort(err);
 								} else {
-									console.log("widget");
-									console.log(widget);
 									var widgetId = widget._id;
-									console.log("widgetId");
-									console.log(widgetId);
 									for(var i=endIndex; i<=startIndex-1;i++) {
 										var updateQuery2 = {
 											"index":i,
