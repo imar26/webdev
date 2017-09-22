@@ -1,0 +1,15 @@
+<div class="container">
+    <br/>
+    <label>Widget Type</label>
+    <input type="text" class="form-control" ng-model="model.widget.widgetType" />
+    <br/>
+    <label>Text Input</label>
+    <div ng-if="model.widget.formatted" ng-model="model.widget.text" text-angular ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
+        ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+        ['indent','outdent'],['html']]">
+    </div>
+    <input ng-if="!model.widget.formatted && (!model.widget.rows || model.widget.rows==1)" class="form-control" type="text" placeholder="{{model.widget.placeholder}}" ng-model="model.widget.text" />
+    <textarea ng-if="!model.widget.formatted && model.widget.rows>1" rows="{{model.widget.rows}}" class="form-control" placeholder="{{model.widget.placeholder}}" ng-model="model.widget.text"></textarea>
+    <br/>
+    <a ng-click="model.deleteWidget()" class="btn btn-danger btn-block">Delete</a>
+</div>

@@ -43,7 +43,6 @@
                 .findWidgetsByPageId(vm.pageId)
                 .then(function(response) {
                     vm.widgets = response.data;
-
                     var widgetFinal = {
                         widgetType: '',
                         text: '',
@@ -51,6 +50,9 @@
                         width: '',
                         url: '',
                         path: '',
+                        rows: '',
+                        placeholder: '',
+                        formatted: '',
                         index: ''
                     }
                     widgetFinal['widgetType'] = widgetType;
@@ -59,6 +61,9 @@
                     widgetFinal['width'] = widget.width;
                     widgetFinal['url'] = widget.url;
                     widgetFinal['path'] = path; 
+                    widgetFinal['rows'] = widget.rows; 
+                    widgetFinal['placeholder'] = widget.placeholder; 
+                    widgetFinal['formatted'] = widget.formatted; 
                     widgetFinal['index'] = vm.widgets.length; 
 
                     WidgetService

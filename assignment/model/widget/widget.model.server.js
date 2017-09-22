@@ -215,6 +215,20 @@ module.exports = function() {
 						deferred.resolve(widget);
 					}
 				});
+		} else if(widget.widgetType == 'TEXT') {
+			WidgetModel
+				.update({"_id" : widgetId}, {$set: {
+					text: widget.text,
+	        		rows: widget.rows,
+	        		placeholder: widget.placeholder,
+	        		formatted: widget.formatted
+				}}, function(err, widget) {
+					if(err) {
+						deferred.abort(err);
+					} else {
+						deferred.resolve(widget);
+					}
+				});
 		}
 		
 		return deferred.promise;

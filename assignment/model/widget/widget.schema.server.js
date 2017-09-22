@@ -8,7 +8,7 @@ module.exports = function() {
 		},
 		widgetType: {
 			type: String,
-			enum: ['HEADING', 'IMAGE', 'YOUTUBE', 'HTML', 'INPUT']
+			enum: ['HEADING', 'IMAGE', 'YOUTUBE', 'HTML', 'TEXT']
 		},
 		name: String,
 		text: String,
