@@ -3,8 +3,12 @@ module.exports = function() {
 	var mongoose = require('mongoose');
 	var WebsiteSchema = require('./website.schema.server.js')();
 	var UserSchema = require('../user/user.schema.server.js')();
+	var PageSchema = require('../page/page.schema.server.js')();
+	var WidgetSchema = require('../widget/widget.schema.server.js')();
 	var WebsiteModel = mongoose.model('WebsiteModel', WebsiteSchema);
 	var UserRepeatModel = mongoose.model('UserRepeatModel', UserSchema);
+	var RemovePageRepeatModel = mongoose.model('RemovePageRepeatModel', PageSchema);
+	var RemoveWidgetRepeatModel = mongoose.model('RemoveWidgetRepeatModel', WidgetSchema);
 	var q = require('q');
 
 	var api = {
@@ -110,7 +114,33 @@ module.exports = function() {
 							if(err) {
 								deferred.abort(err);
 							} else {
-								deferred.resolve(website);
+								RemovePageRepeatModel
+									.find({"_website" : websiteId}, function(err, pages) {
+										if(err) {
+											deferred.abort(err);
+										} else {
+											var arraylength = pages.length;
+											for(var i=0;i<arraylength;i++) {
+												RemoveWidgetRepeatModel
+													.remove({"_page" : pages[i]._id}, function(err, page) {
+														if(err) {
+															deferred.abort(err);
+														} else {
+															deferred.resolve(page);
+														}
+													});
+											}
+										}
+									});
+
+								RemovePageRepeatModel
+									.remove({"_website" : websiteId}, function(err, website) {
+										if(err) {
+											deferred.abort(err);
+										} else {
+											deferred.resolve(website);
+										}
+									});
 							}
 						});
 				}
