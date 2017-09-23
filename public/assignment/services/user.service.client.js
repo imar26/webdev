@@ -35,7 +35,7 @@
         }
 
         function deleteUser(userId) {
-
+            return $http.delete("/api/user/"+userId);
         }
 
     }

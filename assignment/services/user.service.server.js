@@ -3,6 +3,7 @@ module.exports = function(app, model) {
 	app.get("/api/user/:userId", findUserById);
 	app.put("/api/user/:userId", updateUser);
 	app.post("/api/user", createUser);
+	app.delete("/api/user/:userId", deleteUser);
 
     function createUser(req, res) {
 		var password = req.body.password;
@@ -80,6 +81,19 @@ module.exports = function(app, model) {
   			.userModel
   			.updateUser(userId, req.body)
   			.then(function(user) {
+				res.json(user);
+			}, function(error) {
+				res.sendStatus(404).send(error);
+			});
+	}
+
+	function deleteUser(req, res) {
+		var userId = req.params.userId;
+
+		model
+			.userModel
+			.deleteUser(userId)
+			.then(function(user) {
 				res.json(user);
 			}, function(error) {
 				res.sendStatus(404).send(error);

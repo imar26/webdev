@@ -9,6 +9,7 @@
         vm.updateUser = updateUser;
         vm.goToProfile = goToProfile;
         vm.goToWebsites = goToWebsites;
+        vm.deleteUser = deleteUser;
 		function init() {
 			UserService
                 .findUserById(vm.userId)
@@ -42,6 +43,18 @@
                         console.log(response);
                     }
                 );            
+        }
+        function deleteUser(userId) {
+            UserService
+                .deleteUser(userId)
+                .then(function(response) {
+                    user = response.data;
+                    if(user) {
+                        $location.url("/login");
+                    }
+                }, function(response) {
+                    console.log(response);
+                });
         }
         function goToProfile() {
             $location.url("/user/"+vm.userId);
