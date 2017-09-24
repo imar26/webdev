@@ -169,7 +169,7 @@ module.exports = function() {
 																	}
 																});
 														} 
-													}, 5000);
+													}, 3000);
 												}
 											} else {
 												deferred.resolve(website);
@@ -214,7 +214,7 @@ module.exports = function() {
 											}
 										});
 								} 
-							}, 8000);
+							}, 5000);
 
 							setTimeout(function(){ 
 								for(var i=0; i<websitesLength;i++) {
@@ -229,7 +229,7 @@ module.exports = function() {
 											}
 										});
 								} 
-							}, 12000);
+							}, 7000);
 							
 						} 
 
