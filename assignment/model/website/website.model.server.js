@@ -103,42 +103,82 @@ module.exports = function() {
 	function deleteWebsite(websiteId, userId) {
 		var deferred = q.defer();
 		WebsiteModel
-			.remove({"_id" : websiteId}, function(err, website) {
+			.find({"_id" : websiteId}, function(err, website) {
 				if(err) {
 					deferred.abort(err);
 				} else {
-					UserRepeatModel
-						.update({"_id" : userId}, {$pull : {
-							"websites" : websiteId
-						}}, function(err, website) {
-							if(err) {
-								deferred.abort(err);
-							} else {
+					if(website.length > 0) {
+						var pages = website[0].pages;
+						var pagesLength = pages.length;
+						if(pagesLength > 0) {
+							for(var i=0; i<pagesLength;i++) {
+								console.log("pages[i]");
+								console.log(pages[i]);
 								RemovePageRepeatModel
-									.find({"_website" : websiteId}, function(err, pages) {
+									.find({"_id" : pages[i]}, function(err, page) {
 										if(err) {
 											deferred.abort(err);
 										} else {
-											var arraylength = pages.length;
-											for(var i=0;i<arraylength;i++) {
-												RemoveWidgetRepeatModel
-													.remove({"_page" : pages[i]._id}, function(err, page) {
-														if(err) {
-															deferred.abort(err);
-														} else {
-															deferred.resolve(page);
-														}
-													});
+											console.log("page");
+											console.log(page);
+											if(page.length > 0) {
+												var widgets = page[0].widgets;
+												var widgetsLength = widgets.length;
+												console.log(widgets);
+												console.log(widgetsLength);
+												if(widgetsLength > 0) {
+													for(var j=0;j<widgetsLength;j++) {
+														RemoveWidgetRepeatModel
+															.remove({"_id" : widgets[j]}, function(err, widget) {
+																if(err) {
+																	deferred.abort(err);
+																} else {
+																	deferred.resolve(widget);
+																}
+															});
+													}
+												}
+											} else {
+												deferred.resolve(page);
 											}
 										}
 									});
+							}
 
-								RemovePageRepeatModel
-									.remove({"_website" : websiteId}, function(err, website) {
+							setTimeout(function(){ 
+								for(var i=0; i<pagesLength;i++) {
+									console.log("2pages[i]");
+									console.log(pages[i]);
+									RemovePageRepeatModel
+										.remove({"_id" : pages[i]}, function(err, removedpages) {
+											if(err) {
+												deferred.abort(err);
+											} else {
+												deferred.resolve(removedpages);
+											}
+										});
+								} 
+							}, 5000);
+							
+						} 
+
+					} else {
+						deferred.resolve(website);
+					}
+
+					WebsiteModel
+						.remove({"_id" : websiteId}, function(err, deletedwebsite) {
+							if(err) {
+								deferred.abort(err);
+							} else {
+								UserRepeatModel
+									.update({"_id" : userId}, {$pull : {
+										"websites" : websiteId
+									}}, function(err, user) {
 										if(err) {
 											deferred.abort(err);
 										} else {
-											deferred.resolve(website);
+											deferred.resolve(user);
 										}
 									});
 							}

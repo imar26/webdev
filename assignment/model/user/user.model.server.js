@@ -109,35 +109,44 @@ module.exports = function() {
 							if(err) {
 								deferred.abort(err);
 							} else {
+								console.log("websites");
+								console.log(websites);
 								var websitesLength = websites.length;
+								console.log(websitesLength);
 								for(var i=0; i<websitesLength; i++) {
 									var pages = websites[i].pages;
+									console.log("pages");
 									console.log(pages);
 									if(pages) {
 										var pagesLength = pages.length;
 										for(var j=0; j<pagesLength; j++) {
 											var pageId = pages[j];
+											console.log("pageId");
 											console.log(pageId);
+											console.log("j value");
+											console.log(j);
 											PageModel1
-												.find({"_id" : pages[j]}, function(err, pages) {
+												.find({"_id" : pageId}, function(err, allPages) {
 													if(err) {
 														deferred.abort(err);
 													} else {
-														var widgets = pages[0].widgets;
-														console.log(widgets);
-														if(widgets) {
-															var widgetsLength = widgets.length;
-															for(var k=0; k<widgetsLength; k++) {
-																WidgetModel1
-																	.remove({"_id" : widgets[k]}, function(err, widgets) {
-																		if(err) {
-																			deferred.abort(err);
-																		} else {
-																			deferred.resolve(widgets);
-																		}
-																	});
-															}
-														}
+														console.log("pagessssssssssssssss");
+														console.log(allPages);
+														// var widgets = allPages[0].widgets;
+														// console.log(widgets);
+														// if(widgets) {
+														// 	var widgetsLength = widgets.length;
+														// 	for(var k=0; k<widgetsLength; k++) {
+														// 		WidgetModel1
+														// 			.remove({"_id" : widgets[k]}, function(err, widgets) {
+														// 				if(err) {
+														// 					deferred.abort(err);
+														// 				} else {
+														// 					deferred.resolve(widgets);
+														// 				}
+														// 			});
+														// 	}
+														// }
 													}							
 												});
 
