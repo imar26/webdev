@@ -104,81 +104,147 @@ module.exports = function() {
 				if(err) {
 					deferred.abort(err);
 				} else {
-					WebsiteModel1
-						.find({"_user" : userId}, function(err, websites) {
-							if(err) {
-								deferred.abort(err);
-							} else {
-								console.log("websites");
-								console.log(websites);
-								var websitesLength = websites.length;
-								console.log(websitesLength);
-								for(var i=0; i<websitesLength; i++) {
-									var pages = websites[i].pages;
-									console.log("pages");
-									console.log(pages);
-									if(pages) {
-										var pagesLength = pages.length;
-										for(var j=0; j<pagesLength; j++) {
-											var pageId = pages[j];
-											console.log("pageId");
-											console.log(pageId);
-											console.log("j value");
-											console.log(j);
-											PageModel1
-												.find({"_id" : pageId}, function(err, allPages) {
-													if(err) {
-														deferred.abort(err);
-													} else {
-														console.log("pagessssssssssssssss");
-														console.log(allPages);
-														// var widgets = allPages[0].widgets;
-														// console.log(widgets);
-														// if(widgets) {
-														// 	var widgetsLength = widgets.length;
-														// 	for(var k=0; k<widgetsLength; k++) {
-														// 		WidgetModel1
-														// 			.remove({"_id" : widgets[k]}, function(err, widgets) {
-														// 				if(err) {
-														// 					deferred.abort(err);
-														// 				} else {
-														// 					deferred.resolve(widgets);
-														// 				}
-														// 			});
-														// 	}
-														// }
-													}							
-												});
-
-											PageModel1
-												.remove({"_id" : pageId}, function(err, pages) {
-													if(err) {
-														deferred.abort(err);
-													} else {
-														deferred.resolve(pages);
-													}
-												});									
-										}
-									}
-								}
-							}
-						});	
-
-					WebsiteModel1
-						.remove({"_user" : userId}, function(err, websites) {
-							if(err) {
-								deferred.abort(err);
-							} else {
-								UserModel
-									.remove({"_id" : userId}, function(err, user) {
+					if(user.length > 0) {
+						var websites = user[0].websites;
+						var websitesLength = websites.length;
+						if(websitesLength > 0) {
+							for(var i=0; i<websitesLength;i++) {
+								console.log("websites[i]");
+								console.log(websites[i]);
+								WebsiteModel1
+									.find({"_id" : websites[i]}, function(err, website) {
 										if(err) {
 											deferred.abort(err);
 										} else {
-											deferred.resolve(user);
+											console.log("website");
+											console.log(website);
+											if(website.length > 0) {
+												var pages = website[0].pages;
+												var pagesLength = pages.length;
+												console.log(pages);
+												console.log(pagesLength);
+												if(pagesLength > 0) {
+													for(var j=0;j<pagesLength;j++) {
+														console.log("pages[j]");
+														console.log(pages[j]);
+														PageModel1
+															.find({"_id" : pages[j]}, function(err, page) {
+																if(err) {
+																	deferred.abort(err);
+																} else {
+																	console.log("page");
+																	console.log(page);
+																	if(page.length > 0) {
+																		var widgets = page[0].widgets;
+																		var widgetsLength = widgets.length;
+																		if(widgetsLength > 0) {
+																			for(var k=0;k<widgetsLength;k++) {
+																				WidgetModel1
+																					.remove({"_id" : widgets[k]}, function(err, widget) {
+																						if(err) {
+																							deferred.abort(err);
+																						} else {
+																							deferred.resolve(widget);
+																						}
+																					});
+																			}
+																		}
+																	} else {
+																		deferred.resolve(page);
+																	}
+																}
+															});
+													}
+
+													setTimeout(function(){ 
+														for(var i=0; i<pagesLength;i++) {
+															console.log("2pages[i]");
+															console.log(pages[i]);
+															PageModel1
+																.remove({"_id" : pages[i]}, function(err, removedpages) {
+																	if(err) {
+																		deferred.abort(err);
+																	} else {
+																		deferred.resolve(removedpages);
+																	}
+																});
+														} 
+													}, 5000);
+												}
+											} else {
+												deferred.resolve(website);
+											}
 										}
 									});
 							}
-						});			
+
+							setTimeout(function(){ 
+								for(var i=0; i<websitesLength;i++) {
+									console.log("websites[i]");
+									console.log(websites[i]);
+									WebsiteModel1
+										.find({"_id" : websites[i]}, function(err, website) {
+											if(err) {
+												deferred.abort(err);
+											} else {
+												console.log("website");
+												console.log(website);
+												if(website.length > 0) {
+													var pages = website[0].pages;
+													var pagesLength = pages.length;
+													console.log(pages);
+													console.log(pagesLength);
+													if(pagesLength > 0) {
+														for(var j=0;j<pagesLength;j++) {
+															console.log("pages[j]");
+															console.log(pages[j]);
+															PageModel1
+																.remove({"_id" : pages[j]}, function(err, page) {
+																	if(err) {
+																		deferred.abort(err);
+																	} else {
+																		deferred.resolve(page);
+																	}
+																});
+														}
+													}
+												} else {
+													deferred.resolve(website);
+												}
+											}
+										});
+								} 
+							}, 8000);
+
+							setTimeout(function(){ 
+								for(var i=0; i<websitesLength;i++) {
+									console.log("websites[i]");
+									console.log(websites[i]);
+									WebsiteModel1
+										.remove({"_id" : websites[i]}, function(err, website) {
+											if(err) {
+												deferred.abort(err);
+											} else {
+												deferred.resolve(website);
+											}
+										});
+								} 
+							}, 12000);
+							
+						} 
+
+					} else {
+						deferred.resolve(user);
+					}
+
+					UserModel
+						.remove({"_id" : userId}, function(err, deletedwebsite) {
+							if(err) {
+								deferred.abort(err);
+							} else {
+								deferred.resolve(user);
+							}
+						});
 				}
 			});
 		return deferred.promise;
