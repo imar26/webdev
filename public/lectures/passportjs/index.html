@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="PassportApp">
+<head>
+	<title>Passport js</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-controller="LoginController as model">
+
+<div class="container">
+<h1>Login</h1>
+<input type="text" ng-model="user.username" class="form-control" />
+<input type="password" ng-model="user.password" class="form-control" />
+<button ng-click="model.loginUser(user)">Login</button>
+</div>
+
+</body>
+</html>
