@@ -37,7 +37,6 @@ function findUserByCredentials(username, password) {
 			if(err) {
 				d.abort(err);
 			} else {
-				console.log(user);
 				d.resolve(user);
 			}
 		});

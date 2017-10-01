@@ -1,0 +1,10 @@
+<h1>Login</h1>
+<input type="text" ng-model="user.username" class="form-control" />
+<input type="password" ng-model="user.password" class="form-control" />
+<button ng-click="model.loginUser(user)">Login</button>
+<div class="alert alert-info" ng-if="model.success">
+    {{model.success}}
+</div>
+<div class="alert alert-danger" ng-if="model.error">
+    {{model.error}}
+</div>

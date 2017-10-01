@@ -1,25 +1,42 @@
 (function() {
 	angular
-		.module("PassportApp", [])
-		.controller("LoginController", LoginController);
+		.module("PassportApp", ["ngRoute"])
+		.config(configuration);
 
-	function LoginController($http) {
-		var vm = this;
+	function configuration($routeProvider) {
+		$routeProvider
+			.when('/login', {
+				templateUrl: 'views/user/templates/login.view.html',
+				controller: 'LoginController',
+				controllerAs: 'model'
+			})
+			.when('/profile', {
+				templateUrl: 'views/user/templates/profile.view.html',
+				controller: 'ProfileController',
+				controllerAs: 'model',
+				resolve: {
+					checkLogin: checkLogin
+				}
+			})
+			.otherwise({
+				redirectTo: '/login'
+			});
+	}
 
-		vm.loginUser = loginUser;
-
-		function loginUser(user) {
-			$http.post('/api/passportlogin', user)
-				.then(function(response) {
-					user = response.data;
-					if(user) {						
-						vm.success = 'Welcome';
-					} else {
-						vm.error = 'Unauthorized';
-					}
-				}, function(error) {
-					vm.error = error.data;
-				});
-		}
+	function checkLogin($q, UserService, $location) {
+		var d = $q.defer();
+		UserService
+			.loggedin()
+			.then(function(user) {
+				if(user.data == '0') {
+					d.reject();
+					$location.url('/login');
+				} else {
+					d.resolve(user);			
+				}
+			}, function(err) {
+				error = err.data;
+			});
+		return d.promise;
 	}
 })();
