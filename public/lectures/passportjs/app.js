@@ -10,12 +10,17 @@
 				controller: 'LoginController',
 				controllerAs: 'model'
 			})
+			.when('/register', {
+				templateUrl: 'views/user/templates/register.view.html',
+				controller: 'RegisterController',
+				controllerAs: 'model'
+			})
 			.when('/profile', {
 				templateUrl: 'views/user/templates/profile.view.html',
 				controller: 'ProfileController',
 				controllerAs: 'model',
 				resolve: {
-					checkLogin: checkLogin
+					currentUser: checkLogin
 				}
 			})
 			.otherwise({

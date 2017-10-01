@@ -10,7 +10,9 @@ module.exports = function(app) {
 	passport.deserializeUser(deserializeUser);
 
 	app.post('/api/passportlogin', passport.authenticate('local'), login);
-	app.post('/api/loggedin', loggedin);
+	app.post('/api/passportloggedin', loggedin);
+	app.post('/api/passportlogout', logout);
+	app.post('/api/passportregister', register);
 
 	function localStrategy(username, password, done) {
 	    userModel
@@ -50,6 +52,30 @@ module.exports = function(app) {
 
 	function loggedin(req, res) {
 		res.send(req.isAuthenticated() ? req.user : '0');
+	}
+
+	function logout(req, res) {
+		req.logOut();
+    	res.send(200);
+	}
+
+	function register(req, res) {
+		userModel
+			.createUser(req.body)
+			.then(
+	            function(user){
+	                req.login(user, function(err, user) {
+	                	if(err) {
+	                		res.send(400);
+	                	} else {
+	                		res.json(user);	                		
+	                	}
+	                });
+	            },
+	            function(err){
+	                done(err, null);
+	            }
+	        );
 	}
 
 }

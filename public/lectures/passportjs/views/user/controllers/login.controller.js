@@ -3,7 +3,7 @@
 		.module("PassportApp")
 		.controller("LoginController", LoginController);
 
-	function LoginController($http, $location, UserService) {
+	function LoginController($location, UserService) {
 		var vm = this;
 
 		vm.loginUser = loginUser;

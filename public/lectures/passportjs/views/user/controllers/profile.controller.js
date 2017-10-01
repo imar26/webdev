@@ -3,23 +3,19 @@
 		.module("PassportApp")
 		.controller("ProfileController", ProfileController);
 
-	function ProfileController($http) {
+	function ProfileController(currentUser, UserService, $location) {
 		var vm = this;
 
-		vm.loginUser = loginUser;
+		vm.currentUser = currentUser.data;
 
-		function loginUser(user) {
-			$http.post('/api/passportlogin', user)
-				.then(function(response) {
-					user = response.data;
-					if(user) {						
-						vm.success = 'Welcome';
-					} else {
-						vm.error = 'Unauthorized';
-					}
-				}, function(error) {
-					vm.error = error.data;
+		vm.logout = logout;
+
+		function logout() {
+			UserService
+				.logout()
+				.then(function() {
+					$location.url('/login');
 				});
-		}
+		}		
 	}
 })();
