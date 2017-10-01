@@ -11,9 +11,14 @@
 		function loginUser(user) {
 			$http.post('/api/passportlogin', user)
 				.then(function(response) {
-					console.log(response);
+					user = response.data;
+					if(user) {						
+						vm.success = 'Welcome';
+					} else {
+						vm.error = 'Unauthorized';
+					}
 				}, function(error) {
-					console.log(error);
+					vm.error = error.data;
 				});
 		}
 	}
