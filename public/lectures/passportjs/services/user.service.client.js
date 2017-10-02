@@ -8,7 +8,10 @@
 			login: login,
 			loggedin: loggedin,
 			logout: logout,
-			register: register
+			register: register,
+			isAdmin: isAdmin,
+			passportFindAllUsers: passportFindAllUsers,
+			deleteUser: deleteUser
 		};
 		return api;
 
@@ -26,6 +29,18 @@
 
 		function logout() {
 			return $http.post('/api/passportlogout');
+		}
+
+		function isAdmin() {
+			return $http.post('/api/isAdmin');
+		}
+
+		function passportFindAllUsers() {
+			return $http.get('/api/passportFindAllUsers');
+		}
+
+		function deleteUser(userId) {
+			return $http.delete('/api/deleteUser/'+userId);
 		}
 	} 
 })();

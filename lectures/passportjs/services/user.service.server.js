@@ -13,6 +13,9 @@ module.exports = function(app) {
 	app.post('/api/passportloggedin', loggedin);
 	app.post('/api/passportlogout', logout);
 	app.post('/api/passportregister', register);
+	app.post('/api/isAdmin', isAdmin);
+	app.get('/api/passportFindAllUsers', passportFindAllUsers);
+	app.delete('/api/deleteUser/:userId', deleteUser);
 
 	function localStrategy(username, password, done) {
 	    userModel
@@ -66,16 +69,58 @@ module.exports = function(app) {
 	            function(user){
 	                req.login(user, function(err, user) {
 	                	if(err) {
-	                		res.send(400);
+	                		console.log(err);
+	                		res.sendStatus(400).send(err);
 	                	} else {
+	                		console.log(user);
 	                		res.json(user);	                		
 	                	}
 	                });
 	            },
 	            function(err){
-	                done(err, null);
+	                res.sendStatus(400).send(err);
 	            }
 	        );
+	}
+
+	function isAdmin(req, res) {
+		res.send(req.isAuthenticated() && req.user.role == 'ADMIN' ? req.user : '0');
+	}
+
+	function passportFindAllUsers(req, res) {
+		if(req.user && req.user.role=='ADMIN') {
+			userModel
+				.findAllUsers()
+				.then(
+		            function(users){
+		                res.json(users); 
+		            },
+		            function(err){
+		                res.sendStatus(400).send(err);
+		            }
+		        );
+		} else {
+			res.send(401);
+		}
+	}
+
+	function deleteUser(req, res) {
+		var userId = req.params.userId;
+
+		if(req.user && req.user.role=='ADMIN') {
+			userModel
+				.deleteUser(userId)
+				.then(
+		            function(status){
+		                res.json(status); 
+		            },
+		            function(err){
+		                res.sendStatus(400).send(err);
+		            }
+		        );
+		} else {
+			res.send(401);
+		}
 	}
 
 }

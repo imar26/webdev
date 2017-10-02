@@ -1,7 +1,7 @@
 <h1>
 	Profile
-
+	<a ng-if="model.currentUser.role == 'ADMIN'" class="btn btn-warning pull-right" href="#!/admin">Admin</a>
 	<button ng-click="model.logout()" class="btn btn-primary pull-right">Logout</button>
 </h1>
 
-{{model.currentUser.firstName}}
+{{model.currentUser}}

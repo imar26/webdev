@@ -15,6 +15,14 @@
 				controller: 'RegisterController',
 				controllerAs: 'model'
 			})
+			.when('/admin', {
+				templateUrl: 'views/admin/templates/admin.view.html',
+				controller: 'AdminController',
+				controllerAs: 'model',
+				resolve: {
+					checkAdmin: checkAdmin
+				}
+			})
 			.when('/profile', {
 				templateUrl: 'views/user/templates/profile.view.html',
 				controller: 'ProfileController',
@@ -36,6 +44,23 @@
 				if(user.data == '0') {
 					d.reject();
 					$location.url('/login');
+				} else {
+					d.resolve(user);			
+				}
+			}, function(err) {
+				error = err.data;
+			});
+		return d.promise;
+	}
+
+	function checkAdmin($q, UserService, $location) {
+		var d = $q.defer();
+		UserService
+			.isAdmin()
+			.then(function(user) {
+				if(user.data == '0') {
+					d.reject();
+					$location.url('/profile');
 				} else {
 					d.resolve(user);			
 				}

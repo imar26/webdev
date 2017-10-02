@@ -15,6 +15,8 @@
 					.then(function(user) {
 						if(user) {
 							$location.url('/profile');
+						} else {
+							vm.error = err.data;
 						}
 					}, function(err) {
 						vm.error = err.data;

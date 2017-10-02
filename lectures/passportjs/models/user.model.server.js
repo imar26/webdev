@@ -3,15 +3,28 @@ var mongoose = require('mongoose');
 // mongoose.connect(connectionString);
 
 var userSchema = mongoose.Schema({
-	username: String,
-	password: String,
-	firstName: String
+	username: {
+		type: String,
+		required: true
+	},
+	password: {
+		type: String,
+		required: true
+	},
+	firstName: String,
+	role: {
+		type: String,
+		enum: ['STUDENT', 'FACULTY', 'ADMIN', 'USER'],
+		default: 'USER'
+	}
 }, {collection: 'PassportUserDB'});
 var userModel = mongoose.model('userModel', userSchema);
 
 userModel.createUser = createUser;
 userModel.findUserByCredentials = findUserByCredentials;
 userModel.findUserById = findUserById;
+userModel.findAllUsers = findAllUsers;
+userModel.deleteUser = deleteUser;
 
 var q = require('q');
 function createUser(user) {
@@ -19,8 +32,10 @@ function createUser(user) {
 	userModel
 		.create(user, function(err, user) {
 			if(err) {
+				console.log(err);
 				d.abort(err);
 			} else {
+				console.log(user);
 				d.resolve(user);
 			}
 		});
@@ -46,6 +61,32 @@ function findUserById(userId) {
 	var d = q.defer();
 	userModel
 		.findById(userId, function(err, user) {
+			if(err) {
+				d.abort(err);
+			} else {
+				d.resolve(user);
+			}
+		});
+	return d.promise;
+}
+
+function findAllUsers() {
+	var d = q.defer();
+	userModel
+		.find({}, function(err, users) {
+			if(err) {
+				d.abort(err);
+			} else {
+				d.resolve(users);
+			}
+		});
+	return d.promise;
+}
+
+function deleteUser(userId) {
+	var d = q.defer();
+	userModel
+		.remove({"_id" : userId}, function(err, user) {
 			if(err) {
 				d.abort(err);
 			} else {
