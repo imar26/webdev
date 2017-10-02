@@ -25,6 +25,8 @@ userModel.findUserByCredentials = findUserByCredentials;
 userModel.findUserById = findUserById;
 userModel.findAllUsers = findAllUsers;
 userModel.deleteUser = deleteUser;
+userModel.updateUser = updateUser;
+userModel.updateProfile = updateProfile;
 
 var q = require('q');
 function createUser(user) {
@@ -32,10 +34,8 @@ function createUser(user) {
 	userModel
 		.create(user, function(err, user) {
 			if(err) {
-				console.log(err);
 				d.abort(err);
 			} else {
-				console.log(user);
 				d.resolve(user);
 			}
 		});
@@ -87,6 +87,36 @@ function deleteUser(userId) {
 	var d = q.defer();
 	userModel
 		.remove({"_id" : userId}, function(err, user) {
+			if(err) {
+				d.abort(err);
+			} else {
+				d.resolve(user);
+			}
+		});
+	return d.promise;
+}
+
+function updateUser(user) {
+	var d = q.defer();
+	userModel
+		.update({"_id" : user._id}, {$set: {
+			"role": user.role
+		}}, function(err, user) {
+			if(err) {
+				d.abort(err);
+			} else {
+				d.resolve(user);
+			}
+		});
+	return d.promise;
+}
+
+function updateProfile(user) {
+	var d = q.defer();
+	userModel
+		.update({"_id" : user._id}, {$set: {
+			"firstName": user.firstName
+		}}, function(err, user) {
 			if(err) {
 				d.abort(err);
 			} else {

@@ -7,6 +7,7 @@
 		var vm = this;
 
 		vm.deleteUser = deleteUser;
+		vm.updateUser = updateUser;
 
 		function init() {
 			UserService
@@ -28,6 +29,19 @@
 				.then(function(status) {
 					console.log(status);
 					if(status) {
+						init();
+					}
+				}, function(err) {
+					console.log(err);
+				});
+		}
+
+		function updateUser(user) {
+			UserService
+				.updateUser(user)
+				.then(function(user) {
+					console.log(user);
+					if(user) {
 						init();
 					}
 				}, function(err) {

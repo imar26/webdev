@@ -11,7 +11,10 @@
 			register: register,
 			isAdmin: isAdmin,
 			passportFindAllUsers: passportFindAllUsers,
-			deleteUser: deleteUser
+			deleteUser: deleteUser,
+			unregister: unregister,
+			updateUser: updateUser,
+			updateProfile: updateProfile
 		};
 		return api;
 
@@ -41,6 +44,18 @@
 
 		function deleteUser(userId) {
 			return $http.delete('/api/deleteUser/'+userId);
+		}
+
+		function unregister(userId) {
+			return $http.delete('/api/unregister/'+userId);
+		}	
+
+		function updateUser(user) {
+			return $http.put('/api/updateUser', user);
+		}
+
+		function updateProfile(user) {
+			return $http.put('/api/updateProfile', user);
 		}
 	} 
 })();

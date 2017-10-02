@@ -16,6 +16,9 @@ module.exports = function(app) {
 	app.post('/api/isAdmin', isAdmin);
 	app.get('/api/passportFindAllUsers', passportFindAllUsers);
 	app.delete('/api/deleteUser/:userId', deleteUser);
+	app.delete('/api/unregister/:userId', unregister);
+	app.put('/api/updateUser', updateUser);
+	app.put('/api/updateProfile', updateProfile);
 
 	function localStrategy(username, password, done) {
 	    userModel
@@ -69,10 +72,8 @@ module.exports = function(app) {
 	            function(user){
 	                req.login(user, function(err, user) {
 	                	if(err) {
-	                		console.log(err);
 	                		res.sendStatus(400).send(err);
 	                	} else {
-	                		console.log(user);
 	                		res.json(user);	                		
 	                	}
 	                });
@@ -113,6 +114,63 @@ module.exports = function(app) {
 				.then(
 		            function(status){
 		                res.json(status); 
+		            },
+		            function(err){
+		                res.sendStatus(400).send(err);
+		            }
+		        );
+		} else {
+			res.send(401);
+		}
+	}
+
+	function unregister(req, res) {
+		var userId = req.params.userId;
+
+		if(req.user && req.user._id==userId) {
+			userModel
+				.deleteUser(userId)
+				.then(
+		            function(status){
+		                res.json(status); 
+		            },
+		            function(err){
+		                res.sendStatus(400).send(err);
+		            }
+		        );
+		} else {
+			res.send(401);
+		}
+	}
+
+	function updateUser(req, res) {
+		var user = req.body;
+
+		if(req.user && req.user.role=='ADMIN') {
+			userModel
+				.updateUser(user)
+				.then(
+		            function(user){
+		                res.json(user); 
+		            },
+		            function(err){
+		                res.sendStatus(400).send(err);
+		            }
+		        );
+		} else {
+			res.send(401);
+		}
+	}
+
+	function updateProfile(req, res) {
+		var user = req.body;
+
+		if(req.user && req.user._id==user._id) {
+			userModel
+				.updateProfile(user)
+				.then(
+		            function(user){
+		                res.json(user); 
 		            },
 		            function(err){
 		                res.sendStatus(400).send(err);

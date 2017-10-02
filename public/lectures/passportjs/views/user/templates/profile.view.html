@@ -1,5 +1,11 @@
 <h1>
 	Profile
+
+	<input type="text" name="firstName" ng-model="model.currentUser.firstName">
+
+	<button ng-click="model.updateProfile(model.currentUser)" class="btn btn-primary">Update Profile</button>
+
+	<a ng-click="model.unregister(model.currentUser._id)" class="btn btn-danger pull-right">Unregister</a>
 	<a ng-if="model.currentUser.role == 'ADMIN'" class="btn btn-warning pull-right" href="#!/admin">Admin</a>
 	<button ng-click="model.logout()" class="btn btn-primary pull-right">Logout</button>
 </h1>

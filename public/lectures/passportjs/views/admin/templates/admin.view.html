@@ -6,6 +6,8 @@
 	</li>
 	<li class="list-group-item" ng-repeat="user in model.users">
 		{{user.username}}
+		<input ng-model="user.role" type="text" name="role">
 		<span ng-click="model.deleteUser(user._id)" class="glyphicon glyphicon-remove pull-right"></span>
+		<span ng-click="model.updateUser(user)" class="glyphicon glyphicon-ok pull-right"></span>
 	</li>
 </ul>
