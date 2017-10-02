@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ValidationApp">
+
+<head>
+    <title>Validation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"></script>
+    <script src="app.js"></script>
+    <style type="text/css">
+    	.ng-submitted input.ng-invalid {
+    		background-color: red;
+    	}
+    </style>
+</head>
+
+<body ng-controller="ValidationController">
+    <div class="container">
+    	<form name="ValidationForm" novalidate>
+    		<input type="text" name="username" ng-model="user.username" class="form-control" required>
+    		<span ng-show="ValidationForm.$submitted && ValidationForm.username.$error.required">Username is required</span>
+    		<br/>
+    		<input type="email" name="email" ng-model="user.email" class="form-control" required>
+    		<span ng-show="ValidationForm.$submitted && ValidationForm.email.$error.required">Email is required</span>
+    		<span ng-show="ValidationForm.$submitted && ValidationForm.email.$error.email">Invalid Email</span>
+    		<br/>
+    		<button type="submit" class="btn btn-priamry">Submit</button>
+    	</form>
+    </div>
+</body>
+
+</html>
