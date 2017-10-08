@@ -10,7 +10,7 @@
         function login(user) {
             var u;
             UserService
-                .findUserByCredentials(user.username, user.password)
+                .login(user)
                 .then(
                     function(response) {
                         u = response.data;

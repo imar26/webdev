@@ -4,6 +4,8 @@ module.exports = function(app, model) {
 	app.put("/api/user/:userId", updateUser);
 	app.post("/api/user", createUser);
 	app.delete("/api/user/:userId", deleteUser);
+	app.post("/api/login", passport.authenticate('local'), login);
+	app.post('/api/logout', logout);
 
 	var passport = require('passport');
 	var LocalStrategy = require('passport-local').Strategy;
@@ -49,6 +51,15 @@ module.exports = function(app, model) {
 	        );
 	}
 
+	function login(req, res) {
+	    var user = req.user;
+	    res.json(user);
+	}
+
+	function logout(req, res) {
+	    req.logOut();
+	    res.send(200);
+	}
 
     function createUser(req, res) {
 		var password = req.body.password;

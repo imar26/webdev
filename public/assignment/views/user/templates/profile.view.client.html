@@ -30,7 +30,7 @@
             <br/>
             <a ng-click="model.goToWebsites()" class="btn btn-primary btn-block">Websites</a>
             <a ng-click="model.deleteUser(model.user._id)" class="btn btn-warning btn-block">Delete User</a>
-            <a href="#!/login" class="btn btn-danger btn-block">Logout</a>
+            <a ng-click="model.logout()" class="btn btn-danger btn-block">Logout</a>
             <h5 class="text-success">{{model.success}}</h5>
             <h5 class="text-danger">{{model.error}}</h5>
         </form>

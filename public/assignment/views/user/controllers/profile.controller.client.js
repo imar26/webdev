@@ -10,6 +10,7 @@
         vm.goToProfile = goToProfile;
         vm.goToWebsites = goToWebsites;
         vm.deleteUser = deleteUser;
+        vm.logout = logout;
 		function init() {
 			UserService
                 .findUserById(vm.userId)
@@ -61,6 +62,15 @@
         }
         function goToWebsites() {
             $location.url("/user/"+vm.userId+"/website/");
+        }
+        function logout() {
+            UserService
+                .logout
+                .then(function(response) {
+                    $location.url("/");
+                }, function(response) {
+                    console.log(response);
+                });
         }
     }
 })();
