@@ -5,6 +5,51 @@ module.exports = function(app, model) {
 	app.post("/api/user", createUser);
 	app.delete("/api/user/:userId", deleteUser);
 
+	var passport = require('passport');
+	var LocalStrategy = require('passport-local').Strategy;
+
+	passport.use(new LocalStrategy(localStrategy));
+	passport.serializeUser(serializeUser);
+	passport.deserializeUser(deserializeUser);
+
+	function localStrategy(username, password, done) {
+	    model
+	    	.userModel
+	        .findUserByCredentials(username, password)
+	        .then(
+	            function(user) {
+	                if(user.username === username && user.password === password) {
+	                    return done(null, user);
+	                } else {
+	                    return done(null, false);
+	                }
+	            },
+	            function(err) {
+	                if (err) { return done(err); }
+	            }
+	        );
+	}
+
+
+	function serializeUser(user, done) {
+	    done(null, user);
+	}
+
+	function deserializeUser(user, done) {
+	    model
+			.userModel
+	        .findUserById(user._id)
+	        .then(
+	            function(user){
+	                done(null, user);
+	            },
+	            function(err){
+	                done(err, null);
+	            }
+	        );
+	}
+
+
     function createUser(req, res) {
 		var password = req.body.password;
 		var verifypassword = req.body.verifypassword;
