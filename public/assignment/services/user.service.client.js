@@ -12,7 +12,8 @@
             "updateUser" : updateUser,
             "deleteUser" : deleteUser,
             "login": login,
-            "logout": logout
+            "logout": logout,
+            "register": register
         };
         return api;
 
@@ -41,11 +42,16 @@
         }
 
         function login(user) {
+            console.log(user);
             return $http.post("/api/login", user);
         }
 
         function logout() {
             return $http.post("/api/logout");
+        }
+
+        function register(user) {
+            return $http.post("/api/register", user);   
         }
 
     }

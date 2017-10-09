@@ -65,7 +65,7 @@
         }
         function logout() {
             UserService
-                .logout
+                .logout()
                 .then(function(response) {
                     $location.url("/");
                 }, function(response) {

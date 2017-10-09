@@ -32,7 +32,7 @@ require ("./lectures/mongo/movies/app.js")(app);
 
 require ("./lectures/mongoose/university/university.js");
 
-require ("./lectures/passportjs/services/user.service.server.js")(app);
+// require ("./lectures/passportjs/services/user.service.server.js")(app);
 
 var port = process.env.PORT || 3000;
 
