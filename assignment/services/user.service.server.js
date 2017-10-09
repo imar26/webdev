@@ -3,6 +3,8 @@ module.exports = function(app, model) {
 	var LocalStrategy = require('passport-local').Strategy;
 	var FacebookStrategy = require('passport-facebook').Strategy;
 
+	var bcrypt = require("bcrypt-nodejs");
+
 	var facebookConfig;
 
 	if(process.env.FACEBOOK_CLIENT_ID) {
@@ -55,7 +57,7 @@ module.exports = function(app, model) {
 	            function(user) {
 	                if(!user) {
 	            		return done(null, "User not found");
-	            	} else if(user && user.password === password) {
+	            	} else if(user && bcrypt.compareSync(password, user.password)) {
 	                    return done(null, user);
 	                } else {
 	                    return done(null, "Invalid Credentials");
@@ -142,6 +144,7 @@ module.exports = function(app, model) {
 	function register(req, res) {
 	    var user = req.body;
 	    if(user.password === user.verifypassword) {
+	    	user.password = bcrypt.hashSync(user.password);
 		    model
 		    	.userModel
 		        .createUser(user)
