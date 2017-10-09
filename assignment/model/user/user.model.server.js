@@ -18,12 +18,26 @@ module.exports = function() {
 		findUserByCredentials: findUserByCredentials,
 		findUserById: findUserById,
 		updateUser: updateUser,
-		deleteUser: deleteUser
+		deleteUser: deleteUser,
+		findUserByFacebookId: findUserByFacebookId
 	};
 	return api;
 
 	function setModel(_model) {
 		model = _model;
+	}
+
+	function findUserByFacebookId(facebookId) {
+	    var deferred = q.defer();
+		UserModel
+			.findOne({'facebook.id': facebookId}, function(err, user) {
+				if(err) {
+					deferred.abort(err);
+				} else {
+					deferred.resolve(user);
+				}
+			});
+		return deferred.promise;
 	}
 
 	function findUserByUsername(username) {

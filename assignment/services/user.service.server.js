@@ -1,8 +1,28 @@
 module.exports = function(app, model) {
 	var passport = require('passport');
 	var LocalStrategy = require('passport-local').Strategy;
+	var FacebookStrategy = require('passport-facebook').Strategy;
+
+	var facebookConfig;
+
+	if(process.env.FACEBOOK_CLIENT_ID) {
+		facebookConfig = {
+		    clientID     : process.env.FACEBOOK_CLIENT_ID,
+		    clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
+		    callbackURL  : process.env.FACEBOOK_CALLBACK_URL,
+		    profileFields: ['email','id', 'first_name', 'gender', 'last_name', 'picture']
+		};
+	} else {
+		facebookConfig = {
+		    clientID     : '516087062076256',
+		    clientSecret : '686a87f2ac2085ac513fbcc8ba7883b0',
+		    callbackURL  : 'http://localhost:3000/auth/facebook/callback',
+		    profileFields: ['email','id', 'first_name', 'gender', 'last_name', 'picture']
+		};
+	}
 
 	passport.use(new LocalStrategy(localStrategy));
+	passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
 	passport.serializeUser(serializeUser);
 	passport.deserializeUser(deserializeUser);
 
@@ -14,7 +34,18 @@ module.exports = function(app, model) {
 	app.post("/api/login", passport.authenticate('local'), login);
 	app.post("/api/logout", logout);
 	app.post("/api/register", register);
-	app.get("/api/loggedin", loggedin);	
+	app.get("/api/loggedin", loggedin);
+
+	// Facebook Strategy
+	app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+
+	app.get('/auth/facebook/callback',
+	    passport.authenticate('facebook', {
+	        // successRedirect: '/assignment/#!/user',
+	        failureRedirect: '/assignment/#!/login'
+	}), function(req, res) {		
+		res.redirect('/assignment/#!/user/'+req.user._id);
+    });	
 
 	function localStrategy(username, password, done) {
 	    model
@@ -34,6 +65,45 @@ module.exports = function(app, model) {
 	        );
 	}
 
+	function facebookStrategy(token, refreshToken, profile, done) {
+        model
+            .userModel
+            .findUserByFacebookId(profile.id)
+            .then(
+                function(user) {
+                    if(user) {
+                        return done(null, user);
+                    } else {
+                    	var email = profile.emails[0].value;
+                        var emailParts = email.split("@");
+                        var newFacebookUser = {
+                        	username:  emailParts[0],
+                        	firstName: profile.name.givenName,
+                            lastName:  profile.name.familyName,
+                        	email:     email,
+                            facebook: {
+                                id:    profile.id,
+                                token: token
+                            }
+                        };
+                        return model
+                                .userModel
+                                .createUser(newFacebookUser);
+                    }
+                },
+                function(err) {
+                    if (err) { return done(err); }
+                }
+            )
+            .then(
+                function(user){
+                    return done(null, user);
+                },
+                function(err){
+                    if (err) { return done(err); }
+                }
+            );
+    }
 
 	function serializeUser(user, done) {
 	    done(null, user);

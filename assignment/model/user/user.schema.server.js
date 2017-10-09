@@ -12,6 +12,10 @@ module.exports = function() {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'WebsiteModel'
 		}],
+		facebook: {
+	        id:    String,
+	        token: String
+	    },
 		dateCreated: {
 			type: Date,
 			default: Date.now
