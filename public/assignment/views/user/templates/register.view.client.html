@@ -1,18 +1,23 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1>Register</h1>
-            <input type="text" class="form-control" placeholder="username" ng-model="model.user.username" />
-            <br/>
-            <input type="password" class="form-control" placeholder="password" ng-model="model.user.password" />
-            <br/>
-            <input type="password" class="form-control" placeholder="verify password" ng-model="model.user.verifypassword" />
-            <br/>
-            <a ng-click="model.createUser(model.user)" class="btn btn-primary btn-block">Register</a>
-            <a href="#!/login" class="btn btn-danger btn-block">Cancel</a>
-            <h5 ng-if="model.alert" class="text-danger">{{model.alert}}</h5>
-            <h5 ng-if="model.error" class="text-danger">{{model.error}}</h5>
-            <h5 ng-if="model.passwordsDoNotMatch" class="text-danger">{{model.passwordsDoNotMatch}}</h5>
+            <form name="registerForm" novalidate="">
+                <h1>Register</h1>
+                <input type="text" class="form-control" placeholder="username" ng-model="model.user.username" name="username" required />
+                <span class="validationError" ng-show="registerForm.$submitted && registerForm.username.$error.required">Username is required</span>
+                <br/>
+                <input type="password" class="form-control" placeholder="password" ng-model="model.user.password" name="password" required />
+                <span class="validationError" ng-show="registerForm.$submitted && registerForm.password.$error.required">Password is required</span>
+                <br/>
+                <input type="password" class="form-control" placeholder="verify password" ng-model="model.user.verifypassword" name="verifypassword" required />
+                <span class="validationError" ng-show="registerForm.$submitted && registerForm.verifypassword.$error.required">Verify Password is required</span>
+                <br/>
+                <button type="submit" ng-click="registerForm.$valid && model.createUser(model.user)" class="btn btn-primary btn-block">Register</button>
+                <a href="#!/login" class="btn btn-danger btn-block">Cancel</a>
+                <h5 ng-if="model.alert" class="text-danger">{{model.alert}}</h5>
+                <h5 ng-if="model.error" class="text-danger">{{model.error}}</h5>
+                <h5 ng-if="model.passwordsDoNotMatch" class="text-danger">{{model.passwordsDoNotMatch}}</h5>
+            </form>
         </div>
     </div>
 </div>

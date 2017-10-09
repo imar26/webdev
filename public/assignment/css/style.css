@@ -190,5 +190,5 @@ input[type=checkbox] {
 }
 
 .ng-submitted input.ng-invalid-required {
-    background-color: red;
+    background-color: #cc0606;
 }
