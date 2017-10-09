@@ -16,7 +16,7 @@
                             vm.error = "Username already exists.";                      
                         } else {
                             UserService
-                                .createUser(user)
+                                .register(user)
                                 .then(
                                     function(response) {
                                         var user = response.data;
