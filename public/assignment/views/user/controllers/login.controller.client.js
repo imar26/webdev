@@ -8,6 +8,7 @@
         vm.login = login;
 
         function login(user) {
+            console.log(user);
             var u;
             UserService
                 .login(user)

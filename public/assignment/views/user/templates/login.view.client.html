@@ -2,17 +2,21 @@
     <div class="row">
         <div class="col-md-12">
             <h1>Login</h1>
-            <input type="text" class="form-control" placeholder="username" ng-model="model.user.username" />
-            <br/>
-            <input type="password" class="form-control" placeholder="password" ng-model="model.user.password" />
-            <br/>
-            <a ng-click="model.login(model.user)" class="btn btn-primary btn-block">Login</a>
-            <a href="#!/register" class="btn btn-success btn-block">Register</a>
-            <a href="/auth/facebook" class="btn btn-info btn-block">
-                <span class="fa fa-facebook"></span>
-                Facebook
-            </a>
-            <h5 class="text-danger">{{model.alert}}</h5>
+            <form name="loginForm" novalidate>
+                <input type="text" class="form-control" placeholder="username" ng-model="model.user.username" name="username" required autocorrect="off" autocapitalize="off" />
+                <span class="validationError" ng-show="loginForm.$submitted && loginForm.username.$error.required">Username is required</span>
+                <br/>
+                <input type="password" class="form-control" placeholder="password" ng-model="model.user.password" name="password" required />
+                <span class="validationError" ng-show="loginForm.$submitted && loginForm.password.$error.required">Password is required</span>
+                <br/>
+                <button type="submit" ng-click="model.login(model.user)" class="btn btn-primary btn-block">Login</button>
+                <a href="#!/register" class="btn btn-success btn-block">Register</a>
+                <a href="/auth/facebook" class="btn btn-info btn-block">
+                    <span class="fa fa-facebook"></span>
+                    Facebook
+                </a>
+                <h5 class="text-danger">{{model.alert}}</h5>
+            </form>
         </div>
     </div>
 </div>

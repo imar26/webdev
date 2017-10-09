@@ -184,3 +184,11 @@ input[type=checkbox] {
     position: relative;
     top: 1px;
 }
+
+.validationError {
+    color: red;
+}
+
+.ng-submitted input.ng-invalid-required {
+    background-color: red;
+}
