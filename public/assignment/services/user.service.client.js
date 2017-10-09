@@ -42,6 +42,7 @@
         }
 
         function login(user) {
+            console.log(user);
             return $http.post("/api/login", user);
         }
 
