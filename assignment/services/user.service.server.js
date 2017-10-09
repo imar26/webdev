@@ -3,6 +3,8 @@ module.exports = function(app, model) {
 	var LocalStrategy = require('passport-local').Strategy;
 	var FacebookStrategy = require('passport-facebook').Strategy;
 
+	var bcrypt = require("bcrypt-nodejs");
+
 	var facebookConfig;
 
 	if(process.env.FACEBOOK_CLIENT_ID) {
@@ -53,10 +55,12 @@ module.exports = function(app, model) {
 	        .findUserByCredentials(username, password)
 	        .then(
 	            function(user) {
-	                if(user.username === username && user.password === password) {
+	            	if(!user) {
+	            		return done(null, "User not found");
+	            	} else if(user && user.password === password) {
 	                    return done(null, user);
 	                } else {
-	                    return done(null, false);
+	                    return done(null, "Invalid Credentials");
 	                }
 	            },
 	            function(err) {
@@ -124,18 +128,25 @@ module.exports = function(app, model) {
 	}
 
 	function login(req, res) {
-	    var user = req.user;
-	    res.json(user);
+	    if(req.user) {
+            var user = req.user;
+            res.json(user);
+        } else {
+            res.sendStatus(400);
+        }
 	}
 
 	function logout(req, res) {
 	    req.logOut();
-	    res.send(200);
+	    res.sendStatus(200);
 	}
 
 	function register(req, res) {
 	    var user = req.body;
+	    console.log(user);
 	    if(user.password === user.verifypassword) {
+	    	user.password = bcrypt.hashSync(user.password);
+	    	console.log(user.password);	    	
 		    model
 		    	.userModel
 		        .createUser(user)
