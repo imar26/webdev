@@ -2,10 +2,12 @@ module.exports = function(app, model) {
 	var passport = require('passport');
 	var LocalStrategy = require('passport-local').Strategy;
 	var FacebookStrategy = require('passport-facebook').Strategy;
+	var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 	var bcrypt = require("bcrypt-nodejs");
 
 	var facebookConfig;
+	var googleConfig;
 
 	if(process.env.FACEBOOK_CLIENT_ID) {
 		facebookConfig = {
@@ -13,7 +15,7 @@ module.exports = function(app, model) {
 		    clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
 		    callbackURL  : process.env.FACEBOOK_CALLBACK_URL,
 		    profileFields: ['email','id', 'first_name', 'gender', 'last_name', 'picture']
-		};
+		};		
 	} else {
 		facebookConfig = {
 		    clientID     : '516087062076256',
@@ -23,8 +25,23 @@ module.exports = function(app, model) {
 		};
 	}
 
+	if(process.env.GOOGLE_CLIENT_ID) {
+		googleConfig = {
+		    clientID     : process.env.GOOGLE_CLIENT_ID,
+		    clientSecret : process.env.GOOGLE_CLIENT_SECRET,
+		    callbackURL  : process.env.GOOGLE_CALLBACK_URL
+		};
+	} else {
+		googleConfig = {
+		    clientID     : '907033912600-5haahl84mr90u8b1l9masoqaau2flhoc.apps.googleusercontent.com',
+		    clientSecret : 'pa9qeDizGoruOV_qcMAiE8zT',
+		    callbackURL  : 'http://localhost:3000/auth/google/callback'
+		};
+	}
+
 	passport.use(new LocalStrategy(localStrategy));
 	passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
+	passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 	passport.serializeUser(serializeUser);
 	passport.deserializeUser(deserializeUser);
 
@@ -41,8 +58,19 @@ module.exports = function(app, model) {
 	// Facebook Strategy
 	app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
 
+	// Google Strategy
+	app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+
 	app.get('/auth/facebook/callback',
 	    passport.authenticate('facebook', {
+	        // successRedirect: '/assignment/#!/user',
+	        failureRedirect: '/assignment/#!/login'
+	}), function(req, res) {		
+		res.redirect('/assignment/#!/user/'+req.user._id);
+    });
+
+    app.get('/auth/google/callback',
+	    passport.authenticate('google', {
 	        // successRedirect: '/assignment/#!/user',
 	        failureRedirect: '/assignment/#!/login'
 	}), function(req, res) {		
@@ -93,6 +121,46 @@ module.exports = function(app, model) {
                         return model
                                 .userModel
                                 .createUser(newFacebookUser);
+                    }
+                },
+                function(err) {
+                    if (err) { return done(err); }
+                }
+            )
+            .then(
+                function(user){
+                    return done(null, user);
+                },
+                function(err){
+                    if (err) { return done(err); }
+                }
+            );
+    }
+
+    function googleStrategy(token, refreshToken, profile, done) {
+        model
+            .userModel
+            .findUserByGoogleId(profile.id)
+            .then(
+                function(user) {
+                    if(user) {
+                        return done(null, user);
+                    } else {
+                    	var email = profile.emails[0].value;
+                        var emailParts = email.split("@");
+                        var newGoogleUser = {
+                        	username:  emailParts[0],
+                        	firstName: profile.name.givenName,
+                            lastName:  profile.name.familyName,
+                        	email:     email,
+                            google: {
+                                id:    profile.id,
+                                token: token
+                            }
+                        };
+                        return model
+                                .userModel
+                                .createUser(newGoogleUser);
                     }
                 },
                 function(err) {

@@ -19,7 +19,8 @@ module.exports = function() {
 		findUserById: findUserById,
 		updateUser: updateUser,
 		deleteUser: deleteUser,
-		findUserByFacebookId: findUserByFacebookId
+		findUserByFacebookId: findUserByFacebookId,
+		findUserByGoogleId: findUserByGoogleId
 	};
 	return api;
 
@@ -31,6 +32,19 @@ module.exports = function() {
 	    var deferred = q.defer();
 		UserModel
 			.findOne({'facebook.id': facebookId}, function(err, user) {
+				if(err) {
+					deferred.abort(err);
+				} else {
+					deferred.resolve(user);
+				}
+			});
+		return deferred.promise;
+	}
+
+	function findUserByGoogleId(googleId) {
+	    var deferred = q.defer();
+		UserModel
+			.findOne({'google.id': googleId}, function(err, user) {
 				if(err) {
 					deferred.abort(err);
 				} else {
