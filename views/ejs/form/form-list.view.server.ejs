@@ -3,25 +3,37 @@
 <div class="container-fluid">
 	<h1>Form List</h1>
 
-	<div class="input-group">
-		<input type="text" class="form-control" placeholder="Search for..">
-		<span class="input-group-btn">
-			<button class="btn btn-primary" type="button">Add</button>
-			<button class="btn btn-success" type="button">Update</button>
-		</span>
-	</div>
+	<% 
+		var formName = "";
+		var formId = "";
+		if(typeof form !="undefined") {
+			formName = form.name;
+			formId = form._id;
+		}
+	%>
+
+	<form action="/ejs/form" method="post">
+		<div class="input-group">
+			<input type="text" name="name" class="form-control" placeholder="Search for.." value="<%= formName %>">
+			<input name="_id" type="hidden" value="<%= formId %>">
+			<span class="input-group-btn">
+				<button name="action" value="create" class="btn btn-primary" type="submit">Add</button>
+				<button name="action" value="update" class="btn btn-success" type="submit">Update</button>
+			</span>
+		</div>
+	</form>
 
 	<br/>
 
 	<ul class="list-group">
 		<% for(var i=0; i < forms.length; i++) { %>
 			<li class="list-group-item">
-				<%= forms[i].name %>
+				<a href="/ejs/form/<%= forms[i]._id %>/details"><%= forms[i].name %></a>
 				<span class="pull-right">
-					<a href="#">
+					<a href="/ejs/form/<%= forms[i]._id %>/delete">
 						<span class="glyphicon glyphicon-remove"></span>
 					</a>
-					<a href="#">
+					<a href="/ejs/form/<%= forms[i]._id %>">
 					<span class="glyphicon glyphicon-cog"></span>
 					</a>
 				</span>
