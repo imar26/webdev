@@ -6,3 +6,7 @@
 1. mongod
 1. node server.js
 1. browse to http://localhost:3000/assignment/
+
+## Web Application Deployed on Heroku
+
+### Go Here: https://webdev-lecture.herokuapp.com/assignment/
