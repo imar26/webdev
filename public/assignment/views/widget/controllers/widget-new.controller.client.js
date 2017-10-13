@@ -28,6 +28,7 @@
                 $(this).ajaxSubmit({
                     success: function(response) {
                         var path = response.filename;
+                        console.log(path)
                         addWidget(widget, widgetType, path);
                     },
                     error: function(response) {
@@ -39,6 +40,9 @@
             });
         }
         function addWidget(widget, widgetType, path) {
+            console.log(widget);
+            console.log(widgetType);
+            console.log(path);
             WidgetService
                 .findWidgetsByPageId(vm.pageId)
                 .then(function(response) {
