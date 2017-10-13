@@ -29,7 +29,7 @@
                     success: function(response) {
                         var path = response.filename;
                         console.log(path);
-                        addWidget(widget, widgetType, path);
+                        // addWidget(widget, widgetType, path);
                     },
                     error: function(response) {
                         console.log(response);

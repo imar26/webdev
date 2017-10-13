@@ -106,6 +106,6 @@ module.exports = function(app, model) {
 
     function uploadImage(req, res) {
         console.log(req.file);
-        res.json(req.file);
+        // res.json(req.file);
     }
 };
